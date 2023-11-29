@@ -1,0 +1,1 @@
+export { IRecipe } from './recipe.interface';
