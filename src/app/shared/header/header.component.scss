@@ -20,7 +20,7 @@ header {
         margin: auto;
         padding: 0;
         height: 60px;
-        // @include mat.form-field-density(-4);
+        @include mat.form-field-density(-4);
     }
 
     .header-nav {
