@@ -1,0 +1,29 @@
+.recipe-card {
+    width: 350px;
+    height: auto;
+    color: black;
+
+    img {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .recipe-card-footer {
+        padding: 0 20px; 
+        display: flex;
+        justify-content: space-between;
+
+        p {
+            font-size: large;
+        }
+    }
+}
+
+.recipe-card:hover {
+    cursor: pointer;
+
+}
+
+a {
+    text-decoration: none;
+}

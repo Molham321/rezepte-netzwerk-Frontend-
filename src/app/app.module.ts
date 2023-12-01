@@ -22,8 +22,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 import { HttpClientModule } from '@angular/common/http';
+import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     NotFoundComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    RecipeListElementComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatInputModule,
     MatFormFieldModule,
+    MatCardModule,
     HttpClientModule
   ],
   providers: [],
