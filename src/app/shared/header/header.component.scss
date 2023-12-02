@@ -66,3 +66,38 @@ header {
         }
     }
 }
+
+.dropdown-nav {
+    height: auto;
+    background-color: lightgrey;
+
+    .dropdown-nav {
+        margin: auto;
+        width: 50%;
+    }
+
+    .dropdown-nav ul {
+        display: flex;
+        flex-direction: row;
+        align-content: space-between;
+        flex-wrap: wrap;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            padding: 14px 16px;
+        }
+
+        li a {
+            text-align: center;
+            text-decoration: none;
+            color: black;
+        }
+
+        li:hover, li a:hover {
+            color: goldenrod;
+            cursor: pointer;
+        }
+    }
+}
