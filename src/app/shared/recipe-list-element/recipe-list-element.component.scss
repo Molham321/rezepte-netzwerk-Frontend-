@@ -17,11 +17,21 @@
             font-size: large;
         }
     }
+
+    .recipe-card-actions {
+        padding: 0 20px; 
+        display: flex;
+        justify-content: space-between;
+
+        p {
+            font-size: small;
+        }
+    }
 }
 
 .recipe-card:hover {
     cursor: pointer;
-
+    box-shadow: rgba(105, 105, 105, 0.4) 5px 5px, rgba(105, 105, 105, 0.3) 10px 10px, rgba(105, 105, 105, 0.2) 15px 15px, rgba(105, 105, 105, 0.1) 20px 20px, rgba(105, 105, 105, 0.05) 25px 25px;
 }
 
 a {
