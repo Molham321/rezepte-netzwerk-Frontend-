@@ -20,4 +20,8 @@ export class DataService {
   getAll(): Observable<IRecipe[]> {
     return this.http.get<IRecipe[]>(this.baseUrl + "recipes");
   }
+
+  getRecipeById(id: string): Observable<IRecipe> {
+    return this.http.get<IRecipe>(this.baseUrl + "recipes/" + id);
+  }
 }

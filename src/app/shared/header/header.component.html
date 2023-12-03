@@ -39,12 +39,12 @@
                         <li><a [routerLink]="['/category', 'Desserts']">Desserts</a></li>
                         <li><a [routerLink]="['/category', 'Snacks']">Snacks</a></li>
                         <li><a [routerLink]="['/category', 'Getränke']">Getränke</a></li>
-                        <li>weitere Kategorien</li>
+                        <li (click)="showSubmenu()">weitere Kategorien</li>
                     </ul>
                 </nav>
             </div>
         </mat-toolbar-row>
-        <mat-toolbar-row class="dropdown-nav">
+        <mat-toolbar-row class="dropdown-nav" *ngIf="submenuVisible">
                 <div class="dropdown-nav">
                     <nav>
                         <ul>

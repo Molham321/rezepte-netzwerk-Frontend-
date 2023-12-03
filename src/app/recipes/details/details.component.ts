@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { IRecipe } from 'src/app/interfaces';
+import { DataService } from 'src/app/services';
 
 @Component({
   selector: 'app-details',
@@ -7,13 +9,28 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-
-  currentRecipe: number = 0
-  constructor(private route: ActivatedRoute) {}
+  currentRecipeId: string = "";
+  currentRecipe!: IRecipe;
+  constructor(private route: ActivatedRoute, private ds: DataService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.currentRecipe = +params['id']
+      this.currentRecipeId = params['id']
     })
+    this.ReadRecipe(this.currentRecipeId);
+  }
+
+  ReadRecipe(id: string): void {
+    this.ds.getRecipeById(id).subscribe(
+      {
+        next: (response) => {
+          this.currentRecipe = response;
+          console.log(this.currentRecipe);
+          return this.currentRecipe;
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('getAll() completed')
+      }
+    )
   }
 }

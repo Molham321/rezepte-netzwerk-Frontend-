@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 export class HeaderComponent {
   recipeCategories: string[] = ['alle Rezepte', 'Italienisch', 'Vegetarisch', 'Suppen', 'Salate', 'Japanisch', 'Indisch', 'Vegan']
 
+  submenuVisible: boolean = false;
+
+  showSubmenu(): void {
+    this.submenuVisible = !this.submenuVisible;
+  }
 }
