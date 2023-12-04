@@ -1,1 +1,11 @@
-<p>details ({{currentRecipe}}) works!</p>
+<h1>{{currentRecipe.title}}</h1>
+
+<p>{{currentRecipe.description}}</p>
+
+<h3>Zutaten</h3>
+<ul>
+    <li *ngFor="let ingredient of currentRecipe.ingredients">{{ingredient.amount}} {{ingredient.unit}} {{ingredient.ingredient}}</li>
+</ul>
+
+<h3>Arbeitsschritte</h3>
+<p *ngFor="let step of currentRecipe.steps">{{step.order}}. {{step.description}}</p>
