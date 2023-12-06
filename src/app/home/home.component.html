@@ -1,4 +1,36 @@
-<p>home works!</p>
+<div class="presented-recipe-category">
+
+  <h3>Rezept des Tages:</h3>
+
+  <div class="presented-recipes">
+    <app-recipe-list-element [recipe]="recipes[0]"></app-recipe-list-element>
+  </div>
+</div>
+
+<div class="presented-recipe-category">
+
+  <h3>beliebteste Rezepte:</h3>
+
+  <div class="presented-recipes">
+    <app-recipe-list-element [recipe]="recipes[0]"></app-recipe-list-element>
+    <app-recipe-list-element [recipe]="recipes[0]"></app-recipe-list-element>
+    <app-recipe-list-element [recipe]="recipes[0]"></app-recipe-list-element>
+  </div>
+</div>
+
+<div class="presented-recipe-category">
+
+  <h3>neuste Rezepte:</h3>
+
+  <!-- <div class="presented-recipes">
+    <app-recipe-list-element></app-recipe-list-element>
+    <app-recipe-list-element></app-recipe-list-element>
+    <app-recipe-list-element></app-recipe-list-element>
+  </div> -->
+  <div class="presented-recipes" *ngFor="let recipe of recipes">
+    <app-recipe-list-element [recipe]="recipe"></app-recipe-list-element>
+  </div>
+</div>
 
 <ul>
   <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>

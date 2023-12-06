@@ -36,12 +36,22 @@
                         <li><a routerLink="add">neues Rezept</a></li>
                         <li><a [routerLink]="['/category', 'dessert']">Desserts</a></li>
                         <li><a [routerLink]="['/category', 'drink']">Getränke</a></li> -->
-            <li><a [routerLink]="['/category', 'appetizer']">Vorspeisen</a></li>
-            <li><a [routerLink]="['/category', 'main']">Hauptspeisen</a></li>
-            <li><a [routerLink]="['/category', 'dessert']">Desserts</a></li>
-            <li><a [routerLink]="['/category', 'snack']">Snacks</a></li>
-            <li><a [routerLink]="['/category', 'drink']">Getränke</a></li>
-            <li>weitere Kategorien</li>
+            <li><a [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</a></li>
+            <li><a [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</a></li>
+            <li><a [routerLink]="['/category', 'Desserts']">Desserts</a></li>
+            <li><a [routerLink]="['/category', 'Snacks']">Snacks</a></li>
+            <li><a [routerLink]="['/category', 'Getränke']">Getränke</a></li>
+            <li (click)="showSubmenu()">weitere Kategorien</li>
+          </ul>
+        </nav>
+      </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="dropdown-nav" *ngIf="submenuVisible">
+      <div class="dropdown-nav">
+        <nav>
+          <ul>
+            <li *ngFor="let category of recipeCategories"><a [routerLink]="['/category', category]">{{category}}</a>
+            </li>
           </ul>
         </nav>
       </div>

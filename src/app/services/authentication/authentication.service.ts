@@ -38,10 +38,8 @@ export class AuthenticationService {
           // Custom error handling based on the error response
           let errorMessage = 'An error occurred during login.';
 
-          if (error.status === 400) {
+          if (error) {
             errorMessage = 'Invalid email or password.';
-          } else if (error.status === 401) {
-            errorMessage = 'Unauthorized. Please check your credentials.';
           }
 
           // Forward the error to the subscriber

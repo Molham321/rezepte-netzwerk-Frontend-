@@ -1,8 +1,15 @@
-<p>login works!</p>
-
 <div class="login_container">
   <div class="login-form">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <h2 class="text-center">Login</h2>
+      <h3 class="text-center">welcome to Rezepte Netzwerk</h3>
+
+      <div class="text-center error-block">
+        <mat-error *ngIf="error">
+          {{ error }}
+        </mat-error>
+      </div>
 
       <mat-form-field class="full-width">
         <input matInput placeholder="Email" formControlName="email" type="email" required #email
@@ -18,17 +25,12 @@
           [ngClass]="{ 'is-invalid': submitted && form.get('password')?.errors }" />
         <div *ngIf="submitted && form.get('password')?.errors" class="invalid-feedback">
           <div *ngIf="form.get('password')?.hasError('required')">Password is required</div>
-          <div *ngIf="form.get('password')?.hasError('minlength')">Password must be at least 3 characters</div>
         </div>
       </mat-form-field>
 
-      <mat-error *ngIf="error" class="">
-        {{ error }}
-      </mat-error>
-
       <div class="text-center">
         <button mat-raised-button color="primary" type="submit">Login</button>
-        <a routerLink="../register" class="btn btn-link">Register</a>
+        <a routerLink="../register" mat-raised-button color="basic">Register</a>
       </div>
     </form>
   </div>
