@@ -19,6 +19,7 @@
               <li>Filter</li>
               <li><a [routerLink]="['/profile']">Profil</a></li>
               <li *ngIf="!user"><a [routerLink]="['/login']">Login</a></li>
+              <li *ngIf="!user"><a [routerLink]="['/register']">Register</a></li>
               <li *ngIf="user"><a (click)="logout()">Logout</a></li>
             </ul>
           </nav>

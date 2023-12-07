@@ -1,1 +1,54 @@
-<p>register works!</p>
+<div class="container">
+  <div class="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <h2 class="text-center">Register</h2>
+      <h3 class="text-center">create an Anccount on Rezepte Netzwerk</h3>
+
+      <div class="text-center error-block">
+        <mat-error *ngIf="error">{{ error }}</mat-error>
+      </div>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Username" formControlName="username" type="text" required #username
+          [ngClass]="{ 'is-invalid': submitted && form.get('username')?.errors }">
+        <div *ngIf="submitted && form.get('username')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('username')?.hasError('required')">username is required</mat-error>
+          <mat-error *ngIf="form.get('username')?.hasError('minlength')">Username must be at least 3
+            characters</mat-error>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Email" formControlName="email" type="email" required #email
+          [ngClass]="{ 'is-invalid': submitted && form.get('email')?.errors }">
+        <div *ngIf="submitted && form.get('email')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('email')?.hasError('required')">email is required</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">Invalid email format</mat-error>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Password" formControlName="password" type="password" required #password
+          [ngClass]="{ 'is-invalid': submitted && form.get('password')?.errors }" />
+        <div *ngIf="submitted && form.get('password')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="form.get('password')?.hasError('invalidPassword')">Invalid password format</mat-error>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password" required
+          #confirmPassword [ngClass]="{ 'is-invalid': submitted && form.get('confirmPassword')?.errors }" />
+        <div *ngIf="submitted && form.get('confirmPassword')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('confirmPassword')?.hasError('required')">confirm password is required</mat-error>
+        </div>
+      </mat-form-field>
+
+      <div class="text-center">
+        <button mat-raised-button color="primary" type="submit">Register</button>
+        <a routerLink="../login" mat-raised-button color="basic">Login</a>
+      </div>
+    </form>
+  </div>
+</div>

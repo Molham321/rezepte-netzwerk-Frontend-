@@ -48,6 +48,29 @@ export class AuthenticationService {
       );
   }
 
+  register(username: string, email: string, password: string): Observable<IUser> {
+    const loginData = { username, email, password };
+    return this.http.post<IUser>(this.baseUrl + "register", loginData)
+      .pipe(map(user => {
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        localStorage.setItem('user', JSON.stringify(user));
+        this.userSubject.next(user);
+        return user;
+      }),
+        catchError(error => {
+          // Custom error handling based on the error response
+          let errorMessage = 'An error occurred during register.';
+
+          if (error) {
+            errorMessage = 'email already exists';
+          }
+
+          // Forward the error to the subscriber
+          return throwError(errorMessage);
+        })
+      );
+  }
+
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem('user');
