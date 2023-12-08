@@ -8,13 +8,14 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AddComponent } from './recipes/add/add.component';
 import { CategoryComponent } from './recipes/category/category.component';
 import { DetailsComponent } from './recipes/details/details.component';
+import { AuthGuard } from './guards'
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'add', component: AddComponent },
   { path: 'category/:catName', component: CategoryComponent },
   { path: 'details/:id', component: DetailsComponent },

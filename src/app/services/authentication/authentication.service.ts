@@ -29,7 +29,7 @@ export class AuthenticationService {
     const loginData = { email, password };
     return this.http.post<IUser>(this.baseUrl + "login", loginData)
       .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        // store user details in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
         return user;
