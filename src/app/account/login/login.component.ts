@@ -1,7 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from 'src/app/services';
@@ -34,12 +34,6 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
-  }
-
-  // optional zum nutzen 
-  customPasswordValidator(control: AbstractControl): ValidationErrors | null {
-    const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    return passwordRegex.test(control.value) ? null : { invalidPassword: true };
   }
 
   // convenience getter for easy access to form fields

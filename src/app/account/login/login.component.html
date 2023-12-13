@@ -1,22 +1,20 @@
-<div class="login_container">
-  <div class="login-form">
+<div class="container">
+  <div class="form">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
       <h2 class="text-center">Login</h2>
       <h3 class="text-center">welcome to Rezepte Netzwerk</h3>
 
       <div class="text-center error-block">
-        <mat-error *ngIf="error">
-          {{ error }}
-        </mat-error>
+        <mat-error *ngIf="error">{{ error }}</mat-error>
       </div>
 
       <mat-form-field class="full-width">
         <input matInput placeholder="Email" formControlName="email" type="email" required #email
           [ngClass]="{ 'is-invalid': submitted && form.get('email')?.errors }">
         <div *ngIf="submitted && form.get('email')?.errors" class="invalid-feedback">
-          <div *ngIf="form.get('email')?.hasError('required')">email is required</div>
-          <div *ngIf="form.get('email')?.hasError('email')">Invalid email format</div>
+          <mat-error *ngIf="form.get('email')?.hasError('required')">email is required</mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">Invalid email format</mat-error>
         </div>
       </mat-form-field>
 
@@ -24,7 +22,7 @@
         <input matInput placeholder="Password" formControlName="password" type="password" required #password
           [ngClass]="{ 'is-invalid': submitted && form.get('password')?.errors }" />
         <div *ngIf="submitted && form.get('password')?.errors" class="invalid-feedback">
-          <div *ngIf="form.get('password')?.hasError('required')">Password is required</div>
+          <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
         </div>
       </mat-form-field>
 
