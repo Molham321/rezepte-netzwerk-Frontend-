@@ -52,82 +52,29 @@
 
       <!-- Ingredients -->
       <h3>Ingredients</h3>
-      <div>
-        <div class="full-width">
-          <mat-form-field>
-            <mat-label>Menge</mat-label>
-            <input matInput placeholder="Menge" formControlName="amount" type="number" required #amount
-              [ngClass]="{ 'is-invalid': submitted && form.get('amount')?.errors }">
-            <div *ngIf="submitted && form.get('amount')?.errors" class="invalid-feedback">
-              <mat-error *ngIf="form.get('amount')?.hasError('required')">Menge is required</mat-error>
-            </div>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Einheit</mat-label>
-            <input matInput placeholder="Einheit" formControlName="unit" type="text" required #unit
-              [ngClass]="{ 'is-invalid': submitted && form.get('unit')?.errors }">
-            <div *ngIf="submitted && form.get('unit')?.errors" class="invalid-feedback">
-              <mat-error *ngIf="form.get('unit')?.hasError('required')">Einheit is required</mat-error>
-            </div>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Zutat</mat-label>
-            <input matInput placeholder="Zutat" formControlName="ingredient" type="text" required #ingredient
-              [ngClass]="{ 'is-invalid': submitted && form.get('ingredient')?.errors }">
-            <div *ngIf="submitted && form.get('ingredient')?.errors" class="invalid-feedback">
-              <mat-error *ngIf="form.get('ingredient')?.hasError('required')">Zutat is required</mat-error>
-            </div>
-          </mat-form-field>
-
-          <!-- Remove button for the specific ingredient -->
-          <button mat-icon-button (click)="removeIngredient()">
-            <mat-icon>remove</mat-icon>
-          </button>
-        </div>
-        <!-- Button to add a new ingredient -->
-        <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
+      <div class="ingredients-container">
       </div>
+      <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
+      <button mat-raised-button color="warn" (click)="removeIngredient()">Remove Last Ingredient</button>
 
       <!-- Steps -->
       <h3>Steps</h3>
-      <div formArrayName="steps">
-        <div class="full-width">
-          <mat-form-field>
-            <mat-label>Reihenfolge</mat-label>
-            <input matInput placeholder="Reihenfolge" formControlName="order" type="number" required #order
-              [ngClass]="{ 'is-invalid': submitted && form.get('order')?.errors }">
-            <div *ngIf="submitted && form.get('order')?.errors" class="invalid-feedback">
-              <mat-error *ngIf="form.get('order')?.hasError('required')">Reihenfolge is required</mat-error>
-            </div>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Beschreibung</mat-label>
-            <textarea matInput placeholder="Beschreibung" formControlName="description" required #description
-              [ngClass]="{ 'is-invalid': submitted && form.get('description')?.errors }"></textarea>
-            <div *ngIf="submitted && form.get('description')?.errors" class="invalid-feedback">
-              <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung is required</mat-error>
-            </div>
-          </mat-form-field>
-          <!-- Remove button for the specific step -->
-          <button mat-icon-button (click)="removeStep()">
-            <mat-icon>remove</mat-icon>
-          </button>
-        </div>
-        <!-- Button to add a new step -->
-        <button mat-raised-button color="primary" (click)="addStep()">Add Step</button>
+      <div class="steps-container">
       </div>
+      <button mat-raised-button color="primary" (click)="addStep()">Add Step</button>
+      <button mat-raised-button color="warn" (click)="removeStep()">Remove Last Step</button>
+
 
       <!-- category -->
       <h3>category</h3>
       <mat-form-field class="full-width">
         <mat-label>Kategorie</mat-label>
-        <mat-select formControlName="category" required #category>
+        <mat-select formControlName="category" required #category multiple>
+          <mat-option *ngFor="let option of categoryOptions" [value]="option">{{ option }}</mat-option>
         </mat-select>
         <div *ngIf="submitted && form.get('category')?.errors" class="invalid-feedback">
           <mat-error *ngIf="form.get('category')?.hasError('required')">Kategorie is required</mat-error>
+          <mat-error *ngIf="form.get('category')?.hasError('maxCategories')">Maximal 3 Kategorien auswählen</mat-error>
         </div>
       </mat-form-field>
 
