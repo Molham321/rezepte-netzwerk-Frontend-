@@ -10,6 +10,7 @@
       </div>
 
       <mat-form-field class="full-width">
+        <mat-label>Username</mat-label>
         <input matInput placeholder="Username" formControlName="username" type="text" required #username
           [ngClass]="{ 'is-invalid': submitted && form.get('username')?.errors }">
         <div *ngIf="submitted && form.get('username')?.errors" class="invalid-feedback">
@@ -20,6 +21,7 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" type="email" required #email
           [ngClass]="{ 'is-invalid': submitted && form.get('email')?.errors }">
         <div *ngIf="submitted && form.get('email')?.errors" class="invalid-feedback">
@@ -29,6 +31,7 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
+        <mat-label>Password</mat-label>
         <input matInput placeholder="Password" formControlName="password" type="password" required #password
           [ngClass]="{ 'is-invalid': submitted && form.get('password')?.errors }" />
         <div *ngIf="submitted && form.get('password')?.errors" class="invalid-feedback">
@@ -38,6 +41,7 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
+        <mat-label>Confirm Password</mat-label>
         <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password" required
           #confirmPassword [ngClass]="{ 'is-invalid': submitted && form.get('confirmPassword')?.errors }" />
         <div *ngIf="submitted && form.get('confirmPassword')?.errors" class="invalid-feedback">

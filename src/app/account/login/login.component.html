@@ -10,6 +10,7 @@
       </div>
 
       <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" type="email" required #email
           [ngClass]="{ 'is-invalid': submitted && form.get('email')?.errors }">
         <div *ngIf="submitted && form.get('email')?.errors" class="invalid-feedback">
@@ -19,6 +20,7 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
+        <mat-label>Password</mat-label>
         <input matInput placeholder="Password" formControlName="password" type="password" required #password
           [ngClass]="{ 'is-invalid': submitted && form.get('password')?.errors }" />
         <div *ngIf="submitted && form.get('password')?.errors" class="invalid-feedback">

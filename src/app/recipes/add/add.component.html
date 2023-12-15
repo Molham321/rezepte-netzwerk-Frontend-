@@ -1,1 +1,139 @@
-<p>add works!</p>
+<div class="container">
+  <div class="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <h2 class="text-center">Ein neues Rezept hochladen</h2>
+
+      <div class="text-center error-block">
+        <mat-error *ngIf="error">{{ error }}</mat-error>
+      </div>
+
+      <mat-form-field class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="title" type="text" required #title
+          [ngClass]="{ 'is-invalid': submitted && form.get('title')?.errors }">
+        <div *ngIf="submitted && form.get('title')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('title')?.hasError('required')">Name is required</mat-error>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Beschreibung</mat-label>
+        <textarea matInput placeholder="Beschreibung" formControlName="description" required #description
+          [ngClass]="{ 'is-invalid': submitted && form.get('description')?.errors }"></textarea>
+        <div *ngIf="submitted && form.get('description')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung is required</mat-error>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Bild URL</mat-label>
+        <input matInput placeholder="Bild URL" formControlName="imageURL" type="text" required #imageURL
+          [ngClass]="{ 'is-invalid': submitted && form.get('imageURL')?.errors }">
+        <div *ngIf="submitted && form.get('imageURL')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('imageURL')?.hasError('required')">Bild URL is required</mat-error>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Servings</mat-label>
+        <input matInput placeholder="Servings" formControlName="servings" type="number" required #servings
+          [ngClass]="{ 'is-invalid': submitted && form.get('imageURL')?.errors }">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>prepTime</mat-label>
+        <input matInput placeholder="prepTime" formControlName="prepTime" type="number" required #prepTime
+          [ngClass]="{ 'is-invalid': submitted && form.get('prepTime')?.errors }">
+        <div *ngIf="submitted && form.get('prepTime')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('prepTime')?.hasError('required')">prepTime is required</mat-error>
+        </div>
+      </mat-form-field>
+
+      <!-- Ingredients -->
+      <h3>Ingredients</h3>
+      <div>
+        <div class="full-width">
+          <mat-form-field>
+            <mat-label>Menge</mat-label>
+            <input matInput placeholder="Menge" formControlName="amount" type="number" required #amount
+              [ngClass]="{ 'is-invalid': submitted && form.get('amount')?.errors }">
+            <div *ngIf="submitted && form.get('amount')?.errors" class="invalid-feedback">
+              <mat-error *ngIf="form.get('amount')?.hasError('required')">Menge is required</mat-error>
+            </div>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Einheit</mat-label>
+            <input matInput placeholder="Einheit" formControlName="unit" type="text" required #unit
+              [ngClass]="{ 'is-invalid': submitted && form.get('unit')?.errors }">
+            <div *ngIf="submitted && form.get('unit')?.errors" class="invalid-feedback">
+              <mat-error *ngIf="form.get('unit')?.hasError('required')">Einheit is required</mat-error>
+            </div>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Zutat</mat-label>
+            <input matInput placeholder="Zutat" formControlName="ingredient" type="text" required #ingredient
+              [ngClass]="{ 'is-invalid': submitted && form.get('ingredient')?.errors }">
+            <div *ngIf="submitted && form.get('ingredient')?.errors" class="invalid-feedback">
+              <mat-error *ngIf="form.get('ingredient')?.hasError('required')">Zutat is required</mat-error>
+            </div>
+          </mat-form-field>
+
+          <!-- Remove button for the specific ingredient -->
+          <button mat-icon-button (click)="removeIngredient()">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+        <!-- Button to add a new ingredient -->
+        <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
+      </div>
+
+      <!-- Steps -->
+      <h3>Steps</h3>
+      <div formArrayName="steps">
+        <div class="full-width">
+          <mat-form-field>
+            <mat-label>Reihenfolge</mat-label>
+            <input matInput placeholder="Reihenfolge" formControlName="order" type="number" required #order
+              [ngClass]="{ 'is-invalid': submitted && form.get('order')?.errors }">
+            <div *ngIf="submitted && form.get('order')?.errors" class="invalid-feedback">
+              <mat-error *ngIf="form.get('order')?.hasError('required')">Reihenfolge is required</mat-error>
+            </div>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Beschreibung</mat-label>
+            <textarea matInput placeholder="Beschreibung" formControlName="description" required #description
+              [ngClass]="{ 'is-invalid': submitted && form.get('description')?.errors }"></textarea>
+            <div *ngIf="submitted && form.get('description')?.errors" class="invalid-feedback">
+              <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung is required</mat-error>
+            </div>
+          </mat-form-field>
+          <!-- Remove button for the specific step -->
+          <button mat-icon-button (click)="removeStep()">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+        <!-- Button to add a new step -->
+        <button mat-raised-button color="primary" (click)="addStep()">Add Step</button>
+      </div>
+
+      <!-- category -->
+      <h3>category</h3>
+      <mat-form-field class="full-width">
+        <mat-label>Kategorie</mat-label>
+        <mat-select formControlName="category" required #category>
+        </mat-select>
+        <div *ngIf="submitted && form.get('category')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('category')?.hasError('required')">Kategorie is required</mat-error>
+        </div>
+      </mat-form-field>
+
+      <div class="text-center">
+        <button mat-raised-button color="primary" type="submit">Rezept hochladen</button>
+      </div>
+    </form>
+  </div>
+</div>
