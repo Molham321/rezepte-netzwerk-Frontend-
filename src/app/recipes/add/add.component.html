@@ -35,6 +35,11 @@
         </div>
       </mat-form-field>
 
+      <!-- Bildvorschau -->
+      <div class="image-preview" *ngIf="form.get('imageURL')?.value">
+        <img [src]="form.get('imageURL')?.value" alt="Bildvorschau">
+      </div>
+
       <mat-form-field class="full-width">
         <mat-label>Servings</mat-label>
         <input matInput placeholder="Servings" formControlName="servings" type="number" required #servings

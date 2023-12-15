@@ -39,15 +39,31 @@ export class AddComponent implements OnInit {
 
     this.addIngredient();
     this.addStep();
+
+    this.form.get('imageURL')?.valueChanges.subscribe(() => {
+      this.updateImagePreview();
+    });
   }
 
   get f() { return this.form.controls; }
+
+  updateImagePreview() {
+    const imageURLControl = this.form.get('imageURL');
+    const imagePreviewElement = this.el.nativeElement.querySelector('.image-preview');
+
+    if (imageURLControl?.valid) {
+      this.renderer.setStyle(imagePreviewElement, 'background-image', `url(${imageURLControl.value})`);
+      this.renderer.setStyle(imagePreviewElement, 'background-size', 'cover');
+      this.renderer.setStyle(imagePreviewElement, 'background-position', 'center');
+    } else {
+      this.renderer.removeStyle(imagePreviewElement, 'background-image');
+    }
+  }
 
   validateCategories(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const selectedCategories = control.value as string[];
 
-      // Überprüfen, ob mehr als 3 Kategorien ausgewählt wurden
       if (selectedCategories && selectedCategories.length > 3) {
         return { maxCategories: true };
       }
@@ -80,7 +96,6 @@ export class AddComponent implements OnInit {
   removeIngredient() {
     const formArray = this.form.get('ingredients') as FormArray;
 
-    // Verhindern, dass die erste Gruppe entfernt wird, wenn nur eine vorhanden ist
     if (formArray.length > 1) {
       formArray.removeAt(formArray.length - 1);
       this.removeIngredientFromDOM();
@@ -90,7 +105,6 @@ export class AddComponent implements OnInit {
   removeStep() {
     const formArray = this.form.get('steps') as FormArray;
 
-    // Verhindern, dass die erste Gruppe entfernt wird, wenn nur eine vorhanden ist
     if (formArray.length > 1) {
       formArray.removeAt(formArray.length - 1);
       this.removeStepFromDOM();
