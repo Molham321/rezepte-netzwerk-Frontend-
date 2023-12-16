@@ -21,8 +21,12 @@
 
       <mat-form-field class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" formControlName="password" type="password" required #password
-          [ngClass]="{ 'is-invalid': submitted && form.get('password')?.errors }" />
+        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password"
+          type="password" required #password [ngClass]="{ 'is-invalid': submitted && form.get('password')?.errors }" />
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
         <div *ngIf="submitted && form.get('password')?.errors" class="invalid-feedback">
           <mat-error *ngIf="form.get('password')?.hasError('required')">Password is required</mat-error>
         </div>
