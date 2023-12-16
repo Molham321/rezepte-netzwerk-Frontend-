@@ -1,0 +1,92 @@
+.details-page {
+    padding: 60px 100px;
+
+    .image-container {
+        width: 500px;
+        margin: auto;
+
+        .details-image {
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .recipe-chips {
+            width: 500px;
+            margin: 0 15px;
+
+            .recipe-chip {
+                width: 150px;
+
+                .chip-content {
+                    margin: 0 auto;
+                }
+            }
+        }
+
+    }
+
+    .recipe-section {
+        margin: 40px 0;
+
+        h3 {
+            margin: 50px 0 20px 0;
+        }
+
+        .recipe-ingredients {
+            padding: 10px 100px;
+
+            .ingredients-table {
+                width: 100px;
+
+                .mat-column-amount {
+                    width: 32px;
+                    padding-right: 24px;
+                    text-align: center;
+                }
+
+                .mat-column-unit {
+                    width: 128px;
+                    border-right: 1px solid lightgray;
+                    padding-right: 24px;
+                    text-align: center;
+                }
+            }
+        }
+
+        .recipe-steps {
+
+            .steps-description {
+                margin: 0 20px;
+                padding: 10px;
+                background-color: lightgrey;
+            }
+        }
+    }
+
+    .recipe-actions {
+        margin: 50px 0;
+
+        .action-buttons {
+            width: 600px;
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            
+             button {
+                width: 150px;
+                background-color: grey;
+             }
+        }
+
+        .comment-button {
+            width: 600px;
+            margin: 50px auto;
+
+            button {
+                width: 100%;
+                background-color: lightgrey;
+            }
+        }
+    }
+}
