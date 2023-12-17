@@ -27,6 +27,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTableModule } from '@angular/material/table';
 
 import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
 
@@ -60,6 +62,8 @@ import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-
     MatTooltipModule,
     MatMenuModule,
     MatCardModule,
+    MatChipsModule,
+    MatTableModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
