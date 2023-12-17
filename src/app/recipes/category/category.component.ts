@@ -23,13 +23,11 @@ export class CategoryComponent implements OnInit {
       this.currentCategory = params['catName'];
       console.log(this.currentCategory);
 
-      // todo: funktioniert noch nicht!
+      this.readRecipes(this.currentCategory);
 
       // this.readRecipes(params['catName']);
       // console.log(this.recipes);
     })
-
-    this.readRecipes(this.currentCategory);
 
     // this.route.paramMap.subscribe((params: ParamMap) => {
     //   this.currentCategory = params.get('catName')!;
