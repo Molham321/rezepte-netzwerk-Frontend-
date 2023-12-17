@@ -37,7 +37,7 @@ export class AuthGuard {
       return true;
     } else {
       alert('Du kommst hier nicht rein!');
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
       return false;
     }
   }
