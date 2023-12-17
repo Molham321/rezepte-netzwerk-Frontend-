@@ -11,6 +11,10 @@ import { DataService } from 'src/app/services';
 export class DetailsComponent implements OnInit {
   currentRecipeId: string = "";
   currentRecipe!: IRecipe;
+  recipeDate: string = "";
+
+  displayedColumns: string[] = ['amount', 'unit', 'ingredient'];
+
   constructor(private route: ActivatedRoute, private ds: DataService) {}
 
   ngOnInit(): void {
@@ -26,6 +30,7 @@ export class DetailsComponent implements OnInit {
         next: (response) => {
           this.currentRecipe = response;
           console.log(this.currentRecipe);
+          this.recipeDate = new Date(this.currentRecipe.createdDate).toLocaleDateString('de-DE');
           return this.currentRecipe;
         },
         error: (err) => console.log(err),
