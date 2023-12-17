@@ -8,7 +8,7 @@ import { AuthenticationService } from 'src/app/services';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  recipeCategories: string[] = ['alle Rezepte', 'Italienisch', 'Vegetarisch', 'Suppen', 'Salate', 'Japanisch', 'Indisch', 'Vegan']
+  recipeCategories: string[] = ['Alle', 'Italienisch', 'Vegetarisch', 'Suppen', 'Salate', 'Japanisch', 'Indisch', 'Vegan']
 
   submenuVisible: boolean = false;
   user?: IUser | null;

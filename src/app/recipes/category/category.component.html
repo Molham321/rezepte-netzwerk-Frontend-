@@ -1,7 +1,11 @@
-<p>category ({{currentCategory}}) works!</p>
 
-<ul>
-    <li><a [routerLink]="['/details', 1]">Spaghetti Bolognese</a></li>
-    <li><a [routerLink]="['/details', 2]">hausgemachter Vanillepudding</a></li>
-    <li><a [routerLink]="['/details', 3]">Mojito</a></li>
-</ul>
+<div class="category-content">
+
+    <h3>Kategorie {{currentCategory}}:</h3>
+
+    <p *ngIf="recipes.length === 0">Keine Rezepte vorhanden</p>
+
+    <div class="category-recipes">
+        <app-recipe-list-element *ngFor="let recipe of recipes" [recipe]="recipe"></app-recipe-list-element>
+    </div>
+</div>
