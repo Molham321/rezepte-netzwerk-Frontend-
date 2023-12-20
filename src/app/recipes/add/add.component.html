@@ -1,11 +1,11 @@
 <div class="container">
   <div class="form">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-5">
 
-      <h2 class="text-center">Ein neues Rezept hochladen</h2>
+      <h2 class="text-center mb-4">Ein neues Rezept hochladen</h2>
 
-      <div class="text-center error-block">
-        <mat-error *ngIf="error">{{ error }}</mat-error>
+      <div class="text-center alert alert-danger" role="alert" *ngIf="error">
+        <mat-error>{{ error }}</mat-error>
       </div>
 
       <mat-form-field class="full-width">
@@ -36,8 +36,8 @@
       </mat-form-field>
 
       <!-- Bildvorschau -->
-      <div class="image-preview" *ngIf="form.get('imageURL')?.value">
-        <img [src]="form.get('imageURL')?.value" alt="Bildvorschau">
+      <div class="image-preview form-group text-center" *ngIf="form.get('imageURL')?.value">
+        <img [src]="form.get('imageURL')?.value" alt="Bildvorschau" class="border-info rounded-circle">
       </div>
 
       <mat-form-field class="full-width">
@@ -56,22 +56,26 @@
       </mat-form-field>
 
       <!-- Ingredients -->
-      <h3>Ingredients</h3>
+      <h3 class="text-center mb-4">Ingredients</h3>
       <div class="ingredients-container">
       </div>
-      <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
-      <button mat-raised-button color="warn" (click)="removeIngredient()">Remove Last Ingredient</button>
+      <div class="text-center mb-4 mt-4">
+        <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
+        <button mat-raised-button color="warn" (click)="removeIngredient()">Remove Last Ingredient</button>
+      </div>
+
 
       <!-- Steps -->
-      <h3>Steps</h3>
+      <h3 class="text-center mb-4">Steps</h3>
       <div class="steps-container">
       </div>
-      <button mat-raised-button color="primary" (click)="addStep()">Add Step</button>
-      <button mat-raised-button color="warn" (click)="removeStep()">Remove Last Step</button>
-
+      <div class="text-center mb-4 mt-4">
+        <button mat-raised-button color="primary" (click)="addStep()">Add Step</button>
+        <button mat-raised-button color="warn" (click)="removeStep()">Remove Last Step</button>
+      </div>
 
       <!-- category -->
-      <h3>category</h3>
+      <h3 class="text-center mb-4">category</h3>
       <mat-form-field class="full-width">
         <mat-label>Kategorie</mat-label>
         <mat-select formControlName="category" required #category multiple>

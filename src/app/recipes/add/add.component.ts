@@ -15,7 +15,6 @@ export class AddComponent implements OnInit {
   submitted = false;
   error?: string;
 
-  // Define the category options
   categoryOptions = ['category_01', 'category_02', 'category_03', 'category_04', 'category_05', 'Other'];
   einheit = ['Liter', 'Milliliter', 'Kilogramm', 'Gramm', 'Milligramm', 'Stück']
 

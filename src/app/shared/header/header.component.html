@@ -1,16 +1,17 @@
 <header>
   <mat-toolbar>
-    <mat-toolbar-row class="first-nav">
-      <div>
-        <a [routerLink]="['/home']">
-          <h1><mat-icon matPrefix>home</mat-icon>Rezepte Netzwerk</h1>
+    <mat-toolbar-row class="first-nav fixed-top bg-light">
+      <div class="d-flex align-items-center">
+        <a [routerLink]="['/home']" class="d-flex align-items-center">
+          <mat-icon matPrefix class="mr-2">home</mat-icon>
+          <h1 class="mb-0">Rezepte Netzwerk</h1>
         </a>
       </div>
-      <div class="search-field">
-        <mat-form-field appearance="outline">
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput placeholder="Suche">
-        </mat-form-field>
+      <div class="container-fluid">
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
       </div>
       <div>
         <div class="header-nav">
@@ -18,45 +19,48 @@
             <ul>
               <li>Filter</li>
               <li><a [routerLink]="['/profile']">Profil</a></li>
-              <li><a [routerLink]="['/add']">Create Recipes</a></li>
               <li *ngIf="!user"><a [routerLink]="['/login']">Login</a></li>
               <li *ngIf="!user"><a [routerLink]="['/register']">Register</a></li>
+
+              <li *ngIf="user"><a [routerLink]="['/add']">Create Recipes</a></li>
               <li *ngIf="user"><a (click)="logout()">Logout</a></li>
             </ul>
           </nav>
         </div>
       </div>
     </mat-toolbar-row>
-    <mat-toolbar-row class="second-nav">
-      <div class="header-nav">
-        <nav>
-          <ul>
-            <!-- <li><a routerLink="home">Home</a></li>
-                        <li><a routerLink="login">Login</a></li>
-                        <li><a routerLink="register">Registrierung</a></li>
-                        <li><a routerLink="profile">Profil</a></li>
-                        <li><a routerLink="add">neues Rezept</a></li>
-                        <li><a [routerLink]="['/category', 'dessert']">Desserts</a></li>
-                        <li><a [routerLink]="['/category', 'drink']">Getränke</a></li> -->
-            <li><a [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</a></li>
-            <li><a [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</a></li>
-            <li><a [routerLink]="['/category', 'Desserts']">Desserts</a></li>
-            <li><a [routerLink]="['/category', 'Snacks']">Snacks</a></li>
-            <li><a [routerLink]="['/category', 'Getränke']">Getränke</a></li>
-            <li (click)="showSubmenu()">weitere Kategorien</li>
-          </ul>
-        </nav>
-      </div>
-    </mat-toolbar-row>
-    <mat-toolbar-row class="dropdown-nav" *ngIf="submenuVisible">
-      <div class="dropdown-nav">
-        <nav>
-          <ul>
-            <li *ngFor="let category of recipeCategories"><a [routerLink]="['/category', category]">{{category}}</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </mat-toolbar-row>
+    <div style="margin-top: 70px;">
+      <mat-toolbar-row class="second-nav">
+        <div class="header-nav">
+          <nav>
+            <ul>
+              <!-- <li><a routerLink="home">Home</a></li>
+                              <li><a routerLink="login">Login</a></li>
+                              <li><a routerLink="register">Registrierung</a></li>
+                              <li><a routerLink="profile">Profil</a></li>
+                              <li><a routerLink="add">neues Rezept</a></li>
+                              <li><a [routerLink]="['/category', 'dessert']">Desserts</a></li>
+                              <li><a [routerLink]="['/category', 'drink']">Getränke</a></li> -->
+              <li><a [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</a></li>
+              <li><a [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</a></li>
+              <li><a [routerLink]="['/category', 'Desserts']">Desserts</a></li>
+              <li><a [routerLink]="['/category', 'Snacks']">Snacks</a></li>
+              <li><a [routerLink]="['/category', 'Getränke']">Getränke</a></li>
+              <li (click)="showSubmenu()">weitere Kategorien</li>
+            </ul>
+          </nav>
+        </div>
+      </mat-toolbar-row>
+      <mat-toolbar-row class="dropdown-nav" *ngIf="submenuVisible">
+        <div class="dropdown-nav">
+          <nav>
+            <ul>
+              <li *ngFor="let category of recipeCategories"><a [routerLink]="['/category', category]">{{category}}</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </mat-toolbar-row>
+    </div>
   </mat-toolbar>
 </header>

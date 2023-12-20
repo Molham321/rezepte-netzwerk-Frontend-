@@ -1,107 +1,110 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "cli": {
+    "analytics": "09dfbe22-5511-418c-ae26-e8509412104f"
+  },
   "newProjectRoot": "projects",
   "projects": {
     "rezepte-netzwerk": {
+      "architect": {
+        "build": {
+          "options": {
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "index": "src/index.html",
+            "inlineStyleLanguage": "scss",
+            "main": "src/main.ts",
+            "outputPath": "dist/rezepte-netzwerk",
+            "polyfills": [
+              "zone.js"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+            "tsConfig": "tsconfig.app.json"
+          },
+          "builder": "@angular-devkit/build-angular:browser",
+          "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "extractLicenses": false,
+              "namedChunks": true,
+              "optimization": false,
+              "sourceMap": true,
+              "vendorChunk": true
+            },
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumError": "1mb",
+                  "maximumWarning": "500kb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumError": "4kb",
+                  "maximumWarning": "2kb"
+                }
+              ],
+              "outputHashing": "all"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "extract-i18n": {
+          "options": {
+            "browserTarget": "rezepte-netzwerk:build"
+          },
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "rezepte-netzwerk:build:development"
+            },
+            "production": {
+              "browserTarget": "rezepte-netzwerk:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "options": {
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "inlineStyleLanguage": "scss",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "scripts": [],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "tsConfig": "tsconfig.spec.json"
+          },
+          "builder": "@angular-devkit/build-angular:karma"
+        }
+      },
+      "prefix": "app",
       "projectType": "application",
+      "root": "",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/rezepte-netzwerk",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
-            "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "browserTarget": "rezepte-netzwerk:build:production"
-            },
-            "development": {
-              "browserTarget": "rezepte-netzwerk:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "rezepte-netzwerk:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
-          }
-        }
-      }
+      "sourceRoot": "src"
     }
   },
-  "cli": {
-    "analytics": "09dfbe22-5511-418c-ae26-e8509412104f"
-  }
+  "version": 1
 }
