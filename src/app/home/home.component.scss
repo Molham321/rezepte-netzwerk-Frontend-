@@ -1,15 +1,21 @@
 .presented-recipe-category {
-    margin: 60px 0;
+  margin: 60px 0;
 
-    h3 {
-        margin-left: 30px;
-        margin-bottom: 30px;
-    }
+  h3 {
+    margin-left: 30px;
+    margin-bottom: 30px;
+    position: relative;
+  }
 
-    .presented-recipes {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-    }
+  .custom-heading {
+    border-top: 2px solid black;
+    padding-top: 10px; // Verleiht dem Text etwas Abstand zur Linie
+  }
+
+  .presented-recipes {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 }

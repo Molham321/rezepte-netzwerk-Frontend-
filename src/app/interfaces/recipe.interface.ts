@@ -3,7 +3,7 @@ export interface IRecipe {
   _id: string;
   title: string;
   description: string;
-  imageUrl: string;
+  imageURL: string;
   prepTime: number;
   servings: number;
   createdDate: string;
@@ -14,14 +14,12 @@ export interface IRecipe {
   steps: ISteps[];
 }
 
-
 interface IIngredients {
   _id: string;
   amount: number;
   unit: string;
   ingredient: string;
 }
-
 
 interface ISteps {
   _id: string;

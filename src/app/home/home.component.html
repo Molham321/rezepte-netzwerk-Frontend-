@@ -1,95 +1,33 @@
-<div class="presented-recipe-category">
-
-  <h3>Rezept des Tages:</h3>
-
-  <div class="presented-recipes">
-    <app-recipe-list-element [recipe]="recipes[0]"></app-recipe-list-element>
+<!-- Rezept des Tages -->
+<div class="presented-recipe-category mb-4">
+  <h3 class="mb-3 custom-heading">Rezept des Tages:</h3>
+  <div class="presented-recipes row">
+    <div class="col-md-4 mb-3">
+      <app-recipe-list-element [recipe]="recipeOfTheDay"></app-recipe-list-element>
+    </div>
   </div>
 </div>
 
-<div class="presented-recipe-category">
-
-  <h3>beliebteste Rezepte:</h3>
-
-  <div class="presented-recipes">
-    <app-recipe-list-element [recipe]="recipes[0]"></app-recipe-list-element>
-    <app-recipe-list-element [recipe]="recipes[0]"></app-recipe-list-element>
-    <app-recipe-list-element [recipe]="recipes[0]"></app-recipe-list-element>
+<!-- Beliebteste Rezepte -->
+<div class="presented-recipe-category mb-4">
+  <h3 class="mb-3 custom-heading">Beliebteste Rezepte:</h3>
+  <div class="presented-recipes row">
+    <ng-container *ngFor="let recipe of topLikedRecipes">
+      <div class="col-md-4 mb-3">
+        <app-recipe-list-element [recipe]="recipe"></app-recipe-list-element>
+      </div>
+    </ng-container>
   </div>
 </div>
 
-<div class="presented-recipe-category">
-
-  <h3>neuste Rezepte:</h3>
-
-  <!-- <div class="presented-recipes">
-    <app-recipe-list-element></app-recipe-list-element>
-    <app-recipe-list-element></app-recipe-list-element>
-    <app-recipe-list-element></app-recipe-list-element>
-  </div> -->
-  <div class="presented-recipes">
-    <app-recipe-list-element [recipe]="recipes[1]"></app-recipe-list-element>
-    <app-recipe-list-element [recipe]="recipes[1]"></app-recipe-list-element>
-    <app-recipe-list-element [recipe]="recipes[1]"></app-recipe-list-element>
+<!-- Neueste Rezepte -->
+<div class="presented-recipe-category mb-4">
+  <h3 class="mb-3 custom-heading">Neueste Rezepte:</h3>
+  <div class="presented-recipes row">
+    <ng-container *ngFor="let recipe of latestRecipes">
+      <div class="col-md-4 mb-3">
+        <app-recipe-list-element [recipe]="recipe"></app-recipe-list-element>
+      </div>
+    </ng-container>
   </div>
 </div>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
-
-<ul>
-  <li><a [routerLink]="['/details', 4]">Rezept des Tages</a></li>
-  <li><a [routerLink]="['/details', 5]">beliebtes Rezept</a></li>
-  <li><a [routerLink]="['/details', 6]">neues Rezept</a></li>
-</ul>
