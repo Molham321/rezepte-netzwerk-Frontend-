@@ -10,7 +10,7 @@
 
       <mat-form-field class="full-width">
         <mat-label>Title</mat-label>
-        <input matInput placeholder="Title" formControlName="title" type="text" required #title
+        <input matInput placeholder="Title" formControlName="title" type="text" #title
           [ngClass]="{ 'is-invalid': submitted && form.get('title')?.errors }">
         <div *ngIf="submitted && form.get('title')?.errors" class="invalid-feedback">
           <mat-error *ngIf="form.get('title')?.hasError('required')">Name is required</mat-error>
@@ -19,7 +19,7 @@
 
       <mat-form-field class="full-width">
         <mat-label>Beschreibung</mat-label>
-        <textarea matInput placeholder="Beschreibung" formControlName="description" required #description
+        <textarea matInput placeholder="Beschreibung" formControlName="description" #description
           [ngClass]="{ 'is-invalid': submitted && form.get('description')?.errors }"></textarea>
         <div *ngIf="submitted && form.get('description')?.errors" class="invalid-feedback">
           <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung is required</mat-error>
@@ -28,7 +28,7 @@
 
       <mat-form-field class="full-width">
         <mat-label>Bild URL</mat-label>
-        <input matInput placeholder="Bild URL" formControlName="imageURL" type="text" required #imageURL
+        <input matInput placeholder="Bild URL" formControlName="imageURL" type="text" #imageURL
           [ngClass]="{ 'is-invalid': submitted && form.get('imageURL')?.errors }">
         <div *ngIf="submitted && form.get('imageURL')?.errors" class="invalid-feedback">
           <mat-error *ngIf="form.get('imageURL')?.hasError('required')">Bild URL is required</mat-error>
@@ -42,13 +42,13 @@
 
       <mat-form-field class="full-width">
         <mat-label>Servings</mat-label>
-        <input matInput placeholder="Servings" formControlName="servings" type="number" required #servings
+        <input matInput placeholder="Servings" formControlName="servings" type="number" #servings
           [ngClass]="{ 'is-invalid': submitted && form.get('imageURL')?.errors }">
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>prepTime</mat-label>
-        <input matInput placeholder="prepTime" formControlName="prepTime" type="number" required #prepTime
+        <input matInput placeholder="prepTime" formControlName="prepTime" type="number" #prepTime
           [ngClass]="{ 'is-invalid': submitted && form.get('prepTime')?.errors }">
         <div *ngIf="submitted && form.get('prepTime')?.errors" class="invalid-feedback">
           <mat-error *ngIf="form.get('prepTime')?.hasError('required')">prepTime is required</mat-error>
@@ -78,7 +78,7 @@
       <h3 class="text-center mb-4">category</h3>
       <mat-form-field class="full-width">
         <mat-label>Kategorie</mat-label>
-        <mat-select formControlName="category" required #category multiple>
+        <mat-select formControlName="category" #category multiple>
           <mat-option *ngFor="let option of categoryOptions" [value]="option">{{ option }}</mat-option>
         </mat-select>
         <div *ngIf="submitted && form.get('category')?.errors" class="invalid-feedback">

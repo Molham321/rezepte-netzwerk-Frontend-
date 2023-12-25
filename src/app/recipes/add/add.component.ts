@@ -27,14 +27,14 @@ export class AddComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      imageURL: ['', [Validators.required]],
-      servings: [1, [Validators.required]],
-      prepTime: [0, [Validators.required]],
+      title: [''],
+      description: [''],
+      imageURL: [''],
+      servings: [1],
+      prepTime: [0],
       ingredients: this.formBuilder.array([]),
       steps: this.formBuilder.array([]),
-      category: ['', [Validators.required, this.validateCategories()]]
+      category: ['']
     });
 
     this.addIngredient();
@@ -74,9 +74,9 @@ export class AddComponent implements OnInit {
 
   addIngredient() {
     const ingredient = this.formBuilder.group({
-      amount: ['', [Validators.required]],
-      unit: ['', [Validators.required]],
-      ingredient: ['', [Validators.required]],
+      amount: [''],
+      unit: [''],
+      ingredient: [''],
     });
 
     (this.form.get('ingredients') as FormArray).push(ingredient);
@@ -85,8 +85,8 @@ export class AddComponent implements OnInit {
 
   addStep() {
     const step = this.formBuilder.group({
-      order: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      order: [''],
+      description: [''],
     });
 
     (this.form.get('steps') as FormArray).push(step);
