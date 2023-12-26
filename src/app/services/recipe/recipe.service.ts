@@ -2,6 +2,7 @@ import { IRecipe } from './../../interfaces';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,10 @@ import { Observable, catchError, map, tap, throwError } from 'rxjs';
 export class RecipeService {
   baseUrl = 'http://localhost:8080/recipes/'
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private authenticationService: AuthenticationService
+  ) { }
 
   getAll(): Observable<IRecipe[]> {
     return this.http.get<IRecipe[]>(this.baseUrl);
@@ -23,28 +27,63 @@ export class RecipeService {
     return this.http.get<IRecipe[]>(this.baseUrl + "category/" + category);
   }
 
-  createNewRecipe(recipeData: IRecipe): Observable<IRecipe> {
-    console.log(recipeData);
-    return this.http.post<IRecipe>(this.baseUrl + "create", recipeData);
-    // .pipe(
-    //   map(response => {
-    //     console.log("Create Recipe Response:", response);
-    //     return response;
-    //   }),
-    //   catchError(error => {
-    //     console.error("Create Recipe Error:", error);
+  createNewRecipe(
+    title: string,
+    description: string,
+    imageURL: string,
+    servings: number,
+    prepTime: number,
+    ingredientsAmount: string,
+    ingredientsUnit: string,
+    ingredientsIngredient: string,
+    stepsOrder: number,
+    stepsDescription: string,
+    category: string[]
+  ): Observable<IRecipe> {
 
-    //     let errorMessage = 'An error occurred during recipe creation.';
+    // Benutzer aus dem AuthenticationService holen
+    const user = this.authenticationService.userValue;
 
-    //     if (error) {
-    //       if (error.status === 409) {
-    //         errorMessage = 'Recipe with the same title already exists.';
-    //       }
-    //     }
+    const createdBy = user?._id
 
-    //     // Rethrow the error to propagate it
-    //     return throwError(errorMessage);
-    //   })
-    // );
+    const recipesData = {
+      title,
+      description,
+      imageURL,
+      servings,
+      prepTime,
+      ingredients: [{
+        amount: ingredientsAmount,
+        unit: ingredientsUnit,
+        ingredient: ingredientsIngredient
+      }],
+      steps: [{
+        order: stepsOrder,
+        description: stepsDescription
+      }],
+      category,
+      createdBy
+    };
+
+    return this.http.post<IRecipe>(`${this.baseUrl}create`, recipesData)
+      .pipe(
+        map(response => {
+          console.log('Create Recipe Response:', response);
+          return response;
+        }),
+        catchError(error => {
+          console.error('Create Recipe Error:', error);
+
+          let errorMessage = 'An error occurred during recipe creation.';
+
+          if (error) {
+            if (error.status === 409) {
+              errorMessage = 'Recipe with the same title already exists.';
+            }
+          }
+
+          return throwError(errorMessage);
+        })
+      );
   }
 }
