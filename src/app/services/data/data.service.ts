@@ -30,6 +30,6 @@ export class DataService {
   }
 
   getRecipesByOwner(ownerId: string): Observable<IRecipe[]> {
-    return this.http.get<IRecipe[]>(this.baseUrl + "owner/" + ownerId);
+    return this.http.get<IRecipe[]>(this.baseUrl + "recipes/owner/" + ownerId);
   }
 }
