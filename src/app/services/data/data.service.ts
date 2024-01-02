@@ -28,4 +28,8 @@ export class DataService {
   getRecipeByCategory(category: string): Observable<IRecipe[]> {
     return this.http.get<IRecipe[]>(this.baseUrl + "recipes/category/" + category);
   }
+
+  getRecipesByOwner(ownerId: string): Observable<IRecipe[]> {
+    return this.http.get<IRecipe[]>(this.baseUrl + "owner/" + ownerId);
+  }
 }
