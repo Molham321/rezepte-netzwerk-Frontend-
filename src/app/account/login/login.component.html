@@ -1,6 +1,6 @@
 <div class="container">
   <div class="form">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form">
 
       <h2 class="text-center mb-4">Login</h2>
       <h4 class="text-center mb-4">welcome to Rezepte Netzwerk</h4>
@@ -33,8 +33,7 @@
       </mat-form-field>
 
       <div class="text-center">
-        <button mat-raised-button color="primary" type="submit">Login</button>
-        <a routerLink="../register" mat-raised-button color="basic">Register</a>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Login</button>
       </div>
     </form>
   </div>

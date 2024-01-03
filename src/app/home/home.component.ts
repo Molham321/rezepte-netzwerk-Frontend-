@@ -1,6 +1,6 @@
 import { IRecipe } from '../interfaces/recipe.interface';
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../services/data/data.service';
+import { RecipeService } from '../services';
 
 @Component({
   selector: 'app-home',
@@ -9,24 +9,35 @@ import { DataService } from '../services/data/data.service';
 })
 export class HomeComponent implements OnInit {
   recipes!: IRecipe[];
+  latestRecipes!: IRecipe[];
+  topLikedRecipes!: IRecipe[];
+  recipeOfTheDay!: IRecipe;
 
-  constructor(private ds: DataService) { }
+  constructor(private recipeService: RecipeService) { }
   ngOnInit(): void {
     this.readAll();
   }
 
   readAll(): void {
-    this.ds.getAll().subscribe(
+    this.recipeService.getAll().subscribe(
       {
         next: (response) => {
           this.recipes = response;
-          console.log(this.recipes);
-          return this.recipes;
+
+          this.topLikedRecipes = this.recipes.slice().sort((a, b) => {
+            return parseInt(b.likes) - parseInt(a.likes);
+          }).slice(0, 3);
+
+          this.latestRecipes = this.recipes.sort((a, b) => {
+            return new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime();
+          }).slice(0, 3);
+
+          this.recipeOfTheDay = this.recipes[Math.floor(Math.random() * this.recipes.length)];
+
         },
         error: (err) => console.log(err),
         complete: () => console.log('getAll() completed')
       })
   }
-
 }
 

@@ -10,29 +10,19 @@
 
       <mat-form-field class="full-width">
         <mat-label>Title</mat-label>
-        <input matInput placeholder="Title" formControlName="title" type="text" required #title
-          [ngClass]="{ 'is-invalid': submitted && form.get('title')?.errors }">
-        <div *ngIf="submitted && form.get('title')?.errors" class="invalid-feedback">
-          <mat-error *ngIf="form.get('title')?.hasError('required')">Name is required</mat-error>
-        </div>
+        <input matInput placeholder="Title" formControlName="title" type="text">
       </mat-form-field>
 
+      <!-- Beschreibung -->
       <mat-form-field class="full-width">
         <mat-label>Beschreibung</mat-label>
-        <textarea matInput placeholder="Beschreibung" formControlName="description" required #description
-          [ngClass]="{ 'is-invalid': submitted && form.get('description')?.errors }"></textarea>
-        <div *ngIf="submitted && form.get('description')?.errors" class="invalid-feedback">
-          <mat-error *ngIf="form.get('description')?.hasError('required')">Beschreibung is required</mat-error>
-        </div>
+        <textarea matInput placeholder="Beschreibung" formControlName="description"></textarea>
       </mat-form-field>
 
+      <!-- Bild-URL -->
       <mat-form-field class="full-width">
         <mat-label>Bild URL</mat-label>
-        <input matInput placeholder="Bild URL" formControlName="imageURL" type="text" required #imageURL
-          [ngClass]="{ 'is-invalid': submitted && form.get('imageURL')?.errors }">
-        <div *ngIf="submitted && form.get('imageURL')?.errors" class="invalid-feedback">
-          <mat-error *ngIf="form.get('imageURL')?.hasError('required')">Bild URL is required</mat-error>
-        </div>
+        <input matInput placeholder="Bild URL" formControlName="imageURL" type="text">
       </mat-form-field>
 
       <!-- Bildvorschau -->
@@ -40,45 +30,58 @@
         <img [src]="form.get('imageURL')?.value" alt="Bildvorschau" class="border-info rounded-circle">
       </div>
 
+      <!-- Servings -->
       <mat-form-field class="full-width">
         <mat-label>Servings</mat-label>
-        <input matInput placeholder="Servings" formControlName="servings" type="number" required #servings
-          [ngClass]="{ 'is-invalid': submitted && form.get('imageURL')?.errors }">
+        <input matInput placeholder="Servings" formControlName="servings" type="number">
       </mat-form-field>
 
+      <!-- prepTime -->
       <mat-form-field class="full-width">
         <mat-label>prepTime</mat-label>
-        <input matInput placeholder="prepTime" formControlName="prepTime" type="number" required #prepTime
-          [ngClass]="{ 'is-invalid': submitted && form.get('prepTime')?.errors }">
-        <div *ngIf="submitted && form.get('prepTime')?.errors" class="invalid-feedback">
-          <mat-error *ngIf="form.get('prepTime')?.hasError('required')">prepTime is required</mat-error>
-        </div>
+        <input matInput placeholder="prepTime" formControlName="prepTime" type="number">
       </mat-form-field>
 
       <!-- Ingredients -->
       <h3 class="text-center mb-4">Ingredients</h3>
-      <div class="ingredients-container">
-      </div>
-      <div class="text-center mb-4 mt-4">
-        <button mat-raised-button color="primary" (click)="addIngredient()">Add Ingredient</button>
-        <button mat-raised-button color="warn" (click)="removeIngredient()">Remove Last Ingredient</button>
-      </div>
+      <div formGroupName="ingredients">
+        <mat-form-field class="full-width">
+          <mat-label>Amount</mat-label>
+          <input matInput placeholder="Amount" formControlName="amount" type="text">
+        </mat-form-field>
 
+        <mat-form-field class="full-width">
+          <mat-label>Unit</mat-label>
+          <mat-select formControlName="unit">
+            <mat-option *ngFor="let unit of einheit" [value]="unit">{{ unit }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Ingredient</mat-label>
+          <input matInput placeholder="Ingredient" formControlName="ingredient" type="text">
+        </mat-form-field>
+      </div>
 
       <!-- Steps -->
       <h3 class="text-center mb-4">Steps</h3>
-      <div class="steps-container">
-      </div>
-      <div class="text-center mb-4 mt-4">
-        <button mat-raised-button color="primary" (click)="addStep()">Add Step</button>
-        <button mat-raised-button color="warn" (click)="removeStep()">Remove Last Step</button>
+      <div formGroupName="steps">
+        <mat-form-field class="full-width">
+          <mat-label>Order</mat-label>
+          <input matInput placeholder="Order" formControlName="order" type="number">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput placeholder="Description" formControlName="description"></textarea>
+        </mat-form-field>
       </div>
 
       <!-- category -->
       <h3 class="text-center mb-4">category</h3>
       <mat-form-field class="full-width">
         <mat-label>Kategorie</mat-label>
-        <mat-select formControlName="category" required #category multiple>
+        <mat-select formControlName="category" #category multiple>
           <mat-option *ngFor="let option of categoryOptions" [value]="option">{{ option }}</mat-option>
         </mat-select>
         <div *ngIf="submitted && form.get('category')?.errors" class="invalid-feedback">
