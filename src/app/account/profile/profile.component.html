@@ -1,1 +1,68 @@
-<p>profile works!</p>
+<div class="profile-data">
+    <h3>Hallo {{user.username}}!</h3>
+    <p>Email: {{user.email}}</p>
+    <button mat-stroked-button (click)="showForm = !showForm">Daten bearbeiten</button>
+
+    <div class="data-form" *ngIf="showForm">
+        <div class="user-form">
+            <form [formGroup]="userForm" (ngSubmit)="onUsernameSubmit()" class="form-fields">
+                <mat-form-field class="data-form-field">
+                    <mat-label>Username</mat-label>
+                    <input matInput value="user.username" formControlName="username" required #username
+                      [ngClass]="{ 'is-invalid': userSubmitted && userForm.get('username')?.errors }">
+                    <div *ngIf="userSubmitted && userForm.get('username')?.errors" class="invalid-feedback">
+                      <mat-error *ngIf="userForm.get('username')?.hasError('required')">username is required</mat-error>
+                    </div>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit" class="form-button">Username Speichern</button>
+            </form>
+        </div>
+
+        <div class="password-form">
+            <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()" class="form-fields">
+                <div>
+                    <mat-form-field class="data-form-field">
+                        <mat-label>Passwort</mat-label>
+                        <input matInput formControlName="password" required type="password" #password
+                        [ngClass]="{ 'is-invalid': passwordSubmitted && passwordForm.get('password')?.errors }">
+                        <div *ngIf="passwordSubmitted && passwordForm.get('password')?.errors" class="invalid-feedback">
+                        <mat-error *ngIf="passwordForm.get('password')?.hasError('required')">password is required</mat-error>
+                        </div>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                        <mat-label>Passwort wiederholen</mat-label>
+                        <input matInput formControlName="passwordRepeat" required type="password" #passwordRepeat
+                        [ngClass]="{ 'is-invalid': passwordSubmitted && passwordForm.get('passwordRepeat')?.errors }">
+                        <div *ngIf="passwordSubmitted && passwordForm.get('passwordRepeat')?.errors" class="invalid-feedback">
+                        <mat-error *ngIf="passwordForm.get('passwordRepeat')?.hasError('required')">password is required</mat-error>
+                        </div>
+                    </mat-form-field>
+                </div>
+
+                <button mat-raised-button color="primary" type="submit" class="form-button">Passwort Speichern</button>
+            </form>
+        </div>
+    </div>
+
+    <mat-tab-group class="profile-tabs">
+        <mat-tab label="hochgeladene Rezepte">
+            <div class="user-recipes" *ngIf="userRecipes.length !== 0">
+                <app-recipe-list-element *ngFor="let recipe of userRecipes" [recipe]="recipe"></app-recipe-list-element>
+            </div>
+            <div class="no-user-recipes" *ngIf="userRecipes.length === 0">
+                <p>keine Rezepte hochgeladen</p>
+            </div>
+        </mat-tab>
+        <mat-tab label="gemerkte Rezepte">
+            <div class="user-recipes" *ngIf="savedRecipes.length !== 0">
+                <app-recipe-list-element *ngFor="let recipe of savedRecipes" [recipe]="recipe"></app-recipe-list-element>
+            </div>
+            <div class="no-user-recipes" *ngIf="savedRecipes.length === 0">
+                <p>keine Rezepte gemerkt</p>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+

@@ -31,6 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
@@ -68,6 +69,7 @@ import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-
     MatSelectModule,
     MatChipsModule,
     MatTableModule,
+    MatTabsModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
