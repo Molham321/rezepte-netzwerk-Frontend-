@@ -18,28 +18,28 @@ export class SearchResultsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllRecipes();
+    this.GetAllRecipes();
 
     this.route.params.subscribe((params) => {
       this.searchString = params['searchedRecipe'];
-      this.filterRecipes(this.searchString);
+      this.FilterRecipes(this.searchString);
     })
   }
 
-  getAllRecipes(): void {
+  GetAllRecipes(): void {
     this.ds.getAll().subscribe(
       {
         next: (response) => {
           this.allRecipes = response;
           // console.log(this.allRecipes);
-          this.filterRecipes(this.searchString);
+          this.FilterRecipes(this.searchString);
         },
         error: (err) => console.log(err),
         complete: () => console.log('getAll() completed')
       })
   }
 
-  filterRecipes(searchString: String): void {
+  FilterRecipes(searchString: String): void {
     // console.log(searchString);
     this.filteredRecipes = [];
     this.allRecipes.forEach(element => {

@@ -19,6 +19,8 @@
 
         <p>{{currentRecipe.description}}</p>
 
+        <p class="recipe-owner">hochgeladen von: {{recipeOwner.username}}</p>
+
         <h3>Zutaten</h3>
 
         <div class="recipe-ingredients">
@@ -56,8 +58,10 @@
     <div class="recipe-actions">
         <div class="action-buttons">
             <button mat-stroked-button>Drucken</button>
-            <button mat-stroked-button>Stern</button>
-            <button mat-stroked-button>Merken</button>
+            <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
+            <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Löschen</button>
+            <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user">Stern</button>
+            <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user">Merken</button>
         </div>
 
         <div class="comment-button">

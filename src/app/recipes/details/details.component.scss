@@ -32,6 +32,10 @@
             margin: 50px 0 20px 0;
         }
 
+        .recipe-owner {
+            color: grey;
+        }
+
         .recipe-ingredients {
             padding: 10px 100px;
 
@@ -75,7 +79,17 @@
             
              button {
                 width: 150px;
-                background-color: grey;
+                color: white;
+                background-color: rgb(66, 66, 66);
+             }
+
+             button:hover {
+                opacity: 0.7;
+                cursor: pointer;
+             }
+
+             button:disabled {
+                opacity: 0.3;
              }
         }
 
