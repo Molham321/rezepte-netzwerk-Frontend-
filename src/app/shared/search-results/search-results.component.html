@@ -1,0 +1,10 @@
+<div class="search-result-content">
+
+    <h3>Ergebisse für "{{searchString}}":</h3>
+
+    <p *ngIf="filteredRecipes.length === 0">Es konnten keine Rezepte gefunden werden</p>
+
+    <div class="searched-recipes">
+        <app-recipe-list-element *ngFor="let recipe of filteredRecipes" [recipe]="recipe"></app-recipe-list-element>
+    </div>
+</div>

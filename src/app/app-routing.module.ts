@@ -9,6 +9,7 @@ import { AddComponent } from './recipes/add/add.component';
 import { CategoryComponent } from './recipes/category/category.component';
 import { DetailsComponent } from './recipes/details/details.component';
 import { AuthGuard } from './guards'
+import { SearchResultsComponent } from './shared/search-results/search-results.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'add', component: AddComponent },
   { path: 'category/:catName', component: CategoryComponent },
   { path: 'details/:id', component: DetailsComponent },
+  { path: 'search/:searchedRecipe', component: SearchResultsComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
