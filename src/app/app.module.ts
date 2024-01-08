@@ -35,6 +35,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 
 import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
+import { SearchResultsComponent } from './shared/search-results/search-results.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-
     NotFoundComponent,
     HeaderComponent,
     FooterComponent,
-    RecipeListElementComponent
+    RecipeListElementComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,

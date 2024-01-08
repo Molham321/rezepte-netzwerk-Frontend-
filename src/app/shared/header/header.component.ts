@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IUser } from 'src/app/interfaces';
 import { AuthenticationService } from 'src/app/services';
 
@@ -7,14 +9,22 @@ import { AuthenticationService } from 'src/app/services';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   recipeCategories: string[] = ['Alle', 'Italienisch', 'Vegetarisch', 'Suppen', 'Salate', 'Japanisch', 'Indisch', 'Vegan']
 
   submenuVisible: boolean = false;
   user?: IUser | null;
 
-  constructor(private authenticationService: AuthenticationService) {
+  searchForm!: FormGroup;
+
+  constructor(private authenticationService: AuthenticationService, private router: Router) {
     this.authenticationService.user.subscribe(x => this.user = x);
+  }
+
+  ngOnInit(): void {
+    this.searchForm = new FormGroup({
+      recipe: new FormControl('', Validators.required)
+    });
   }
 
   showSubmenu(): void {
@@ -22,5 +32,11 @@ export class HeaderComponent {
   }
   logout() {
     this.authenticationService.logout();
+  }
+
+  searchRecipes(): void {
+    // alert(this.searchForm.controls['recipe'].value);
+    this.router.navigate(['search/' + this.searchForm.controls['recipe']. value]);
+    this.searchForm.reset();
   }
 }
