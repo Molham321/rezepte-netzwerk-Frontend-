@@ -1,74 +1,54 @@
 <header>
-  <mat-toolbar>
-    <mat-toolbar-row class="first-nav fixed-top bg-light">
-      <div class="d-flex align-items-center">
-        <a [routerLink]="['/home']" class="d-flex align-items-center">
-          <mat-icon matPrefix class="mr-2">home</mat-icon>
-          <h1 class="mb-0">Rezepte Netzwerk</h1>
-        </a>
-      </div>
-      <div class="container-fluid">
-        <form class="d-flex" role="search" [formGroup]="searchForm" (ngSubmit)="searchRecipes()">
-          <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" formControlName="recipe">
-          <button class="btn btn-outline-success" type="submit" [disabled]="searchForm.invalid">Search</button>
-        </form>
-      </div>
-      <div class="header-nav">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+  <mat-toolbar class="first-nav fixed-top bg-light">
+    <mat-toolbar-row class="d-flex align-items-center">
+      <a [routerLink]="['/home']" class="d-flex align-items-center">
+        <mat-icon matPrefix class="mr-2">home</mat-icon>
+        <h1 class="mb-0">Rezepte Netzwerk</h1>
+      </a>
+      <form class="search" role="search" [formGroup]="searchForm" (ngSubmit)="searchRecipes()">
+        <mat-form-field>
+          <input matInput placeholder="Search" formControlName="recipe">
+        </mat-form-field>
+        <button class="searchButton" mat-raised-button color="primary" type="submit"
+          [disabled]="searchForm.invalid">Search</button>
+      </form>
+      <button mat-raised-button [matMenuTriggerFor]="filterMenu" class="filter-menu-button">
+        <mat-icon>filter_list</mat-icon> Rezepte
+      </button>
+      <mat-menu #filterMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</button>
+        <button mat-menu-item [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</button>
+        <button mat-menu-item [routerLink]="['/category', 'Desserts']">Desserts</button>
+        <button mat-menu-item [routerLink]="['/category', 'Snacks']">Snacks</button>
+        <button mat-menu-item [routerLink]="['/category', 'Getränke']">Getränke</button>
+        <button mat-menu-item [matMenuTriggerFor]="additionalCategoriesMenu">weitere Kategorien</button>
+      </mat-menu>
+      <mat-menu #additionalCategoriesMenu="matMenu">
+        <button mat-menu-item *ngFor="let category of recipeCategories" [routerLink]="['/category', category]">{{
+          category }}</button>
+      </mat-menu>
+      <button mat-raised-button *ngIf="!user" color="primary" [routerLink]="['/login']">
+        <i class="bi bi-box-arrow-in-right"></i> Login
+      </button>
+      <button mat-raised-button *ngIf="!user" color="warn" [routerLink]="['/register']">
+        <i class="bi bi-person-plus"></i> Registrieren
+      </button>
+      <div class="dropdown" *ngIf="user">
+        <button mat-raised-button color="primary" [matMenuTriggerFor]="profileMenu">
+          <i class="bi bi-person-badge"></i> Hello {{ user!.username }}
+        </button>
+        <mat-menu #profileMenu="matMenu">
+          <button mat-menu-item [routerLink]="['/add']">
+            <i class="bi bi-plus"></i> Rezept hochladen
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <button mat-button [matMenuTriggerFor]="filterMenu" class="filter-menu-button">Rezepte</button>
-                <mat-menu #filterMenu="matMenu">
-                  <button mat-menu-item [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</button>
-                  <button mat-menu-item [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</button>
-                  <button mat-menu-item [routerLink]="['/category', 'Desserts']">Desserts</button>
-                  <button mat-menu-item [routerLink]="['/category', 'Snacks']">Snacks</button>
-                  <button mat-menu-item [routerLink]="['/category', 'Getränke']">Getränke</button>
-                  <button mat-menu-item [matMenuTriggerFor]="additionalCategoriesMenu">weitere Kategorien</button>
-                </mat-menu>
-                <mat-menu #additionalCategoriesMenu="matMenu">
-                  <button mat-menu-item *ngFor="let category of recipeCategories"
-                    [routerLink]="['/category', category]">{{ category }}</button>
-                </mat-menu>
-              </li>
-              <!-- <li class="nav-item"><a class="btn btn-light" [routerLink]="['/profile']">Profil</a></li> -->
-              <li class="btn btn-outline-success my-2 my-sm-0" *ngIf="!user" [routerLink]="['/login']">
-                <i class="bi bi-box-arrow-in-right"></i> Login
-              </li>
-              <li class="btn btn-outline-danger my-2 my-sm-0" *ngIf="!user" [routerLink]="['/register']">
-                <i class="bi bi-person-plus"></i> Registrieren
-              </li>
-              <!-- <li class="nav-item" *ngIf="user"><a class="btn btn-light" [routerLink]="['/add']">Create Recipes</a></li> -->
-              <div class="dropdown" *ngIf="user">
-                <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn"
-                  data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-person-badge"></i> Hello {{ user!.username }}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="profile-btn">
-                  <li>
-                    <a class="dropdown-item" [routerLink]="['/add']">
-                      <i class="bi bi-plus"></i> Rezept hochladen
-                    </a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" [routerLink]="['/profile']">
-                      <i class="bi bi-people"></i> Profil
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <li class="btn btn-outline-danger my-2 my-sm-0" *ngIf="user" (click)="logout()">
-                <i class="bi bi-box-arrow-in-right"></i> Logout
-              </li>
-            </ul>
-          </div>
-        </nav>
+          <button mat-menu-item [routerLink]="['/profile']">
+            <i class="bi bi-people"></i> Profil
+          </button>
+        </mat-menu>
       </div>
+      <button mat-raised-button *ngIf="user" color="warn" (click)="logout()">
+        <i class="bi bi-box-arrow-in-right"></i> Logout
+      </button>
     </mat-toolbar-row>
   </mat-toolbar>
 </header>

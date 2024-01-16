@@ -1,4 +1,10 @@
-
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+}
 
 a {
   text-decoration: none;
@@ -8,4 +14,14 @@ a {
 .filter-menu-button {
   width: 200px;
   margin: 0 20px;
+}
+
+.search {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchButton {
+  margin-left: 5px;
 }
