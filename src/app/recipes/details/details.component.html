@@ -9,7 +9,10 @@
                 <p class="chip-content"><mat-icon>calendar_today</mat-icon> {{recipeDate}}</p>
             </mat-chip>
             <mat-chip class="recipe-chip">
-                <p class="chip-content"><mat-icon>star_border</mat-icon> {{currentRecipe.likes}} Sterne</p>
+                <p class="chip-content">
+                    <mat-icon>star_border</mat-icon> 
+                    {{currentRecipe.likedBy.length}} Sterne
+                </p>
             </mat-chip>
         </mat-chip-listbox>
     </div>
@@ -65,8 +68,13 @@
             <button mat-stroked-button>Drucken</button>
             <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
             <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Löschen</button>
-            <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user">Stern</button>
-            <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user">Merken</button>
+            <div>
+                <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user" (click)="UpdateRecipeLikeCount(currentRecipe._id, user!._id)">Stern</button>
+                <p *ngIf="user && currentRecipe.likedBy.includes(user._id)">Stern von dir vergeben!</p>
+            </div>
+            <div>
+                <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user">Merken</button>
+            </div>
         </div>
 
         <div class="comment-button">

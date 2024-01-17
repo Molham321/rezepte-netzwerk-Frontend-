@@ -12,6 +12,7 @@ export interface IRecipe {
   category: string[];
   ingredients: IIngredients[];
   steps: ISteps[];
+  likedBy: string[];
 }
 
 interface IIngredients {

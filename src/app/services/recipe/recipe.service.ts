@@ -86,4 +86,28 @@ export class RecipeService {
         })
       );
   }
+
+  updateRecipeLikeCount(recipeId: string, likedBy: string[]): Observable<IRecipe> {
+
+    console.log('from recipe service: ' + recipeId + ' ' + likedBy);
+
+    const recipeData = {
+      likedBy
+    };
+
+    return this.http.post<IRecipe>(this.baseUrl + "like/" + recipeId, recipeData)
+      .pipe(
+        map(response => {
+          console.log('update like count response: ', response);
+          return response;
+        }),
+        catchError(error => {
+          console.error('update like count error: ', error);
+
+          let errorMessage = 'An error occured during like count update';
+
+          return throwError(errorMessage);
+        })
+      )
+  }
 }

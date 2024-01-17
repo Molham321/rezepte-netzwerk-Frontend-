@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { IRecipe, IUser } from 'src/app/interfaces';
-import { DataService, UserService, AuthenticationService } from 'src/app/services';
+import { DataService, UserService, AuthenticationService, RecipeService } from 'src/app/services';
 
 @Component({
   selector: 'app-details',
@@ -19,7 +19,13 @@ export class DetailsComponent implements OnInit {
 
   displayedColumns: string[] = ['amount', 'unit', 'ingredient'];
 
-  constructor(private route: ActivatedRoute, private ds: DataService, private us: UserService, private authenticationService: AuthenticationService,) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router, 
+    private ds: DataService, 
+    private rs: RecipeService, 
+    private us: UserService, 
+    private authenticationService: AuthenticationService,) {
     this.authenticationService.user.subscribe(x => this.user = x);
   }
 
@@ -69,5 +75,32 @@ export class DetailsComponent implements OnInit {
     }
 
     return isRecipeOwner;
+  }
+
+  UpdateRecipeLikeCount(recipeId: string, likingUser: string): void {
+    let recipeLikes = this.currentRecipe.likedBy;
+
+    if(recipeLikes.includes(likingUser)) {
+      recipeLikes.forEach((item, index) => {
+        if(item === likingUser) recipeLikes.splice(index, 1);
+      });
+    } else {
+      recipeLikes.push(likingUser);
+    }
+
+    console.log(recipeLikes);
+
+    this.rs.updateRecipeLikeCount(recipeId, recipeLikes).subscribe(
+      {
+        next: (response) => {
+          console.log('details component response: ' + response.title + ' ' + response.likedBy);
+          // this.currentRecipe = response;
+          // return this.currentRecipe;
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('updateRecipeLikeCount() completed')
+
+        }
+    )
   }
 }
