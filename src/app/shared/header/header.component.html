@@ -2,8 +2,8 @@
   <mat-toolbar class="first-nav fixed-top bg-light">
     <mat-toolbar-row class="d-flex align-items-center">
       <a [routerLink]="['/home']" class="d-flex align-items-center">
-        <mat-icon matPrefix class="mr-2">home</mat-icon>
-        <h1 class="mb-0">Rezepte Netzwerk</h1>
+        <mat-icon matPrefix class="mr-1" style="vertical-align: middle; margin-right: 7px;">home</mat-icon>
+        <span class="align-middle">Rezepte Netzwerk</span>
       </a>
       <form class="search" role="search" [formGroup]="searchForm" (ngSubmit)="searchRecipes()">
         <mat-form-field>
@@ -28,26 +28,26 @@
           category }}</button>
       </mat-menu>
       <button mat-raised-button *ngIf="!user" color="primary" [routerLink]="['/login']">
-        <i class="bi bi-box-arrow-in-right"></i> Login
+        <mat-icon class="mr-1">exit_to_app</mat-icon> Login
       </button>
       <button mat-raised-button *ngIf="!user" color="warn" [routerLink]="['/register']">
-        <i class="bi bi-person-plus"></i> Registrieren
+        <mat-icon class="mr-1">person_add</mat-icon> Registrieren
       </button>
       <div class="dropdown" *ngIf="user">
         <button mat-raised-button color="primary" [matMenuTriggerFor]="profileMenu">
-          <i class="bi bi-person-badge"></i> Hello {{ user!.username }}
+          <mat-icon class="mr-1">person</mat-icon> Hello {{ user!.username }}
         </button>
         <mat-menu #profileMenu="matMenu">
           <button mat-menu-item [routerLink]="['/add']">
-            <i class="bi bi-plus"></i> Rezept hochladen
+            <mat-icon class="mr-1">add_box</mat-icon> Rezept hochladen
           </button>
           <button mat-menu-item [routerLink]="['/profile']">
-            <i class="bi bi-people"></i> Profil
+            <mat-icon class="mr-1">people</mat-icon> Profil
           </button>
         </mat-menu>
       </div>
       <button mat-raised-button *ngIf="user" color="warn" (click)="logout()">
-        <i class="bi bi-box-arrow-in-right"></i> Logout
+        <mat-icon class="mr-1">exit_to_app</mat-icon> Logout
       </button>
     </mat-toolbar-row>
   </mat-toolbar>
