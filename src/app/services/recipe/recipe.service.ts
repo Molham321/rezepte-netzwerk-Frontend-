@@ -27,6 +27,21 @@ export class RecipeService {
     return this.http.get<IRecipe[]>(this.baseUrl + "category/" + category);
   }
 
+  deleteRecipe(id: string) {
+    return this.http.delete<IRecipe>(this.baseUrl + id)
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(error => {
+          console.error('Delete Recipe Error:', error);
+
+          let errorMessage = 'An error occurred during recipe deleting.';
+          return throwError(errorMessage);
+        })
+      );
+  }
+
   createNewRecipe(
     title: string,
     description: string,
@@ -38,7 +53,6 @@ export class RecipeService {
     category: string[]
   ): Observable<IRecipe> {
 
-    // Benutzer aus dem AuthenticationService holen
     const user = this.authenticationService.userValue;
     const createdBy = user?._id
 
@@ -63,13 +77,6 @@ export class RecipeService {
           console.error('Create Recipe Error:', error);
 
           let errorMessage = 'An error occurred during recipe creation.';
-
-          if (error) {
-            if (error.status === 409) {
-              errorMessage = 'Recipe with the same title already exists.';
-            }
-          }
-
           return throwError(errorMessage);
         })
       );

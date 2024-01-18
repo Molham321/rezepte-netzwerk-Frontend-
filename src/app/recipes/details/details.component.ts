@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { IRecipe, IUser } from 'src/app/interfaces';
-import { DataService, UserService, AuthenticationService } from 'src/app/services';
+import { DataService, UserService, AuthenticationService, RecipeService } from 'src/app/services';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -19,7 +20,18 @@ export class DetailsComponent implements OnInit {
 
   displayedColumns: string[] = ['amount', 'unit', 'ingredient'];
 
-  constructor(private route: ActivatedRoute, private ds: DataService, private us: UserService, private authenticationService: AuthenticationService,) {
+  loading = false;
+  submitted = false;
+  error?: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private ds: DataService,
+    private us: UserService,
+    private authenticationService: AuthenticationService,
+    private recipeService: RecipeService,
+    private router: Router,
+  ) {
     this.authenticationService.user.subscribe(x => this.user = x);
   }
 
@@ -64,10 +76,25 @@ export class DetailsComponent implements OnInit {
   CheckIfRecipeOwner(): boolean {
     var isRecipeOwner = false;
 
-    if(this.user && this.user?._id === this.currentRecipe.createdBy) {
+    if (this.user && this.user?._id === this.currentRecipe.createdBy) {
       isRecipeOwner = true;
     }
 
     return isRecipeOwner;
+  }
+
+  deleteRecipe() {
+    this.recipeService.deleteRecipe(this.currentRecipeId)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          this.router.navigateByUrl(returnUrl);
+        },
+        error: errorMessage => {
+          this.error = errorMessage;
+          this.loading = false;
+        }
+      });
   }
 }
