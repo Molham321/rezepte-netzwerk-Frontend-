@@ -10,15 +10,23 @@ import { RecipeService } from 'src/app/services';
   styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
-  form!: FormGroup;
-  ingredients!: FormGroup;
-  steps!: FormGroup;
+
+  form = this.formBuilder.group({
+    title: ['', Validators.required],
+    description: ['', Validators.required],
+    imageURL: ['', Validators.required],
+    servings: [1, Validators.required],
+    prepTime: [0, Validators.required],
+    ingredients: this.formBuilder.array([]),
+    steps: this.formBuilder.array([]),
+    category: [[], [this.validateCategories()]]
+  });
+
   loading = false;
   submitted = false;
   error?: string;
 
-  categoryOptions = ['category_01', 'category_02', 'category_03', 'category_04', 'category_05',
-    'Vorspeisen', 'Hauptspeisen', 'Desserts', 'Snacks', 'Getränke',
+  categoryOptions = ['Vorspeisen', 'Hauptspeisen', 'Desserts', 'Snacks', 'Getränke',
     'Spaghetti', 'Rind', 'Geflügel', 'Fisch', 'Schwein', 'Vegetarisch', 'Vegan',
     'Italienisch', 'Deutsch', 'Japanisch', 'Indisch', 'Mexikanisch', 'Andere'];
 
@@ -36,32 +44,57 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      title: [''],
-      description: [''],
-      imageURL: [''],
-      servings: [1],
-      prepTime: [0],
-      ingredients: this.formBuilder.group({
-        amount: [''],
-        unit: [''],
-        ingredient: [''],
-      }),
-
-      steps: this.formBuilder.group({
-        order: [1],
-        description: [''],
-      }),
-
-      category: ['']
-    });
-
     this.form.get('imageURL')?.valueChanges.subscribe(() => {
       this.updateImagePreview();
     });
   }
 
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
+
+  get ingredients() {
+    return this.form.controls["ingredients"] as FormArray;
+  }
+
+  get steps() {
+    return this.form.controls["steps"] as FormArray;
+  }
+
+  createIngredientFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      amount: ['', Validators.required],
+      unit: ['', Validators.required],
+      ingredient: ['', Validators.required],
+    });
+  }
+
+  addIngredient() {
+    const IngredientForm = this.formBuilder.group({
+      amount: ['', Validators.required],
+      unit: ['', Validators.required],
+      ingredient: ['', Validators.required],
+    });
+
+    this.ingredients.push(IngredientForm);
+  }
+
+  addStep() {
+    const stepForm = this.formBuilder.group({
+      order: ['', Validators.required],
+      description: ['', Validators.required],
+    });
+
+    this.steps.push(stepForm);
+  }
+
+  deleteIngredient(lessonIndex: number) {
+    this.ingredients.removeAt(lessonIndex);
+  }
+
+  deleteStep(lessonIndex: number) {
+    this.steps.removeAt(lessonIndex);
+  }
 
   updateImagePreview() {
     const imageURLControl = this.form.get('imageURL');
@@ -100,22 +133,18 @@ export class AddComponent implements OnInit {
     this.loading = true;
 
     this.recipeService.createNewRecipe(
-      this.f['title'].value,
-      this.f['description'].value,
-      this.f['imageURL'].value,
-      this.f['servings'].value,
-      this.f['prepTime'].value,
-      this.f['ingredients'].get('amount')!.value,
-      this.f['ingredients']!.get('unit')!.value,
-      this.f['ingredients'].get('ingredient')!.value,
-      this.f['steps'].get('order')!.value,
-      this.f['steps'].get('description')!.value,
-      this.f['category'].value,
+      this.f['title'].value!,
+      this.f['description'].value!,
+      this.f['imageURL'].value!,
+      this.f['servings'].value!,
+      this.f['prepTime'].value!,
+      this.ingredients.value,
+      this.steps.value,
+      this.f['category'].value!,
     )
       .pipe(first())
       .subscribe({
         next: () => {
-          // get return url from query parameters or default to home page
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigateByUrl(returnUrl);
         },

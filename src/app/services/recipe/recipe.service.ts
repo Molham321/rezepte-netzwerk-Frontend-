@@ -33,17 +33,13 @@ export class RecipeService {
     imageURL: string,
     servings: number,
     prepTime: number,
-    ingredientsAmount: string,
-    ingredientsUnit: string,
-    ingredientsIngredient: string,
-    stepsOrder: number,
-    stepsDescription: string,
+    ingredients: { amount: string, unit: string, ingredient: string }[],
+    steps: { order: number, description: string }[],
     category: string[]
   ): Observable<IRecipe> {
 
     // Benutzer aus dem AuthenticationService holen
     const user = this.authenticationService.userValue;
-
     const createdBy = user?._id
 
     const recipesData = {
@@ -52,15 +48,8 @@ export class RecipeService {
       imageURL,
       servings,
       prepTime,
-      ingredients: [{
-        amount: ingredientsAmount,
-        unit: ingredientsUnit,
-        ingredient: ingredientsIngredient
-      }],
-      steps: [{
-        order: stepsOrder,
-        description: stepsDescription
-      }],
+      ingredients,
+      steps,
       category,
       createdBy
     };
@@ -68,7 +57,6 @@ export class RecipeService {
     return this.http.post<IRecipe>(`${this.baseUrl}create`, recipesData)
       .pipe(
         map(response => {
-          console.log('Create Recipe Response:', response);
           return response;
         }),
         catchError(error => {
