@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IRecipe } from 'src/app/interfaces';
-import { DataService } from 'src/app/services';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService, UserService } from 'src/app/services';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +13,8 @@ export class ProfileComponent implements OnInit {
   userRecipes!: IRecipe[];
   savedRecipes!: IRecipe[];
   showForm: Boolean = false;
+
+  error: boolean = false;
 
   userForm!: FormGroup;
   userLoading = false;
@@ -26,7 +28,7 @@ export class ProfileComponent implements OnInit {
   passwordError?: string;
   passwordHide = true;
 
-  constructor(private formBuilder: FormBuilder, private ds: DataService) {}
+  constructor(private formBuilder: FormBuilder, private ds: DataService, private us: UserService) {}
 
   ngOnInit(): void {
     console.log(this.user);
@@ -42,9 +44,14 @@ export class ProfileComponent implements OnInit {
     });
 
     this.passwordForm = this.formBuilder.group({
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, this.customPasswordValidator]],
       passwordRepeat: ['', [Validators.required]]
     });
+  }
+
+  customPasswordValidator(control: AbstractControl): ValidationErrors | null {
+    const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    return passwordRegex.test(control.value) ? null : { invalidPassword: true };
   }
 
   onUsernameSubmit() {
@@ -59,10 +66,32 @@ export class ProfileComponent implements OnInit {
     }
 
     this.userLoading = true;
-    alert(this.userForm.controls['username'].value);
+
+    this.us.updateUserById(this.user._id, this.userForm.controls['username'].value).subscribe(
+      {
+        next: (response) => {
+          console.log('user update component response: ' + response.username);
+          localStorage.setItem('user', JSON.stringify(response));
+          this.user = JSON.parse(localStorage.getItem('user')!);
+          console.log(this.user);
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('updateUser() completed')
+
+        }
+    )
+
+    // alert(this.userForm.controls['username'].value);
   }
 
   onPasswordSubmit() {
+
+    if(this.passwordForm.controls['password'].value !== this.passwordForm.controls['passwordRepeat'].value, undefined, undefined) {
+      this.error = true;
+      this.passwordForm.reset();
+      return;
+    }
+
     this.passwordSubmitted = true;
 
     // reset alert on submit
@@ -74,10 +103,24 @@ export class ProfileComponent implements OnInit {
     }
 
     this.passwordLoading = true;
-    if(this.passwordForm.controls['password'].value === this.passwordForm.controls['passwordRepeat'].value) {
-      alert(this.passwordForm.controls['password'].value + " - " + this.passwordForm.controls['passwordRepeat'].value);
-      this.passwordForm.reset();
-    }
+
+    this.us.updateUserById(this.user._id, undefined, undefined, this.passwordForm.controls['password'].value).subscribe(
+      {
+        next: (response) => {
+          console.log('user update component response: ' + response);
+          localStorage.setItem('user', JSON.stringify(response));
+          this.user = JSON.parse(localStorage.getItem('user')!);
+          console.log(this.user);
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('updateUser() completed')
+
+      }
+    )
+    
+    // alert(this.passwordForm.controls['password'].value + " - " + this.passwordForm.controls['passwordRepeat'].value);
+    this.error  = false;
+    this.passwordForm.reset();
   }
 
   readRecipes(ownerId: string): void {
