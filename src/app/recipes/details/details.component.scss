@@ -1,106 +1,130 @@
 .details-page {
-    padding: 60px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
 
-    .image-container {
-        width: 500px;
-        margin: auto;
+  .image-container {
+    width: 500px;
+    margin: auto;
 
-        .details-image {
-            width: 100%;
-            object-fit: cover;
-        }
-
-        .recipe-chips {
-            width: 500px;
-            margin: 0 15px;
-
-            .recipe-chip {
-                width: 150px;
-
-                .chip-content {
-                    margin: 0 auto;
-                }
-            }
-        }
-
+    .details-image {
+      width: 100%;
+      object-fit: cover;
     }
 
-    .recipe-section {
-        margin: 40px 0;
-
-        h3 {
-            margin: 50px 0 20px 0;
-        }
-
-        .recipe-owner {
-            color: grey;
-        }
-
-        .recipe-ingredients {
-            padding: 10px 100px;
-
-            .ingredients-table {
-                width: 100px;
-
-                .mat-column-amount {
-                    width: 32px;
-                    padding-right: 24px;
-                    text-align: center;
-                }
-
-                .mat-column-unit {
-                    width: 128px;
-                    border-right: 1px solid lightgray;
-                    padding-right: 24px;
-                    text-align: center;
-                }
-            }
-        }
-
-        .recipe-steps {
-
-            .steps-description {
-                margin: 0 20px;
-                padding: 10px;
-                background-color: lightgrey;
-            }
-        }
+    .recipe-chips {
+      width: 500px;
+      margin: 0 15px;
     }
 
-    .recipe-actions {
-        margin: 50px 0;
+    .recipe-chip {
+      width: 150px;
 
-        .action-buttons {
-            width: 600px;
-            margin: auto;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            
-             button {
-                width: 150px;
-                color: white;
-                background-color: rgb(66, 66, 66);
-             }
-
-             button:hover {
-                opacity: 0.7;
-                cursor: pointer;
-             }
-
-             button:disabled {
-                opacity: 0.3;
-             }
-        }
-
-        .comment-button {
-            width: 600px;
-            margin: 50px auto;
-
-            button {
-                width: 100%;
-                background-color: lightgrey;
-            }
-        }
+      .chip-content {
+        margin: 0 auto;
+      }
     }
+  }
+
+  .recipe-section {
+    margin: 40px 0;
+
+    h3,
+    .steps-order,
+    .recipe-owner {
+      color: #333;
+      margin: 50px 0 20px 0;
+      font-size: 24px;
+    }
+
+    .recipe-owner {
+      color: #888;
+    }
+
+    .recipe-ingredients {
+      padding: 10px;
+
+      .ingredients-table {
+        width: 100%;
+
+        .mat-column-amount {
+          width: 32px;
+          padding-right: 24px;
+          text-align: center;
+        }
+
+        .mat-column-unit {
+          width: 128px;
+          border-right: 1px solid lightgray;
+          padding-right: 24px;
+          text-align: center;
+        }
+      }
+    }
+
+    .recipe-steps {
+      margin-top: 20px;
+
+      .steps-description {
+        margin: 0 20px;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        color: #555;
+      }
+    }
+  }
+
+  .recipe-actions {
+    margin: 50px 0;
+
+    .action-buttons {
+      width: 600px;
+      margin: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      button {
+        @extend .common-button-style;
+        color: #fff;
+        background-color: #4caf50;
+
+        &:hover {
+          background-color: #45a049;
+        }
+
+        &:disabled {
+          background-color: #ddd;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .comment-button {
+      width: 600px;
+      margin: 50px auto;
+
+      button {
+        width: 100%;
+        background-color: #3498db;
+
+        &:hover {
+          background-color: #2980b9;
+        }
+      }
+    }
+  }
+}
+
+$lightBackgroundColor: #f0f0f0;
+
+.common-button-style {
+  width: 150px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
 }

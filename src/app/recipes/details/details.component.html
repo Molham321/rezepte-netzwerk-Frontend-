@@ -1,6 +1,6 @@
 <div class="details-page">
   <div class="image-container">
-    <img src="../../../assets/nikolay-smeh-gPpbFaEkl00-unsplash.jpg" class="details-image">
+    <img mat-card-image [src]="currentRecipe.imageURL" class="details-image">
     <mat-chip-listbox class="recipe-chips">
       <mat-chip class="recipe-chip">
         <p class="chip-content"><mat-icon>alarm</mat-icon> {{currentRecipe.prepTime}} min</p>
@@ -55,11 +55,6 @@
     </div>
   </div>
 
-  <!--
-        IDEEN:
-        Stern: Rezepte-Model erweitern um Array -> dort sind alle Nutzer, die einen Stern vergeben haben, anhand ihrer ID gespeichert
-        Merken: User-Model erweitern um Array -> dort sind alle Rezepte, die gemerkt wurden, anhand ihrer ID gespeichert
-    -->
   <div class="recipe-actions">
     <div class="action-buttons">
       <button mat-stroked-button>Drucken</button>
@@ -74,3 +69,9 @@
     </div>
   </div>
 </div>
+
+<!--
+        IDEEN:
+        Stern: Rezepte-Model erweitern um Array -> dort sind alle Nutzer, die einen Stern vergeben haben, anhand ihrer ID gespeichert
+        Merken: User-Model erweitern um Array -> dort sind alle Rezepte, die gemerkt wurden, anhand ihrer ID gespeichert
+    -->
