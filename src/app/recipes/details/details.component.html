@@ -73,7 +73,8 @@
                 <p *ngIf="user && currentRecipe.likedBy.includes(user._id)">Stern von dir vergeben!</p>
             </div>
             <div>
-                <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user">Merken</button>
+                <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user" (click)="SaveRecipe(currentRecipe._id, user!._id)">Merken</button>
+                <p *ngIf="user && currentRecipe.savedBy.includes(user._id)">Rezept von dir gemerkt!</p>
             </div>
         </div>
 

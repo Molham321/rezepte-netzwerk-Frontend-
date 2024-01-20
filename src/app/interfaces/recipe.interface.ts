@@ -13,6 +13,7 @@ export interface IRecipe {
   ingredients: IIngredients[];
   steps: ISteps[];
   likedBy: string[];
+  savedBy: string[];
 }
 
 interface IIngredients {

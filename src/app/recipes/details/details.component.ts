@@ -103,4 +103,28 @@ export class DetailsComponent implements OnInit {
         }
     )
   }
+
+  SaveRecipe(recipeId: string, savingUser: string): void {
+    let recipeSaves = this.currentRecipe.savedBy;
+
+    if(recipeSaves.includes(savingUser)) {
+      recipeSaves.forEach((item, index) => {
+        if(item === savingUser) recipeSaves.splice(index, 1);
+      });
+    } else {
+      recipeSaves.push(savingUser);
+    }
+
+    console.log(recipeSaves);
+
+    this.rs.updateRecipeSaves(recipeId, recipeSaves).subscribe(
+      {
+        next: (response) => {
+          console.log('details component response: ' + response.title + ' ' + response.savedBy);
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('saveRecipe() completed')
+      }
+    )
+  }
 }

@@ -110,4 +110,30 @@ export class RecipeService {
         })
       )
   }
+
+  updateRecipeSaves(recipeId: string, savedBy: string[]): Observable<IRecipe> {
+
+    const recipeData = {
+      savedBy
+    };
+
+    return this.http.post<IRecipe>(this.baseUrl + "save/" + recipeId, recipeData)
+      .pipe(
+        map(response => {
+          console.log('save recipe response: ', response);
+          return response;
+        }),
+        catchError(error => {
+          console.error('save recipe error: ', error);
+
+          let errorMessage = 'An error occured during recipe save update';
+
+          return throwError(errorMessage);
+        })
+      )
+  }
+
+  getUserSavedRecipes(userId: string): Observable<IRecipe[]> {
+    return this.http.get<IRecipe[]>(this.baseUrl + "saved/" + userId);
+  }
 }

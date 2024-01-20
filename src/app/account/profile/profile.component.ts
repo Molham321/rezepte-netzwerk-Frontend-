@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IRecipe } from 'src/app/interfaces';
-import { DataService, UserService } from 'src/app/services';
+import { DataService, RecipeService, UserService } from 'src/app/services';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
@@ -28,12 +28,12 @@ export class ProfileComponent implements OnInit {
   passwordError?: string;
   passwordHide = true;
 
-  constructor(private formBuilder: FormBuilder, private ds: DataService, private us: UserService) {}
+  constructor(private formBuilder: FormBuilder, private ds: DataService, private us: UserService, private rs: RecipeService) {}
 
   ngOnInit(): void {
     console.log(this.user);
     this.readRecipes(this.user._id);
-    this.savedRecipes = [];
+    this.readSavedRecipes(this.user._id);
 
     this.userForm = this.formBuilder.group({
       username: ['', [Validators.required]]
@@ -134,5 +134,17 @@ export class ProfileComponent implements OnInit {
           error: (err) => console.log(err),
           complete: () => console.log('getByOwner() completed')
         })
-    }
+  }
+
+  readSavedRecipes(userId: string): void {
+    this.rs.getUserSavedRecipes(userId).subscribe(
+      {
+        next: (response) => {
+          this.savedRecipes = response;
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('getSavedRecipes() completed')
+      }
+    )
+  }
 }
