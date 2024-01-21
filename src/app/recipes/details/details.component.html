@@ -9,7 +9,7 @@
         <p class="chip-content"><mat-icon>calendar_today</mat-icon> {{recipeDate}}</p>
       </mat-chip>
       <mat-chip class="recipe-chip">
-        <p class="chip-content"><mat-icon>star_border</mat-icon> {{currentRecipe.likes}} Sterne</p>
+        <p class="chip-content"><mat-icon>star_border</mat-icon> {{currentRecipe.likedBy.length}} Sterne</p>
       </mat-chip>
     </mat-chip-listbox>
   </div>
@@ -39,6 +39,23 @@
 
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+
+    <div class="image-container">
+        <img src="../../../assets/nikolay-smeh-gPpbFaEkl00-unsplash.jpg" class="details-image">
+        <mat-chip-listbox class="recipe-chips">
+            <mat-chip class="recipe-chip">
+                <p class="chip-content"><mat-icon>alarm</mat-icon> {{currentRecipe.prepTime}} min</p>
+            </mat-chip>
+            <mat-chip class="recipe-chip">
+                <p class="chip-content"><mat-icon>calendar_today</mat-icon> {{recipeDate}}</p>
+            </mat-chip>
+            <mat-chip class="recipe-chip">
+                <p class="chip-content">
+                    <mat-icon>star_border</mat-icon> 
+                    {{currentRecipe.likedBy.length}} Sterne
+                </p>
+            </mat-chip>
+        </mat-chip-listbox>
     </div>
 
     <h3>Kategorien</h3>
@@ -70,8 +87,24 @@
   </div>
 </div>
 
-<!--
-        IDEEN:
-        Stern: Rezepte-Model erweitern um Array -> dort sind alle Nutzer, die einen Stern vergeben haben, anhand ihrer ID gespeichert
-        Merken: User-Model erweitern um Array -> dort sind alle Rezepte, die gemerkt wurden, anhand ihrer ID gespeichert
-    -->
+
+    <div class="recipe-actions">
+        <div class="action-buttons">
+            <button mat-stroked-button>Drucken</button>
+            <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
+            <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Löschen</button>
+            <div>
+                <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user" (click)="UpdateRecipeLikeCount(currentRecipe._id, user!._id)">Stern</button>
+                <p *ngIf="user && currentRecipe.likedBy.includes(user._id)">Stern von dir vergeben!</p>
+            </div>
+            <div>
+                <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user" (click)="SaveRecipe(currentRecipe._id, user!._id)">Merken</button>
+                <p *ngIf="user && currentRecipe.savedBy.includes(user._id)">Rezept von dir gemerkt!</p>
+            </div>
+        </div>
+
+        <div class="comment-button">
+            <button mat-stroked-button>Kommentare</button>
+        </div>
+    </div>
+</div>

@@ -10,7 +10,6 @@ import { first } from 'rxjs';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  // user = JSON.parse(localStorage.getItem('user')!);
   user?: IUser | null;
 
   currentRecipeId: string = "";
@@ -26,13 +25,13 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router, 
     private ds: DataService,
     private us: UserService,
+    private rs: RecipeService,
     private authenticationService: AuthenticationService,
-    private recipeService: RecipeService,
-    private router: Router,
   ) {
-    this.authenticationService.user.subscribe(x => this.user = x);
+        this.authenticationService.user.subscribe(x => this.user = x);
   }
 
   ngOnInit(): void {
@@ -84,7 +83,7 @@ export class DetailsComponent implements OnInit {
   }
 
   deleteRecipe() {
-    this.recipeService.deleteRecipe(this.currentRecipeId)
+    this.rs.deleteRecipe(this.currentRecipeId)
       .pipe(first())
       .subscribe({
         next: () => {
@@ -96,5 +95,56 @@ export class DetailsComponent implements OnInit {
           this.loading = false;
         }
       });
+  }
+
+  UpdateRecipeLikeCount(recipeId: string, likingUser: string): void {
+    let recipeLikes = this.currentRecipe.likedBy;
+
+    if(recipeLikes.includes(likingUser)) {
+      recipeLikes.forEach((item, index) => {
+        if(item === likingUser) recipeLikes.splice(index, 1);
+      });
+    } else {
+      recipeLikes.push(likingUser);
+    }
+
+    console.log(recipeLikes);
+
+    this.rs.updateRecipeLikeCount(recipeId, recipeLikes).subscribe(
+      {
+        next: (response) => {
+          console.log('details component response: ' + response.title + ' ' + response.likedBy);
+          // this.currentRecipe = response;
+          // return this.currentRecipe;
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('updateRecipeLikeCount() completed')
+
+        }
+    )
+  }
+
+  SaveRecipe(recipeId: string, savingUser: string): void {
+    let recipeSaves = this.currentRecipe.savedBy;
+
+    if(recipeSaves.includes(savingUser)) {
+      recipeSaves.forEach((item, index) => {
+        if(item === savingUser) recipeSaves.splice(index, 1);
+      });
+    } else {
+      recipeSaves.push(savingUser);
+    }
+
+    console.log(recipeSaves);
+
+    this.rs.updateRecipeSaves(recipeId, recipeSaves).subscribe(
+      {
+        next: (response) => {
+          console.log('details component response: ' + response.title + ' ' + response.savedBy);
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('saveRecipe() completed')
+      }
+    )
   }
 }

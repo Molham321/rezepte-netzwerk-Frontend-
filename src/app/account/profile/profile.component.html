@@ -27,7 +27,8 @@
                         <input matInput formControlName="password" required type="password" #password
                         [ngClass]="{ 'is-invalid': passwordSubmitted && passwordForm.get('password')?.errors }">
                         <div *ngIf="passwordSubmitted && passwordForm.get('password')?.errors" class="invalid-feedback">
-                        <mat-error *ngIf="passwordForm.get('password')?.hasError('required')">password is required</mat-error>
+                        <mat-error *ngIf="passwordForm.get('password')?.hasError('required')">Passwort ist erforderlich</mat-error>
+                        <mat-error *ngIf="passwordForm.get('password')?.hasError('invalidPassword')">falsches Passwort-Format</mat-error>
                         </div>
                     </mat-form-field>
 
@@ -36,9 +37,10 @@
                         <input matInput formControlName="passwordRepeat" required type="password" #passwordRepeat
                         [ngClass]="{ 'is-invalid': passwordSubmitted && passwordForm.get('passwordRepeat')?.errors }">
                         <div *ngIf="passwordSubmitted && passwordForm.get('passwordRepeat')?.errors" class="invalid-feedback">
-                        <mat-error *ngIf="passwordForm.get('passwordRepeat')?.hasError('required')">password is required</mat-error>
+                        <mat-error *ngIf="passwordForm.get('passwordRepeat')?.hasError('required')">Passwort ist erforderlich</mat-error>
                         </div>
                     </mat-form-field>
+                    <mat-error *ngIf="error">Die Passwörter müssen übereinstimmen!</mat-error>
                 </div>
 
                 <button mat-raised-button color="primary" type="submit" class="form-button">Passwort Speichern</button>
