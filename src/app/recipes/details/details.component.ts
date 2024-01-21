@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { IRecipe, IUser } from 'src/app/interfaces';
 import { DataService, UserService, AuthenticationService, RecipeService } from 'src/app/services';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -9,7 +10,6 @@ import { DataService, UserService, AuthenticationService, RecipeService } from '
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
-  // user = JSON.parse(localStorage.getItem('user')!);
   user?: IUser | null;
 
   currentRecipeId: string = "";
@@ -19,14 +19,19 @@ export class DetailsComponent implements OnInit {
 
   displayedColumns: string[] = ['amount', 'unit', 'ingredient'];
 
+  loading = false;
+  submitted = false;
+  error?: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router, 
-    private ds: DataService, 
-    private rs: RecipeService, 
-    private us: UserService, 
-    private authenticationService: AuthenticationService,) {
-    this.authenticationService.user.subscribe(x => this.user = x);
+    private ds: DataService,
+    private us: UserService,
+    private rs: RecipeService,
+    private authenticationService: AuthenticationService,
+  ) {
+        this.authenticationService.user.subscribe(x => this.user = x);
   }
 
   ngOnInit(): void {
@@ -70,11 +75,26 @@ export class DetailsComponent implements OnInit {
   CheckIfRecipeOwner(): boolean {
     var isRecipeOwner = false;
 
-    if(this.user && this.user?._id === this.currentRecipe.createdBy) {
+    if (this.user && this.user?._id === this.currentRecipe.createdBy) {
       isRecipeOwner = true;
     }
 
     return isRecipeOwner;
+  }
+
+  deleteRecipe() {
+    this.rs.deleteRecipe(this.currentRecipeId)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          this.router.navigateByUrl(returnUrl);
+        },
+        error: errorMessage => {
+          this.error = errorMessage;
+          this.loading = false;
+        }
+      });
   }
 
   UpdateRecipeLikeCount(recipeId: string, likingUser: string): void {
