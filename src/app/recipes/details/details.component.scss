@@ -28,7 +28,8 @@
   }
 
   .recipe-section {
-    margin: 40px 0;
+    // margin: 40px 0;
+    min-width: 900px;
 
     h3,
     .steps-order,
@@ -84,12 +85,13 @@
       margin: auto;
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: center;
 
       button {
         @extend .common-button-style;
         color: #fff;
         background-color: #4caf50;
+        margin-right: 10px;
 
         &:hover {
           background-color: #45a049;

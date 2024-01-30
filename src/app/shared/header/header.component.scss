@@ -25,3 +25,23 @@ a {
 .searchButton {
   margin-left: 5px;
 }
+
+header .logo {
+  color: #111;
+  font-weight: 600;
+  font-size: 2em;
+  text-decoration: none;
+}
+
+header.sticky .logo {
+  color: #111;
+}
+
+header .logo span {
+  color: #ff0157;
+
+}
+
+button {
+  margin-left: 6px;
+}
