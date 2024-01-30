@@ -40,36 +40,20 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-    <div class="image-container">
-        <img src="../../../assets/nikolay-smeh-gPpbFaEkl00-unsplash.jpg" class="details-image">
-        <mat-chip-listbox class="recipe-chips">
-            <mat-chip class="recipe-chip">
-                <p class="chip-content"><mat-icon>alarm</mat-icon> {{currentRecipe.prepTime}} min</p>
-            </mat-chip>
-            <mat-chip class="recipe-chip">
-                <p class="chip-content"><mat-icon>calendar_today</mat-icon> {{recipeDate}}</p>
-            </mat-chip>
-            <mat-chip class="recipe-chip">
-                <p class="chip-content">
-                    <mat-icon>star_border</mat-icon> 
-                    {{currentRecipe.likedBy.length}} Sterne
-                </p>
-            </mat-chip>
-        </mat-chip-listbox>
+      <h3>Kategorien</h3>
+      <mat-chip-listbox class="category-chips">
+        <mat-chip class="category-chip" *ngFor="let category of currentRecipe.category">
+          <p class="chip-content">{{category}}</p>
+        </mat-chip>
+      </mat-chip-listbox>
+
+      <h3>Arbeitsschritte</h3>
+      <div class="recipe-steps" *ngFor="let step of currentRecipe.steps">
+        <p class="steps-order">{{step.order}}. Schritt:</p>
+        <p class="steps-description">{{step.description}}</p>
+      </div>
     </div>
 
-    <h3>Kategorien</h3>
-    <mat-chip-listbox class="category-chips">
-      <mat-chip class="category-chip" *ngFor="let category of currentRecipe.category">
-        <p class="chip-content">{{category}}</p>
-      </mat-chip>
-    </mat-chip-listbox>
-
-    <h3>Arbeitsschritte</h3>
-    <div class="recipe-steps" *ngFor="let step of currentRecipe.steps">
-      <p class="steps-order">{{step.order}}. Schritt:</p>
-      <p class="steps-description">{{step.description}}</p>
-    </div>
   </div>
 
   <div class="recipe-actions">
@@ -77,34 +61,20 @@
       <button mat-stroked-button>Drucken</button>
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()" (click)="deleteRecipe()">Löschen</button>
-      <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user">Stern</button>
-      <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user">Merken</button>
+      <div>
+        <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
+          (click)="UpdateRecipeLikeCount(currentRecipe._id, user!._id)">Stern</button>
+        <p *ngIf="user && currentRecipe.likedBy.includes(user._id)">Stern von dir vergeben!</p>
+      </div>
+      <div>
+        <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
+          (click)="SaveRecipe(currentRecipe._id, user!._id)">Merken</button>
+        <p *ngIf="user && currentRecipe.savedBy.includes(user._id)">Rezept von dir gemerkt!</p>
+      </div>
     </div>
 
     <div class="comment-button">
       <button mat-stroked-button>Kommentare</button>
     </div>
   </div>
-</div>
-
-
-    <div class="recipe-actions">
-        <div class="action-buttons">
-            <button mat-stroked-button>Drucken</button>
-            <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
-            <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Löschen</button>
-            <div>
-                <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user" (click)="UpdateRecipeLikeCount(currentRecipe._id, user!._id)">Stern</button>
-                <p *ngIf="user && currentRecipe.likedBy.includes(user._id)">Stern von dir vergeben!</p>
-            </div>
-            <div>
-                <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user" (click)="SaveRecipe(currentRecipe._id, user!._id)">Merken</button>
-                <p *ngIf="user && currentRecipe.savedBy.includes(user._id)">Rezept von dir gemerkt!</p>
-            </div>
-        </div>
-
-        <div class="comment-button">
-            <button mat-stroked-button>Kommentare</button>
-        </div>
-    </div>
 </div>
