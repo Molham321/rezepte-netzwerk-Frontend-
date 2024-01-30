@@ -1,13 +1,14 @@
 <header>
   <mat-toolbar class="first-nav fixed-top bg-light">
     <mat-toolbar-row class="d-flex align-items-center">
-      <a [routerLink]="['/home']" class="logo">Rezepte Netzwerk<span>.</span></a>
-      <form class="search" role="search" [formGroup]="searchForm" (ngSubmit)="searchRecipes()">
+      <a [routerLink]="['/home']" (click)="goToHomePage()" class="logo">Rezepte Netzwerk<span>.</span></a>
+      <form class="search" [formGroup]="searchForm" (ngSubmit)="searchRecipes()">
         <mat-form-field>
           <input matInput placeholder="Search" formControlName="recipe">
         </mat-form-field>
-        <button class="searchButton" mat-raised-button color="primary" type="submit"
-          [disabled]="searchForm.invalid">Search</button>
+        <button class="searchButton" mat-raised-button color="primary" type="submit" [disabled]="searchForm.invalid">
+          <mat-icon>search</mat-icon> Search
+        </button>
       </form>
       <button mat-raised-button [matMenuTriggerFor]="filterMenu" class="filter-menu-button">
         <mat-icon>filter_list</mat-icon> Rezepte
@@ -24,10 +25,12 @@
         <button mat-menu-item *ngFor="let category of recipeCategories" [routerLink]="['/category', category]">{{
           category }}</button>
       </mat-menu>
-      <button class="btn" mat-raised-button *ngIf="!user" color="primary" [routerLink]="['/login']">
+      <div>
+      </div>
+      <button mat-raised-button *ngIf="!user" color="primary" [routerLink]="['/login']">
         <mat-icon class="mr-1">exit_to_app</mat-icon> Login
       </button>
-      <button class="btn" mat-raised-button *ngIf="!user" color="warn" [routerLink]="['/register']">
+      <button mat-raised-button *ngIf="!user" color="warn" [routerLink]="['/register']">
         <mat-icon class="mr-1">person_add</mat-icon> Registrieren
       </button>
       <div class="dropdown" *ngIf="user">
