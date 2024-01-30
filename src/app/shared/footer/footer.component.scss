@@ -1,10 +1,9 @@
 .footer-container {
-    height: 36px;
-    margin-top: -36px;
+  padding: 8px 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
 
-    .footer-content {
-        margin: 0 auto;
-        text-align: center;
-        height: 24px;
-      }
+  .footer-container p {
+    color: #333;
   }
+}
