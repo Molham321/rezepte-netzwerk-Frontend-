@@ -74,7 +74,11 @@
     </div>
 
     <div class="comment-button">
-      <button mat-stroked-button>Kommentare</button>
+      <button mat-stroked-button (click)="showComments = !showComments">Kommentare</button>
     </div>
+  </div>
+
+  <div class="comment-section" *ngIf="showComments">
+    <app-comment-section [recipe]="currentRecipe" [recipeOwner]="recipeOwner"></app-comment-section>
   </div>
 </div>

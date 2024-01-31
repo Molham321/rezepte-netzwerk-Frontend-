@@ -23,6 +23,8 @@ export class DetailsComponent implements OnInit {
   submitted = false;
   error?: string;
 
+  showComments: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router, 
