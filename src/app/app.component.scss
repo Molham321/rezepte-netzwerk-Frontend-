@@ -6,3 +6,9 @@
     margin-top: 70px;
   }
 }
+
+@media print {
+  header {
+    display: none !important;
+  }
+}

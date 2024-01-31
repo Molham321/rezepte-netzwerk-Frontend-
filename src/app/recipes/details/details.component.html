@@ -40,13 +40,14 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-      <h3>Kategorien</h3>
-      <mat-chip-listbox class="category-chips">
-        <mat-chip class="category-chip" *ngFor="let category of currentRecipe.category">
-          <p class="chip-content">{{category}}</p>
-        </mat-chip>
-      </mat-chip-listbox>
-
+      <div class="categories">
+        <h3>Kategorien</h3>
+        <mat-chip-listbox class="category-chips">
+          <mat-chip class="category-chip" *ngFor="let category of currentRecipe.category">
+            <p class="chip-content">{{category}}</p>
+          </mat-chip>
+        </mat-chip-listbox>
+      </div>
       <h3>Arbeitsschritte</h3>
       <div class="recipe-steps" *ngFor="let step of currentRecipe.steps">
         <p class="steps-order">{{step.order}}. Schritt:</p>
@@ -58,7 +59,7 @@
 
   <div class="recipe-actions">
     <div class="action-buttons">
-      <button mat-stroked-button>Drucken</button>
+      <button mat-stroked-button (click)="printDetails()">Drucken</button>
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()" (click)="openDeleteConfirmationDialog()">Löschen</button>
       <div>

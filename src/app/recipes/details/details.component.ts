@@ -12,6 +12,7 @@ import { DeleteConfirmationDialogComponent } from 'src/app/dialogs/delete-confir
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+
   user?: IUser | null;
 
   currentRecipeId: string = "";
@@ -158,9 +159,12 @@ export class DetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Der Benutzer hat "Löschen" ausgewählt
         this.deleteRecipe();
       }
     });
+  }
+
+  printDetails() {
+    window.print();
   }
 }

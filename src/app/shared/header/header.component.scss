@@ -40,3 +40,9 @@ header .logo {
 header .logo span {
   color: #ff0157;
 }
+
+@media print {
+  header {
+    display: none !important;
+  }
+}
