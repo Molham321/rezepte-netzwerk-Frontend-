@@ -60,7 +60,7 @@
     <div class="action-buttons">
       <button mat-stroked-button>Drucken</button>
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
-      <button mat-stroked-button *ngIf="CheckIfRecipeOwner()" (click)="deleteRecipe()">Löschen</button>
+      <button mat-stroked-button *ngIf="CheckIfRecipeOwner()" (click)="openDeleteConfirmationDialog()">Löschen</button>
       <div>
         <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
           (click)="UpdateRecipeLikeCount(currentRecipe._id, user!._id)">Stern</button>

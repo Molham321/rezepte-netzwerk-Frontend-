@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private recipeService: RecipeService, private router: Router) { }
   ngOnInit(): void {
+
     this.readAll();
 
     this.router.events.subscribe(event => {
@@ -32,7 +33,7 @@ export class HomeComponent implements OnInit {
           this.recipes = response;
 
           this.topLikedRecipes = this.recipes.slice().sort((a, b) => {
-            return parseInt(b.likes) - parseInt(a.likes);
+            return b.likedBy.length - a.likedBy.length;
           }).slice(0, 3);
 
           this.latestRecipes = this.recipes.sort((a, b) => {

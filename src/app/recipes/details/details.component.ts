@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IRecipe, IUser } from 'src/app/interfaces';
 import { DataService, UserService, AuthenticationService, RecipeService } from 'src/app/services';
 import { first } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from 'src/app/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-details',
@@ -25,13 +27,14 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router, 
+    private router: Router,
     private ds: DataService,
     private us: UserService,
     private rs: RecipeService,
     private authenticationService: AuthenticationService,
+    public dialog: MatDialog
   ) {
-        this.authenticationService.user.subscribe(x => this.user = x);
+    this.authenticationService.user.subscribe(x => this.user = x);
   }
 
   ngOnInit(): void {
@@ -100,9 +103,9 @@ export class DetailsComponent implements OnInit {
   UpdateRecipeLikeCount(recipeId: string, likingUser: string): void {
     let recipeLikes = this.currentRecipe.likedBy;
 
-    if(recipeLikes.includes(likingUser)) {
+    if (recipeLikes.includes(likingUser)) {
       recipeLikes.forEach((item, index) => {
-        if(item === likingUser) recipeLikes.splice(index, 1);
+        if (item === likingUser) recipeLikes.splice(index, 1);
       });
     } else {
       recipeLikes.push(likingUser);
@@ -120,16 +123,16 @@ export class DetailsComponent implements OnInit {
         error: (err) => console.log(err),
         complete: () => console.log('updateRecipeLikeCount() completed')
 
-        }
+      }
     )
   }
 
   SaveRecipe(recipeId: string, savingUser: string): void {
     let recipeSaves = this.currentRecipe.savedBy;
 
-    if(recipeSaves.includes(savingUser)) {
+    if (recipeSaves.includes(savingUser)) {
       recipeSaves.forEach((item, index) => {
-        if(item === savingUser) recipeSaves.splice(index, 1);
+        if (item === savingUser) recipeSaves.splice(index, 1);
       });
     } else {
       recipeSaves.push(savingUser);
@@ -146,5 +149,18 @@ export class DetailsComponent implements OnInit {
         complete: () => console.log('saveRecipe() completed')
       }
     )
+  }
+
+  openDeleteConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Der Benutzer hat "Löschen" ausgewählt
+        this.deleteRecipe();
+      }
+    });
   }
 }
