@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IRecipe, IUser } from 'src/app/interfaces';
 import { DataService, UserService, AuthenticationService, RecipeService } from 'src/app/services';
@@ -25,6 +25,7 @@ export class DetailsComponent implements OnInit {
   loading = false;
   submitted = false;
   error?: string;
+  quantityCounter = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,7 +34,8 @@ export class DetailsComponent implements OnInit {
     private us: UserService,
     private rs: RecipeService,
     private authenticationService: AuthenticationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {
     this.authenticationService.user.subscribe(x => this.user = x);
   }
@@ -43,7 +45,6 @@ export class DetailsComponent implements OnInit {
       this.currentRecipeId = params['id']
     })
     this.ReadRecipe(this.currentRecipeId);
-    // this.GetRecipeOwner(this.currentRecipe.createdBy);
   }
 
   ReadRecipe(id: string): void {
@@ -118,8 +119,6 @@ export class DetailsComponent implements OnInit {
       {
         next: (response) => {
           console.log('details component response: ' + response.title + ' ' + response.likedBy);
-          // this.currentRecipe = response;
-          // return this.currentRecipe;
         },
         error: (err) => console.log(err),
         complete: () => console.log('updateRecipeLikeCount() completed')
@@ -167,4 +166,23 @@ export class DetailsComponent implements OnInit {
   printDetails() {
     window.print();
   }
+
+  adjustAllQuantities(action: string): void {
+    const minValue = 1;
+
+    this.currentRecipe.ingredients.forEach((ingredient: any) => {
+      if (action === 'increase') {
+        ingredient.amount *= 2;
+        this.quantityCounter++;
+        this.currentRecipe.servings++;
+      } else if (action === 'decrease' && ingredient.amount / 2 >= minValue) {
+        ingredient.amount /= 2;
+        this.quantityCounter--
+        this.currentRecipe.servings--;
+      }
+    });
+
+    this.cdr.detectChanges();
+  }
+
 }
