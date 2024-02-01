@@ -168,20 +168,22 @@ export class DetailsComponent implements OnInit {
   }
 
   adjustAllQuantities(action: string): void {
-    const minValue = 1;
+
+    let zahl1: number = this.quantityCounter;
+    let zahl2: number = 1;
 
     this.currentRecipe.ingredients.forEach((ingredient: any) => {
       if (action === 'increase') {
         ingredient.amount *= 2;
-        this.quantityCounter++;
-        this.currentRecipe.servings++;
-      } else if (action === 'decrease' && ingredient.amount / 2 >= minValue) {
+        this.quantityCounter = zahl1 + zahl2;
+
+      } else if (action === 'decrease' && this.quantityCounter > 1) {
         ingredient.amount /= 2;
-        this.quantityCounter--
-        this.currentRecipe.servings--;
+        this.quantityCounter = zahl1 - zahl2;
       }
     });
 
+    this.currentRecipe.servings = this.quantityCounter
     this.cdr.detectChanges();
   }
 
