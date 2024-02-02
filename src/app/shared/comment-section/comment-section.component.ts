@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IRecipe, IUser } from 'src/app/interfaces';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { IComments } from 'src/app/interfaces/recipe.interface';
+import { RecipeService } from 'src/app/services';
 
 @Component({
   selector: 'app-comment-section',
@@ -19,7 +21,7 @@ export class CommentSectionComponent implements OnInit {
   commentError?: string;
   commentHide = true;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private rs: RecipeService) {}
 
   ngOnInit(): void {
     if(localStorage.getItem('user') !== null) {
@@ -37,6 +39,32 @@ export class CommentSectionComponent implements OnInit {
 
   onCommentSubmit(): void {
     alert(this.commentForm.controls['comment'].value);
+
+    this.commentSubmitted = true;
+
+    this.commentError = '';
+
+    if (this.commentForm.invalid) {
+      return;
+    }
+
+    this.commentLoading = true;
+
+    let comment: IComments = {
+      'createdBy': this.user?._id!,
+      'createdDate': Date.now().toString(),
+      'comment': this.commentForm.controls['comment'].value
+    }
+
+    this.rs.postRecipeComment(this.recipe._id, comment).subscribe(
+      {
+        next: (response) => {
+          console.log('comment-section component response: ' + response.title + ' ' + response.comments);
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('postRecipeComment() completed')
+      }
+    )
 
     this.commentForm.reset();
   }
