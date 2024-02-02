@@ -10,6 +10,6 @@
         </form>
     </div>
     <div class="comment-list">
-        <p>comment list</p>
+        <app-comment *ngFor="let comment of recipe.comments" [comment]="comment"></app-comment>
     </div>
 </div>

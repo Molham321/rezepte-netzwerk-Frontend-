@@ -38,8 +38,6 @@ export class CommentSectionComponent implements OnInit {
   }
 
   onCommentSubmit(): void {
-    alert(this.commentForm.controls['comment'].value);
-
     this.commentSubmitted = true;
 
     this.commentError = '';
@@ -60,6 +58,11 @@ export class CommentSectionComponent implements OnInit {
       {
         next: (response) => {
           console.log('comment-section component response: ' + response.title + ' ' + response.comments);
+
+          // NEUES REZEPT MUSS AUCH IM DETAILS COMPONENT GESETZT WERDEN
+          // SONST IST DER NEUE KOMMENTAR BEIM SCHLIEßEN UND WIEDER ÖFFNEN
+          // DES KOMMENTARBEREICHS NICHT MEHR DA (ERST BEI SEITEN RELOAD)
+          this.recipe = response;
         },
         error: (err) => console.log(err),
         complete: () => console.log('postRecipeComment() completed')

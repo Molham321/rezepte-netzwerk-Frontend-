@@ -1,0 +1,12 @@
+<mat-card [ngClass]="IsCommentOwner() ? 'own-comment' : 'comment'">
+    <mat-card-header class="comment-header">
+        <mat-card-title class="comment-owner">{{commentOwner.username}} <span class="comment-date"> {{commentDate}}</span></mat-card-title>
+        <!-- <mat-card-subtitle class="comment-date">gepostet am {{commentDate}}</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content class="comment-text">
+        {{comment.comment}}
+    </mat-card-content>
+    <mat-card-actions *ngIf="IsCommentOwner()" class="comment-actions">
+        <button mat-icon-button color="warn" class="delete-comment"><mat-icon>delete_forever</mat-icon></button>
+    </mat-card-actions>
+</mat-card>
