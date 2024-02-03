@@ -153,4 +153,25 @@ export class RecipeService {
         })
       )
   }
+
+  deleteRecipeComment(recipeId: string, commentIndex: number): Observable<IRecipe> {
+    const recipeData = {
+      commentIndex
+    };
+
+    return this.http.post<IRecipe>(this.baseUrl + "comments/delete/" + recipeId, recipeData)
+      .pipe(
+        map(response => {
+          console.log('delete comment response: ', response);
+          return response;
+        }),
+        catchError(error => {
+          console.error('delete comment error: ', error);
+
+          let errorMessage = 'An error occured during comment delete';
+
+          return throwError(errorMessage);
+        })
+      )
+  }
 }

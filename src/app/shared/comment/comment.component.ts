@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IUser } from 'src/app/interfaces';
 import { IComments } from 'src/app/interfaces/recipe.interface';
-import { UserService } from 'src/app/services';
+import { RecipeService, UserService } from 'src/app/services';
 
 @Component({
   selector: 'app-comment',
@@ -10,13 +10,15 @@ import { UserService } from 'src/app/services';
 })
 export class CommentComponent implements OnInit {
   @Input() comment!: IComments;
+  @Input() recipeId!: string;
+  @Input() commentIndex!: number;
 
   user?: IUser | null;
 
   commentOwner!: IUser;
   commentDate: string = "";
 
-  constructor(private us: UserService) {}
+  constructor(private us: UserService, private rs: RecipeService) {}
 
   ngOnInit(): void {
     if(localStorage.getItem('user') !== null) {
@@ -41,6 +43,23 @@ export class CommentComponent implements OnInit {
         complete: () => console.log('getUser() completed')
       }
     )
+  }
+
+  DeleteOwnComment(recipeId: string, commentIndex: number): void {
+    if(confirm("Möchtest du diesen Kommentar wirklich löschen?")) {
+      this.rs.deleteRecipeComment(recipeId, commentIndex).subscribe(
+        {
+          next: (response) => {
+            console.log('comment component response: ' + response.title + ' ' + response.comments);
+  
+            // NEUES REZEPT MUSS AUCH IM DETAILS COMPONENT UND COMMENT-SECTION COMPONENT GESETZT WERDEN
+            // this.recipe = response;
+          },
+          error: (err) => console.log(err),
+          complete: () => console.log('deleteOwnComment() completed')
+        }
+      )
+    }
   }
 
   IsCommentOwner(): boolean {
