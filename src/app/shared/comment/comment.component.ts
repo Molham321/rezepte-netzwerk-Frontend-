@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IUser } from 'src/app/interfaces';
 import { IComments } from 'src/app/interfaces/recipe.interface';
 import { RecipeService, UserService } from 'src/app/services';
+import { ShareDataService } from 'src/app/services/share-data/share-data.service';
 
 @Component({
   selector: 'app-comment',
@@ -18,7 +19,7 @@ export class CommentComponent implements OnInit {
   commentOwner!: IUser;
   commentDate: string = "";
 
-  constructor(private us: UserService, private rs: RecipeService) {}
+  constructor(private us: UserService, private rs: RecipeService, private sds: ShareDataService) {}
 
   ngOnInit(): void {
     if(localStorage.getItem('user') !== null) {
@@ -54,6 +55,7 @@ export class CommentComponent implements OnInit {
   
             // NEUES REZEPT MUSS AUCH IM DETAILS COMPONENT UND COMMENT-SECTION COMPONENT GESETZT WERDEN
             // this.recipe = response;
+            this.sds.setUpdatedRecipe(response);
           },
           error: (err) => console.log(err),
           complete: () => console.log('deleteOwnComment() completed')

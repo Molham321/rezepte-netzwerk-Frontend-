@@ -3,6 +3,7 @@ import { IRecipe, IUser } from 'src/app/interfaces';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { IComments } from 'src/app/interfaces/recipe.interface';
 import { RecipeService } from 'src/app/services';
+import { ShareDataService } from 'src/app/services/share-data/share-data.service';
 
 @Component({
   selector: 'app-comment-section',
@@ -21,7 +22,9 @@ export class CommentSectionComponent implements OnInit {
   commentError?: string;
   commentHide = true;
 
-  constructor(private formBuilder: FormBuilder, private rs: RecipeService) {}
+  constructor(private formBuilder: FormBuilder, private rs: RecipeService, private sds: ShareDataService) {
+    this.sds.getUpdatedRecipe.subscribe(recipe => this.recipe = recipe);
+  }
 
   ngOnInit(): void {
     if(localStorage.getItem('user') !== null) {
@@ -62,7 +65,8 @@ export class CommentSectionComponent implements OnInit {
           // NEUES REZEPT MUSS AUCH IM DETAILS COMPONENT GESETZT WERDEN
           // SONST IST DER NEUE KOMMENTAR BEIM SCHLIEßEN UND WIEDER ÖFFNEN
           // DES KOMMENTARBEREICHS NICHT MEHR DA (ERST BEI SEITEN RELOAD)
-          this.recipe = response;
+          // this.recipe = response;
+          this.sds.setUpdatedRecipe(response);
         },
         error: (err) => console.log(err),
         complete: () => console.log('postRecipeComment() completed')

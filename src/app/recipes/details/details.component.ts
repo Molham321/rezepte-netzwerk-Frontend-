@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { IRecipe, IUser } from 'src/app/interfaces';
 import { DataService, UserService, AuthenticationService, RecipeService } from 'src/app/services';
 import { first } from 'rxjs';
+import { ShareDataService } from 'src/app/services/share-data/share-data.service';
 
 @Component({
   selector: 'app-details',
@@ -32,8 +33,10 @@ export class DetailsComponent implements OnInit {
     private us: UserService,
     private rs: RecipeService,
     private authenticationService: AuthenticationService,
+    private sds: ShareDataService
   ) {
         this.authenticationService.user.subscribe(x => this.user = x);
+        this.sds.getUpdatedRecipe.subscribe(recipe => this.currentRecipe = recipe);
   }
 
   ngOnInit(): void {
