@@ -39,14 +39,26 @@ export class SearchResultsComponent implements OnInit {
       })
   }
 
-  FilterRecipes(searchString: String): void {
+  FilterRecipes(searchString: string): void {
     // console.log(searchString);
     this.filteredRecipes = [];
     this.allRecipes.forEach(element => {
       // console.log(element.title);
-      if(element.title.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())) {
+      if(
+        element.title.toLocaleLowerCase().includes(searchString.toLocaleLowerCase()) ||
+        element.description.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
+        ) {
         // console.log(element.title);
         this.filteredRecipes.push(element);
+      } else {
+        // Überprüfe Zutaten
+        const matchingIngredients = element.ingredients.filter(ingredient =>
+          ingredient.ingredient.toLowerCase().includes(searchString.toLowerCase())
+        );
+        if (matchingIngredients.length > 0) {
+          // Füge das Rezept nur hinzu, wenn es übereinstimmende Zutaten gibt
+          this.filteredRecipes.push(element);
+        }
       }
     });
   }
