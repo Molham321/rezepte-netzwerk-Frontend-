@@ -17,7 +17,9 @@ export class HeaderComponent implements OnInit {
 
   searchForm!: FormGroup;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router) {
     this.authenticationService.user.subscribe(x => this.user = x);
   }
 
