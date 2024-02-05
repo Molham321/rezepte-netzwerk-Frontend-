@@ -5,6 +5,7 @@ import { DataService, UserService, AuthenticationService, RecipeService } from '
 import { first } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { ShareDataService } from 'src/app/services/share-data/share-data.service';
 
 @Component({
   selector: 'app-details',
@@ -27,6 +28,8 @@ export class DetailsComponent implements OnInit {
   error?: string;
   quantityCounter = 1;
 
+  showComments: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -34,10 +37,12 @@ export class DetailsComponent implements OnInit {
     private us: UserService,
     private rs: RecipeService,
     private authenticationService: AuthenticationService,
+    private sds: ShareDataService,
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef
   ) {
     this.authenticationService.user.subscribe(x => this.user = x);
+    this.sds.getUpdatedRecipe.subscribe(recipe => this.currentRecipe = recipe);
   }
 
   ngOnInit(): void {

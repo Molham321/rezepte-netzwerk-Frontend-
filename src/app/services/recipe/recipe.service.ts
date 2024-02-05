@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { IComments } from 'src/app/interfaces/recipe.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -130,5 +131,47 @@ export class RecipeService {
 
   getUserSavedRecipes(userId: string): Observable<IRecipe[]> {
     return this.http.get<IRecipe[]>(this.baseUrl + "saved/" + userId);
+  }
+
+  postRecipeComment(recipeId: string, comment: IComments): Observable<IRecipe> {
+    const recipeData = {
+      comment
+    };
+
+    return this.http.post<IRecipe>(this.baseUrl + "comments/create/" + recipeId, recipeData)
+      .pipe(
+        map(response => {
+          console.log('post comment response: ', response);
+          return response;
+        }),
+        catchError(error => {
+          console.error('post comment error: ', error);
+
+          let errorMessage = 'An error occured during comment post';
+
+          return throwError(errorMessage);
+        })
+      )
+  }
+
+  deleteRecipeComment(recipeId: string, commentIndex: number): Observable<IRecipe> {
+    const recipeData = {
+      commentIndex
+    };
+
+    return this.http.post<IRecipe>(this.baseUrl + "comments/delete/" + recipeId, recipeData)
+      .pipe(
+        map(response => {
+          console.log('delete comment response: ', response);
+          return response;
+        }),
+        catchError(error => {
+          console.error('delete comment error: ', error);
+
+          let errorMessage = 'An error occured during comment delete';
+
+          return throwError(errorMessage);
+        })
+      )
   }
 }
