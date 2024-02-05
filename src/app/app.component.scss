@@ -3,6 +3,12 @@
 
   .content-inner-container {
     padding-bottom: 36px;
-    margin-top: 80px;
+    margin-top: 70px;
+  }
+}
+
+@media print {
+  header {
+    display: none !important;
   }
 }

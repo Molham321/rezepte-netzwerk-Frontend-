@@ -4,6 +4,10 @@ header {
   width: 100%;
   z-index: 1000;
   background-color: white;
+
+  .login-button {
+    margin-right: 10px;
+  }
 }
 
 a {
@@ -33,10 +37,12 @@ header .logo {
   text-decoration: none;
 }
 
-header.sticky .logo {
-  color: #111;
-}
-
 header .logo span {
   color: #ff0157;
+}
+
+@media print {
+  header {
+    display: none !important;
+  }
 }

@@ -36,9 +36,13 @@ export class HeaderComponent implements OnInit {
   }
 
   searchRecipes(): void {
-    // alert(this.searchForm.controls['recipe'].value);
     this.router.navigate(['search/' + this.searchForm.controls['recipe'].value]);
     this.searchForm.reset();
+  }
+
+  goToHomePage(): void {
+    this.router.navigate(['/home']);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -48,15 +52,4 @@ export class HeaderComponent implements OnInit {
       header.classList.toggle("sticky", window.scrollY > 0);
     }
   }
-
-  toggleMenu() {
-    const menuToggle = document.querySelector('.menuToggle');
-    const navigation = document.querySelector('.navigation');
-    if (menuToggle && navigation) {
-      menuToggle.classList.toggle('active');
-      navigation.classList.toggle('active');
-    }
-  }
-
-
 }

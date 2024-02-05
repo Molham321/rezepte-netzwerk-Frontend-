@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IRecipe, IUser } from 'src/app/interfaces';
 import { DataService, UserService, AuthenticationService, RecipeService } from 'src/app/services';
 import { first } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationDialogComponent } from 'src/app/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { ShareDataService } from 'src/app/services/share-data/share-data.service';
 
 @Component({
@@ -11,6 +13,7 @@ import { ShareDataService } from 'src/app/services/share-data/share-data.service
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+
   user?: IUser | null;
 
   currentRecipeId: string = "";
@@ -23,20 +26,23 @@ export class DetailsComponent implements OnInit {
   loading = false;
   submitted = false;
   error?: string;
+  quantityCounter = 1;
 
   showComments: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router, 
+    private router: Router,
     private ds: DataService,
     private us: UserService,
     private rs: RecipeService,
     private authenticationService: AuthenticationService,
-    private sds: ShareDataService
+    private sds: ShareDataService,
+    public dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {
-        this.authenticationService.user.subscribe(x => this.user = x);
-        this.sds.getUpdatedRecipe.subscribe(recipe => this.currentRecipe = recipe);
+    this.authenticationService.user.subscribe(x => this.user = x);
+    this.sds.getUpdatedRecipe.subscribe(recipe => this.currentRecipe = recipe);
   }
 
   ngOnInit(): void {
@@ -44,7 +50,6 @@ export class DetailsComponent implements OnInit {
       this.currentRecipeId = params['id']
     })
     this.ReadRecipe(this.currentRecipeId);
-    // this.GetRecipeOwner(this.currentRecipe.createdBy);
   }
 
   ReadRecipe(id: string): void {
@@ -105,9 +110,9 @@ export class DetailsComponent implements OnInit {
   UpdateRecipeLikeCount(recipeId: string, likingUser: string): void {
     let recipeLikes = this.currentRecipe.likedBy;
 
-    if(recipeLikes.includes(likingUser)) {
+    if (recipeLikes.includes(likingUser)) {
       recipeLikes.forEach((item, index) => {
-        if(item === likingUser) recipeLikes.splice(index, 1);
+        if (item === likingUser) recipeLikes.splice(index, 1);
       });
     } else {
       recipeLikes.push(likingUser);
@@ -119,22 +124,20 @@ export class DetailsComponent implements OnInit {
       {
         next: (response) => {
           console.log('details component response: ' + response.title + ' ' + response.likedBy);
-          // this.currentRecipe = response;
-          // return this.currentRecipe;
         },
         error: (err) => console.log(err),
         complete: () => console.log('updateRecipeLikeCount() completed')
 
-        }
+      }
     )
   }
 
   SaveRecipe(recipeId: string, savingUser: string): void {
     let recipeSaves = this.currentRecipe.savedBy;
 
-    if(recipeSaves.includes(savingUser)) {
+    if (recipeSaves.includes(savingUser)) {
       recipeSaves.forEach((item, index) => {
-        if(item === savingUser) recipeSaves.splice(index, 1);
+        if (item === savingUser) recipeSaves.splice(index, 1);
       });
     } else {
       recipeSaves.push(savingUser);
@@ -152,4 +155,41 @@ export class DetailsComponent implements OnInit {
       }
     )
   }
+
+  openDeleteConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteRecipe();
+      }
+    });
+  }
+
+  printDetails() {
+    window.print();
+  }
+
+  adjustAllQuantities(action: string): void {
+
+    let zahl1: number = this.quantityCounter;
+    let zahl2: number = 1;
+
+    this.currentRecipe.ingredients.forEach((ingredient: any) => {
+      if (action === 'increase') {
+        ingredient.amount *= 2;
+        this.quantityCounter = zahl1 + zahl2;
+
+      } else if (action === 'decrease' && this.quantityCounter > 1) {
+        ingredient.amount /= 2;
+        this.quantityCounter = zahl1 - zahl2;
+      }
+    });
+
+    this.currentRecipe.servings = this.quantityCounter
+    this.cdr.detectChanges();
+  }
+
 }

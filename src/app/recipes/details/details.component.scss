@@ -135,3 +135,19 @@ $lightBackgroundColor: #f0f0f0;
   padding: 10px;
   font-size: 16px;
 }
+
+@media print {
+
+  .recipe-actions,
+  .recipe-chips,
+  .categories {
+    display: none !important;
+  }
+
+  .recipe-section,
+  .recipe-ingredients,
+  .category-chips {
+    width: 100%;
+    text-align: center;
+  }
+}

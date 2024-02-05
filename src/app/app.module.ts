@@ -27,6 +27,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
@@ -36,6 +37,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
 import { SearchResultsComponent } from './shared/search-results/search-results.component';
+import { DeleteConfirmationDialogComponent } from './dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { CommentSectionComponent } from './shared/comment-section/comment-section.component';
 import { CommentComponent } from './shared/comment/comment.component';
 
@@ -55,6 +57,7 @@ import { CommentComponent } from './shared/comment/comment.component';
     FooterComponent,
     RecipeListElementComponent,
     SearchResultsComponent,
+    DeleteConfirmationDialogComponent,
     CommentSectionComponent,
     CommentComponent
   ],
@@ -77,7 +80,8 @@ import { CommentComponent } from './shared/comment/comment.component';
     MatTableModule,
     MatTabsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

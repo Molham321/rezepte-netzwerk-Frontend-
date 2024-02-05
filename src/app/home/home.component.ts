@@ -1,6 +1,7 @@
 import { IRecipe } from '../interfaces/recipe.interface';
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../services';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +14,16 @@ export class HomeComponent implements OnInit {
   topLikedRecipes!: IRecipe[];
   recipeOfTheDay!: IRecipe;
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService, private router: Router) { }
   ngOnInit(): void {
+
     this.readAll();
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
   }
 
   readAll(): void {
@@ -25,7 +33,7 @@ export class HomeComponent implements OnInit {
           this.recipes = response;
 
           this.topLikedRecipes = this.recipes.slice().sort((a, b) => {
-            return parseInt(b.likes) - parseInt(a.likes);
+            return b.likedBy.length - a.likedBy.length;
           }).slice(0, 3);
 
           this.latestRecipes = this.recipes.sort((a, b) => {

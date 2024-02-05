@@ -7,3 +7,9 @@
     color: #333;
   }
 }
+
+@media print {
+  .footer-container {
+    display: none !important;
+  }
+}
