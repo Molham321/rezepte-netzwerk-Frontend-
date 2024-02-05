@@ -64,17 +64,21 @@
       <div>
         <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
           (click)="UpdateRecipeLikeCount(currentRecipe._id, user!._id)">Stern</button>
-        <p *ngIf="user && currentRecipe.likedBy.includes(user._id)">Stern von dir vergeben!</p>
+        <p *ngIf="user && currentRecipe.likedBy.includes(user._id)">Stern vergeben!</p>
       </div>
       <div>
         <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
           (click)="SaveRecipe(currentRecipe._id, user!._id)">Merken</button>
-        <p *ngIf="user && currentRecipe.savedBy.includes(user._id)">Rezept von dir gemerkt!</p>
+        <p *ngIf="user && currentRecipe.savedBy.includes(user._id)">Rezept gemerkt!</p>
       </div>
     </div>
 
     <div class="comment-button">
-      <button mat-stroked-button>Kommentare</button>
+      <button mat-stroked-button (click)="showComments = !showComments">Kommentare</button>
     </div>
+  </div>
+
+  <div class="comment-section" *ngIf="showComments">
+    <app-comment-section [recipe]="currentRecipe" [recipeOwner]="recipeOwner"></app-comment-section>
   </div>
 </div>

@@ -1,0 +1,15 @@
+<div class="comment-section"> 
+    <div class="comment-form" *ngIf="user !== null">
+        <form [formGroup]="commentForm" (ngSubmit)="onCommentSubmit()" class="form-fields">
+            <mat-form-field class="data-form-field">
+                <mat-label>Kommentar</mat-label>
+                <textarea matInput type="textfield" formControlName="comment" required></textarea>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" class="form-button">Kommentar speichern</button>
+        </form>
+    </div>
+    <div class="comment-list">
+        <app-comment *ngFor="let comment of recipe.comments; let i = index" [comment]="comment" [recipeId]="recipe._id" [commentIndex]="i"></app-comment>
+    </div>
+</div>

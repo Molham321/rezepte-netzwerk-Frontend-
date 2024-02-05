@@ -14,6 +14,7 @@ export interface IRecipe {
   steps: ISteps[];
   likedBy: string[];
   savedBy: string[];
+  comments: IComments[];
 }
 
 interface IIngredients {
@@ -27,4 +28,11 @@ interface ISteps {
   _id: string;
   order: number;
   description: string;
+}
+
+export interface IComments {
+  // _id: string;
+  createdBy: string;
+  createdDate: string;
+  comment: string;
 }
