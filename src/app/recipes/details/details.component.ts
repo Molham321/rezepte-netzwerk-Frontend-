@@ -174,17 +174,18 @@ export class DetailsComponent implements OnInit {
 
   adjustAllQuantities(action: string): void {
 
-    let zahl1: number = this.quantityCounter;
-    let zahl2: number = 1;
+    let quantityCounter: number = this.quantityCounter;
+    let servings = this.currentRecipe.servings
 
     this.currentRecipe.ingredients.forEach((ingredient: any) => {
       if (action === 'increase') {
-        ingredient.amount *= 2;
-        this.quantityCounter = zahl1 + zahl2;
 
-      } else if (action === 'decrease' && this.quantityCounter > 1) {
-        ingredient.amount /= 2;
-        this.quantityCounter = zahl1 - zahl2;
+        ingredient.amount = ingredient.amount + (ingredient.amount / servings);
+        this.quantityCounter = quantityCounter + 1;
+
+      } else if (action === 'decrease' && quantityCounter > 1) {
+        ingredient.amount = ingredient.amount - (ingredient.amount / servings);
+        this.quantityCounter = quantityCounter - 1;
       }
     });
 
