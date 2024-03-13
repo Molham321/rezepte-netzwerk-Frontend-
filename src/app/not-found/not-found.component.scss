@@ -1,0 +1,25 @@
+.not-found-page {
+    width: 100%;
+
+    .not-found-content {
+        width: fit-content;
+        height: fit-content;
+        margin: auto;
+        text-align: center;
+
+        img {
+            width: 350px;
+            height: auto;
+            margin-top: 4em;
+        }
+
+        h2 {
+            margin-top: 1em;
+        }
+
+        button {
+            margin-top: 1em;
+            background-color: lightgrey;
+        }
+    }
+}
