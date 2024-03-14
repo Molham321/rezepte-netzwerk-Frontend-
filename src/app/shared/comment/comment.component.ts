@@ -5,6 +5,8 @@ import { RecipeService, UserService } from 'src/app/services';
 import { ShareDataService } from 'src/app/services/share-data/share-data.service';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DeleteConfirmationDialogComponent } from 'src/app/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-comment',
@@ -21,7 +23,13 @@ export class CommentComponent implements OnInit {
   commentOwner!: IUser;
   commentDate: string = "";
 
-  constructor(private us: UserService, private rs: RecipeService, private sds: ShareDataService, private snackbar: MatSnackBar) {}
+  constructor(
+    private us: UserService, 
+    private rs: RecipeService, 
+    private sds: ShareDataService, 
+    private snackbar: MatSnackBar,
+    public dialog: MatDialog
+    ) {}
 
   ngOnInit(): void {
     if(localStorage.getItem('user') !== null) {
@@ -49,23 +57,30 @@ export class CommentComponent implements OnInit {
   }
 
   DeleteOwnComment(recipeId: string, commentIndex: number): void {
-    if(confirm("Möchtest du diesen Kommentar wirklich löschen?")) {
-      this.rs.deleteRecipeComment(recipeId, commentIndex).subscribe(
-        {
-          next: (response) => {
-            console.log('comment component response: ' + response.title + ' ' + response.comments);
-  
-            // NEUES REZEPT MUSS AUCH IM DETAILS COMPONENT UND COMMENT-SECTION COMPONENT GESETZT WERDEN
-            // this.recipe = response;
-            this.sds.setUpdatedRecipe(response);
-          },
-          error: (err) => console.log(err),
-          complete: () => console.log('deleteOwnComment() completed')
-        }
-      )
-    }
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      data: {title: "Kommentar löschen", message: "Möchten Sie den Kommentar wirklich löschen?"},
+      width: '250px',
+    });
 
-    this.showSnackbar("Kommentar wurde erfolgreich gelöscht.")
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.rs.deleteRecipeComment(recipeId, commentIndex).subscribe(
+          {
+            next: (response) => {
+              console.log('comment component response: ' + response.title + ' ' + response.comments);
+    
+              // NEUES REZEPT MUSS AUCH IM DETAILS COMPONENT UND COMMENT-SECTION COMPONENT GESETZT WERDEN
+              // this.recipe = response;
+              this.sds.setUpdatedRecipe(response);
+            },
+            error: (err) => console.log(err),
+            complete: () => console.log('deleteOwnComment() completed')
+          }
+        )
+
+        this.showSnackbar("Kommentar wurde erfolgreich gelöscht.");
+      }
+    });
   }
 
   IsCommentOwner(): boolean {

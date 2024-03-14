@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Rezept löschen</h1>
+<h1 mat-dialog-title>{{dialogData.title}}</h1>
 <div mat-dialog-content>
-  <p>Möchten Sie das Rezept wirklich löschen?</p>
+  <p>{{dialogData.message}}</p>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Abbrechen</button>

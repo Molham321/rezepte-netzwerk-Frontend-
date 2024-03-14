@@ -171,6 +171,7 @@ export class DetailsComponent implements OnInit {
 
   openDeleteConfirmationDialog(): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      data: {title: "Rezept löschen", message: "Möchten Sie das Rezept wirklich löschen?"},
       width: '250px',
     });
 

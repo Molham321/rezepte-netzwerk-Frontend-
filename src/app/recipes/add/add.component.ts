@@ -150,14 +150,13 @@ export class AddComponent implements OnInit {
         next: () => {
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigateByUrl(returnUrl);
+          this.showSnackbar("Rezept wurde erfolgreich hochgeladen.");
         },
         error: errorMessage => {
           this.error = errorMessage;
           this.loading = false;
         }
       });
-
-      this.showSnackbar("Rezept wurde erfolgreich hochgeladen.")
   }
 
   showSnackbar(snackbarMessage: string): void {
