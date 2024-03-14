@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,38 +52,12 @@ export class UpdateComponent implements OnInit {
     this.ReadRecipe(this.currentRecipeId);
   }
 
-  ReadRecipe(id: string): void {
+  private ReadRecipe(id: string): void {
     this.recipeService.getRecipeById(id).subscribe(
       {
         next: (response) => {
           this.currentRecipe = response;
-          this.form.patchValue({
-            title: this.currentRecipe.title,
-            description: this.currentRecipe.description,
-            imageURL: this.currentRecipe.imageURL,
-            servings: this.currentRecipe.servings,
-            prepTime: this.currentRecipe.prepTime,
-            ingredients: this.currentRecipe.ingredients,
-            steps: this.currentRecipe.steps,
-            category: this.currentRecipe.category
-          });
-
-          // Zutaten hinzufügen
-          this.currentRecipe.ingredients.forEach(ingredient => {
-            this.addIngredient();
-            const index = this.ingredients.length - 1;
-            this.ingredients.at(index).patchValue(ingredient);
-          });
-
-          // Schritte hinzufügen
-          this.currentRecipe.steps.forEach(step => {
-            this.addStep();
-            const index = this.steps.length - 1;
-            this.steps.at(index).patchValue(step);
-          });
-
-          this.recipeDate = new Date(this.currentRecipe.createdDate).toLocaleDateString('de-DE');
-          return this.currentRecipe;
+          this.updateFormValues();
         },
         error: (err) => console.log(err),
         complete: () => console.log('getAll() completed')
@@ -90,7 +65,7 @@ export class UpdateComponent implements OnInit {
     )
   }
 
-  validateCategories(): ValidatorFn {
+  private validateCategories(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const selectedCategories = control.value as string[];
 
@@ -141,6 +116,29 @@ export class UpdateComponent implements OnInit {
     this.steps.removeAt(lessonIndex);
   }
 
+  private updateFormValues() {
+    this.form.patchValue({
+      title: this.currentRecipe.title,
+      description: this.currentRecipe.description,
+      imageURL: this.currentRecipe.imageURL,
+      servings: this.currentRecipe.servings,
+      prepTime: this.currentRecipe.prepTime,
+      ingredients: this.currentRecipe.ingredients,
+      steps: this.currentRecipe.steps,
+      category: this.currentRecipe.category
+    });
+    this.currentRecipe.ingredients.forEach(ingredient => {
+      this.addIngredient();
+      const index = this.ingredients.length - 1;
+      this.ingredients.at(index).patchValue(ingredient);
+    });
+    this.currentRecipe.steps.forEach(step => {
+      this.addStep();
+      const index = this.steps.length - 1;
+      this.steps.at(index).patchValue(step);
+    });
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -175,5 +173,4 @@ export class UpdateComponent implements OnInit {
         }
       });
   }
-
 }

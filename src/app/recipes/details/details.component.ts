@@ -181,11 +181,11 @@ export class DetailsComponent implements OnInit {
       if (action === 'increase') {
 
         ingredient.amount = ingredient.amount + (ingredient.amount / servings);
-        this.quantityCounter = quantityCounter + 1;
+        this.quantityCounter = this.currentRecipe.servings + 1;
 
       } else if (action === 'decrease' && quantityCounter > 1) {
         ingredient.amount = ingredient.amount - (ingredient.amount / servings);
-        this.quantityCounter = quantityCounter - 1;
+        this.quantityCounter = this.currentRecipe.servings - 1;
       }
     });
 
