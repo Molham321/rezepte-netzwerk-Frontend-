@@ -66,7 +66,8 @@
   <div class="recipe-actions">
     <div class="action-buttons">
       <button mat-stroked-button (click)="printDetails()">Drucken</button>
-      <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
+      <button mat-stroked-button *ngIf="CheckIfRecipeOwner()"
+        [routerLink]="['/update/', currentRecipe._id]">Bearbeiten</button>
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()" (click)="openDeleteConfirmationDialog()">Löschen</button>
       <div>
         <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"

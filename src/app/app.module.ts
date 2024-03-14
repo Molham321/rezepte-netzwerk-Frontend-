@@ -40,6 +40,7 @@ import { SearchResultsComponent } from './shared/search-results/search-results.c
 import { DeleteConfirmationDialogComponent } from './dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { CommentSectionComponent } from './shared/comment-section/comment-section.component';
 import { CommentComponent } from './shared/comment/comment.component';
+import { UpdateComponent } from './recipes/update/update.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { CommentComponent } from './shared/comment/comment.component';
     SearchResultsComponent,
     DeleteConfirmationDialogComponent,
     CommentSectionComponent,
-    CommentComponent
+    CommentComponent,
+    UpdateComponent
   ],
   imports: [
     BrowserModule,

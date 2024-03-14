@@ -83,6 +83,44 @@ export class RecipeService {
       );
   }
 
+  updateRecipe(
+    id: string,
+    title: string,
+    description: string,
+    imageURL: string,
+    servings: number,
+    prepTime: number,
+    ingredients: { amount: string, unit: string, ingredient: string }[],
+    steps: { order: number, description: string }[],
+    category: string[]
+  ): Observable<IRecipe> {
+
+    const recipeData = {
+      title,
+      description,
+      imageURL,
+      servings,
+      prepTime,
+      ingredients,
+      steps,
+      category
+    };
+
+    return this.http.patch<IRecipe>(`${this.baseUrl}${id}`, recipeData)
+      .pipe(
+        map(response => {
+          return response;
+        }),
+        catchError(error => {
+          console.error('Update Recipe Error:', error);
+
+          let errorMessage = 'An error occurred during recipe update.';
+          return throwError(errorMessage);
+        })
+      );
+  }
+
+
   updateRecipeLikeCount(recipeId: string, likedBy: string[]): Observable<IRecipe> {
 
     console.log('from recipe service: ' + recipeId + ' ' + likedBy);
