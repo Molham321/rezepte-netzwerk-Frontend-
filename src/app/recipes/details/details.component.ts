@@ -192,5 +192,4 @@ export class DetailsComponent implements OnInit {
     this.currentRecipe.servings = this.quantityCounter
     this.cdr.detectChanges();
   }
-
 }
