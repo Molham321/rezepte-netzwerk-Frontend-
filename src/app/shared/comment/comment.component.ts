@@ -3,6 +3,8 @@ import { IUser } from 'src/app/interfaces';
 import { IComments } from 'src/app/interfaces/recipe.interface';
 import { RecipeService, UserService } from 'src/app/services';
 import { ShareDataService } from 'src/app/services/share-data/share-data.service';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-comment',
@@ -19,7 +21,7 @@ export class CommentComponent implements OnInit {
   commentOwner!: IUser;
   commentDate: string = "";
 
-  constructor(private us: UserService, private rs: RecipeService, private sds: ShareDataService) {}
+  constructor(private us: UserService, private rs: RecipeService, private sds: ShareDataService, private snackbar: MatSnackBar) {}
 
   ngOnInit(): void {
     if(localStorage.getItem('user') !== null) {
@@ -62,6 +64,8 @@ export class CommentComponent implements OnInit {
         }
       )
     }
+
+    this.showSnackbar("Kommentar wurde erfolgreich gelöscht.")
   }
 
   IsCommentOwner(): boolean {
@@ -76,4 +80,10 @@ export class CommentComponent implements OnInit {
     }
   }
 
+  showSnackbar(snackbarMessage: string): void {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      data: snackbarMessage,
+      duration: 3000
+    })
+  }
 }

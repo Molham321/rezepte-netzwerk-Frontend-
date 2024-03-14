@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IRecipe } from 'src/app/interfaces';
 import { DataService, RecipeService, UserService } from 'src/app/services';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-profile',
@@ -28,7 +30,12 @@ export class ProfileComponent implements OnInit {
   passwordError?: string;
   passwordHide = true;
 
-  constructor(private formBuilder: FormBuilder, private ds: DataService, private us: UserService, private rs: RecipeService) {}
+  constructor(
+    private formBuilder: FormBuilder, 
+    private ds: DataService, 
+    private us: UserService, 
+    private rs: RecipeService,
+    private snackbar: MatSnackBar) {}
 
   ngOnInit(): void {
     console.log(this.user);
@@ -82,6 +89,7 @@ export class ProfileComponent implements OnInit {
     )
 
     // alert(this.userForm.controls['username'].value);
+    this.showSnackbar("Nutzername wurde erfolgreich geändert.");
   }
 
   onPasswordSubmit() {
@@ -121,6 +129,8 @@ export class ProfileComponent implements OnInit {
     // alert(this.passwordForm.controls['password'].value + " - " + this.passwordForm.controls['passwordRepeat'].value);
     this.error  = false;
     this.passwordForm.reset();
+
+    this.showSnackbar("Passwort wurde erfolgreich geändert.");
   }
 
   readRecipes(ownerId: string): void {
@@ -146,5 +156,12 @@ export class ProfileComponent implements OnInit {
         complete: () => console.log('getSavedRecipes() completed')
       }
     )
+  }
+
+  showSnackbar(snackbarMessage: string): void {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      data: snackbarMessage,
+      duration: 3000
+    })
   }
 }

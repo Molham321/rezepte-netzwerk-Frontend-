@@ -6,6 +6,8 @@ import { first } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { ShareDataService } from 'src/app/services/share-data/share-data.service';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-details',
@@ -39,7 +41,8 @@ export class DetailsComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private sds: ShareDataService,
     public dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private snackbar: MatSnackBar
   ) {
     this.authenticationService.user.subscribe(x => this.user = x);
     this.sds.getUpdatedRecipe.subscribe(recipe => this.currentRecipe = recipe);
@@ -105,6 +108,8 @@ export class DetailsComponent implements OnInit {
           this.loading = false;
         }
       });
+
+    this.showSnackbar("Rezept wurde erfolgreich gelöscht.");
   }
 
   UpdateRecipeLikeCount(recipeId: string, likingUser: string): void {
@@ -113,9 +118,13 @@ export class DetailsComponent implements OnInit {
     if (recipeLikes.includes(likingUser)) {
       recipeLikes.forEach((item, index) => {
         if (item === likingUser) recipeLikes.splice(index, 1);
+
+        this.showSnackbar("Stern wurde erfolgreich vom Rezept entfernt.")
       });
     } else {
       recipeLikes.push(likingUser);
+
+      this.showSnackbar("Stern wurde erfolgreich an das Rezept vergeben.")
     }
 
     console.log(recipeLikes);
@@ -138,9 +147,13 @@ export class DetailsComponent implements OnInit {
     if (recipeSaves.includes(savingUser)) {
       recipeSaves.forEach((item, index) => {
         if (item === savingUser) recipeSaves.splice(index, 1);
+
+        this.showSnackbar("Rezept wurde erfolgreich aus der Merkliste entfernt.");
       });
     } else {
       recipeSaves.push(savingUser);
+
+      this.showSnackbar("Rezept wurde erfolgreich in der Merkliste gespeichert.");
     }
 
     console.log(recipeSaves);
@@ -191,6 +204,13 @@ export class DetailsComponent implements OnInit {
 
     this.currentRecipe.servings = this.quantityCounter
     this.cdr.detectChanges();
+  }
+
+  showSnackbar(snackbarMessage: string): void {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      data: snackbarMessage,
+      duration: 3000
+    })
   }
 
 }
