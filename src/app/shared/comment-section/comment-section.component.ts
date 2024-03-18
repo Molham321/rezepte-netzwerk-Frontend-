@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IRecipe, IUser } from 'src/app/interfaces';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IComments } from 'src/app/interfaces/recipe.interface';
 import { RecipeService } from 'src/app/services';
 import { ShareDataService } from 'src/app/services/share-data/share-data.service';
@@ -27,7 +27,7 @@ export class CommentSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(localStorage.getItem('user') !== null) {
+    if (localStorage.getItem('user') !== null) {
       this.user = JSON.parse(localStorage.getItem('user')!);
     } else {
       this.user = null;

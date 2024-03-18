@@ -9,6 +9,7 @@ import { IComments } from 'src/app/interfaces/recipe.interface';
   providedIn: 'root'
 })
 export class RecipeService {
+
   baseUrl = 'http://localhost:8080/recipes/'
 
   constructor(
@@ -26,6 +27,10 @@ export class RecipeService {
 
   getRecipeByCategory(category: string): Observable<IRecipe[]> {
     return this.http.get<IRecipe[]>(this.baseUrl + "category/" + category);
+  }
+
+  getRecipesByOwner(ownerId: string): Observable<IRecipe[]> {
+    return this.http.get<IRecipe[]>(this.baseUrl + "recipes/owner/" + ownerId);
   }
 
   deleteRecipe(id: string) {
