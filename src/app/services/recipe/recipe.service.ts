@@ -30,7 +30,7 @@ export class RecipeService {
   }
 
   getRecipesByOwner(ownerId: string): Observable<IRecipe[]> {
-    return this.http.get<IRecipe[]>(this.baseUrl + "recipes/owner/" + ownerId);
+    return this.http.get<IRecipe[]>(this.baseUrl + "owner/" + ownerId);
   }
 
   deleteRecipe(id: string) {

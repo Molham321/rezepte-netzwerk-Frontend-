@@ -22,7 +22,10 @@ export class CommentSectionComponent implements OnInit {
   commentError?: string;
   commentHide = true;
 
-  constructor(private formBuilder: FormBuilder, private rs: RecipeService, private sds: ShareDataService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private rs: RecipeService,
+    private sds: ShareDataService) {
     this.sds.getUpdatedRecipe.subscribe(recipe => this.recipe = recipe);
   }
 
@@ -37,7 +40,6 @@ export class CommentSectionComponent implements OnInit {
       comment: ['', [Validators.required]]
     });
 
-    // console.log(this.user);
   }
 
   onCommentSubmit(): void {

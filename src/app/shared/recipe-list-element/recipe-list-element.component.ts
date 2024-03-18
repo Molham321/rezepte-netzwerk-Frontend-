@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IRecipe } from 'src/app/interfaces';
 
 @Component({
@@ -6,16 +6,15 @@ import { IRecipe } from 'src/app/interfaces';
   templateUrl: './recipe-list-element.component.html',
   styleUrls: ['./recipe-list-element.component.scss']
 })
-export class RecipeListElementComponent implements AfterViewInit, OnInit {
+export class RecipeListElementComponent implements OnChanges {
+
   @Input() recipe!: IRecipe;
   recipeDate: string = "";
 
-  ngOnInit(): void {
-    this.recipeDate = new Date(this.recipe.createdDate).toLocaleDateString('de-DE');
-
-  }
-  ngAfterViewInit(): void {
-    this.recipeDate = new Date(this.recipe.createdDate).toLocaleDateString('de-DE');
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['recipe'] && changes['recipe'].currentValue) {
+      this.recipeDate = new Date(this.recipe.createdDate).toLocaleDateString('de-DE');
+    }
   }
 
 }
