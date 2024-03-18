@@ -1,11 +1,17 @@
-
 <div class="category-content">
 
-    <h3>Kategorie {{currentCategory}}:</h3>
+  <h3>Kategorie {{currentCategory}}:</h3>
 
-    <p *ngIf="recipes.length === 0">Keine Rezepte vorhanden</p>
+  <p *ngIf="sortedRecipes.length === 0">Keine Rezepte vorhanden</p>
 
-    <div class="category-recipes">
-        <app-recipe-list-element *ngFor="let recipe of recipes" [recipe]="recipe"></app-recipe-list-element>
-    </div>
+  <div class="sortChips">
+    <mat-chip-listbox>
+      <mat-chip-option (click)="sortByRating()">Nach Bewertung sortieren</mat-chip-option>
+      <mat-chip-option (click)="sortByAlphabet()">Alphabetisch sortieren</mat-chip-option>
+    </mat-chip-listbox>
+  </div>
+
+  <div class="category-recipes">
+    <app-recipe-list-element *ngFor="let recipe of sortedRecipes" [recipe]="recipe"></app-recipe-list-element>
+  </div>
 </div>
