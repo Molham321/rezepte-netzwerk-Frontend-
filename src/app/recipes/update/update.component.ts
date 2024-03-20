@@ -1,10 +1,12 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 import { IRecipe, IUser } from 'src/app/interfaces';
 import { RecipeService } from 'src/app/services';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-update',
@@ -45,6 +47,7 @@ export class UpdateComponent implements OnInit {
     private recipeService: RecipeService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -139,6 +142,13 @@ export class UpdateComponent implements OnInit {
     });
   }
 
+  showSnackbar(snackbarMessage: string): void {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      data: snackbarMessage,
+      duration: 3000
+    })
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -164,8 +174,9 @@ export class UpdateComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/details/' + this.currentRecipeId;
           this.router.navigateByUrl(returnUrl);
+          this.showSnackbar("Rezept wurde erfolgreich bearbeitet.")
         },
         error: errorMessage => {
           this.error = errorMessage;

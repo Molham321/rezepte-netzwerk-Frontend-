@@ -112,6 +112,8 @@
       </mat-form-field>
 
       <div class="text-center">
+        <button mat-raised-button
+          [routerLink]="['/details/', currentRecipeId ]"><mat-icon>arrow_back</mat-icon>Abbrechen</button>
         <button mat-raised-button color="primary" type="submit">Rezept aktualisieren</button>
       </div>
     </form>
