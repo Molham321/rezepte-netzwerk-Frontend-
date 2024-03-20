@@ -1,0 +1,119 @@
+<div class="container">
+  <div class="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-5">
+
+      <!-- Titel -->
+      <mat-form-field class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Title" formControlName="title" type="text">
+      </mat-form-field>
+
+      <!-- Beschreibung -->
+      <mat-form-field class="full-width">
+        <mat-label>Beschreibung</mat-label>
+        <textarea matInput placeholder="Beschreibung" formControlName="description"></textarea>
+      </mat-form-field>
+
+      <!-- Bild-URL -->
+      <mat-form-field class="full-width">
+        <mat-label>Bild URL</mat-label>
+        <input matInput placeholder="Bild URL" formControlName="imageURL" type="text">
+      </mat-form-field>
+
+      <!-- Bildvorschau -->
+      <div class="image-preview form-group text-center" *ngIf="form.get('imageURL')?.value">
+        <img [src]="form.get('imageURL')?.value" alt="Bildvorschau" class="border-info rounded-circle">
+      </div>
+
+      <!-- Servings -->
+      <mat-form-field class="full-width">
+        <mat-label>Servings</mat-label>
+        <input matInput placeholder="Servings" formControlName="servings" type="number">
+      </mat-form-field>
+
+      <!-- prepTime -->
+      <mat-form-field class="full-width">
+        <mat-label>prepTime in min</mat-label>
+        <input matInput placeholder="prepTime" formControlName="prepTime" type="number">
+      </mat-form-field>
+
+      <!-- Ingredients -->
+      <h3>Ingredients:</h3>
+      <div [formGroup]="form">
+        <ng-container formArrayName="ingredients">
+          <ng-container *ngFor="let ingredientForm of ingredients.controls; let i = index">
+            <div [formGroupName]="i">
+              <mat-form-field class="full-width">
+                <mat-label>Amount</mat-label>
+                <input matInput placeholder="Amount" formControlName="amount" type="text">
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>Unit</mat-label>
+                <mat-select formControlName="unit">
+                  <mat-option *ngFor="let unit of einheit" [value]="unit">{{ unit }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>Ingredient</mat-label>
+                <input matInput placeholder="Ingredient" formControlName="ingredient" type="text">
+              </mat-form-field>
+              <mat-icon class="delete-btn text-center mb-4" (click)="deleteIngredient(i)">
+                delete_forever</mat-icon>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <button mat-mini-fab (click)="addIngredient()">
+          <mat-icon class="add-course-btn">add</mat-icon>
+        </button>
+
+      </div>
+
+      <!-- Steps -->
+      <h3>Steps:</h3>
+      <div [formGroup]="form">
+        <ng-container formArrayName="steps">
+          <ng-container *ngFor="let stepForm of steps.controls; let i = index">
+            <div [formGroupName]="i">
+              <mat-form-field class="full-width">
+                <mat-label>Order</mat-label>
+                <input matInput placeholder="Order" formControlName="order" type="number">
+              </mat-form-field>
+
+              <mat-form-field class="full-width">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Description" formControlName="description"></textarea>
+              </mat-form-field>
+              <mat-icon class="delete-btn text-center mb-4" (click)="deleteStep(i)">
+                delete_forever</mat-icon>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <button mat-mini-fab (click)="addStep()">
+          <mat-icon class="add-course-btn">add</mat-icon>
+        </button>
+
+      </div>
+
+      <!-- category -->
+      <h3>category <span style="font-size: x-small;">maximal 3 auswählen</span></h3>
+      <mat-form-field class="full-width">
+        <mat-label>Kategorie</mat-label>
+        <mat-select formControlName="category" #category multiple>
+          <mat-option *ngFor="let option of categoryOptions" [value]="option">{{ option }}</mat-option>
+        </mat-select>
+        <div *ngIf="submitted && form.get('category')?.errors" class="invalid-feedback">
+          <mat-error *ngIf="form.get('category')?.hasError('required')">Kategorie is required</mat-error>
+          <mat-error *ngIf="form.get('category')?.hasError('maxCategories')">Maximal 3 Kategorien auswählen</mat-error>
+        </div>
+      </mat-form-field>
+
+      <div class="text-center">
+        <button mat-raised-button color="primary" type="submit">Rezept aktualisieren</button>
+      </div>
+    </form>
+  </div>
+</div>

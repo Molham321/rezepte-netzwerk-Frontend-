@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IRecipe } from 'src/app/interfaces';
-import { DataService, RecipeService, UserService } from 'src/app/services';
+import { RecipeService, UserService } from 'src/app/services';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
@@ -10,8 +10,8 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 })
 export class ProfileComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('user')!);
-  userRecipes!: IRecipe[];
-  savedRecipes!: IRecipe[];
+  userRecipes: IRecipe[] = [];
+  savedRecipes: IRecipe[] = [];
   showForm: Boolean = false;
 
   error: boolean = false;
@@ -28,7 +28,11 @@ export class ProfileComponent implements OnInit {
   passwordError?: string;
   passwordHide = true;
 
-  constructor(private formBuilder: FormBuilder, private ds: DataService, private us: UserService, private rs: RecipeService) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    private recipeService: RecipeService) {
+  }
 
   ngOnInit(): void {
     console.log(this.user);
@@ -56,18 +60,15 @@ export class ProfileComponent implements OnInit {
 
   onUsernameSubmit() {
     this.userSubmitted = true;
-
-    // reset alert on submit
     this.userError = '';
 
-    // stop here if form is invalid
     if (this.userForm.invalid) {
       return;
     }
 
     this.userLoading = true;
 
-    this.us.updateUserById(this.user._id, this.userForm.controls['username'].value).subscribe(
+    this.userService.updateUserById(this.user._id, this.userForm.controls['username'].value).subscribe(
       {
         next: (response) => {
           console.log('user update component response: ' + response.username);
@@ -78,15 +79,13 @@ export class ProfileComponent implements OnInit {
         error: (err) => console.log(err),
         complete: () => console.log('updateUser() completed')
 
-        }
+      }
     )
-
-    // alert(this.userForm.controls['username'].value);
   }
 
   onPasswordSubmit() {
 
-    if(this.passwordForm.controls['password'].value !== this.passwordForm.controls['passwordRepeat'].value, undefined, undefined) {
+    if (this.passwordForm.controls['password'].value !== this.passwordForm.controls['passwordRepeat'].value, undefined, undefined) {
       this.error = true;
       this.passwordForm.reset();
       return;
@@ -94,17 +93,15 @@ export class ProfileComponent implements OnInit {
 
     this.passwordSubmitted = true;
 
-    // reset alert on submit
     this.passwordError = '';
 
-    // stop here if form is invalid
     if (this.passwordForm.invalid) {
       return;
     }
 
     this.passwordLoading = true;
 
-    this.us.updateUserById(this.user._id, undefined, undefined, this.passwordForm.controls['password'].value).subscribe(
+    this.userService.updateUserById(this.user._id, undefined, undefined, this.passwordForm.controls['password'].value).subscribe(
       {
         next: (response) => {
           console.log('user update component response: ' + response);
@@ -117,27 +114,24 @@ export class ProfileComponent implements OnInit {
 
       }
     )
-    
-    // alert(this.passwordForm.controls['password'].value + " - " + this.passwordForm.controls['passwordRepeat'].value);
-    this.error  = false;
+
+    this.error = false;
     this.passwordForm.reset();
   }
 
   readRecipes(ownerId: string): void {
-      this.ds.getRecipesByOwner(ownerId).subscribe(
-        {
-          next: (response) => {
-            this.userRecipes = response;
-            // console.log(this.recipes);
-            // return this.recipes;
-          },
-          error: (err) => console.log(err),
-          complete: () => console.log('getByOwner() completed')
-        })
+    this.recipeService.getRecipesByOwner(ownerId).subscribe(
+      {
+        next: (response) => {
+          this.userRecipes = response;
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('getByOwner() completed')
+      })
   }
 
   readSavedRecipes(userId: string): void {
-    this.rs.getUserSavedRecipes(userId).subscribe(
+    this.recipeService.getUserSavedRecipes(userId).subscribe(
       {
         next: (response) => {
           this.savedRecipes = response;

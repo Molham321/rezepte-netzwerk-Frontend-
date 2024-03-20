@@ -26,7 +26,6 @@
     <div class="quantity-buttons">
       <button mat-stroked-button (click)="adjustAllQuantities('decrease')"><mat-icon>remove</mat-icon></button>
       <button mat-stroked-button (click)="adjustAllQuantities('increase')"><mat-icon>add</mat-icon></button>
-      <span>{{quantityCounter}}</span>
     </div>
 
     <div class="recipe-ingredients">
@@ -66,7 +65,8 @@
   <div class="recipe-actions">
     <div class="action-buttons">
       <button mat-stroked-button (click)="printDetails()">Drucken</button>
-      <button mat-stroked-button *ngIf="CheckIfRecipeOwner()">Bearbeiten</button>
+      <button mat-stroked-button *ngIf="CheckIfRecipeOwner()"
+        [routerLink]="['/update/', currentRecipe._id]">Bearbeiten</button>
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()" (click)="openDeleteConfirmationDialog()">Löschen</button>
       <div>
         <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"

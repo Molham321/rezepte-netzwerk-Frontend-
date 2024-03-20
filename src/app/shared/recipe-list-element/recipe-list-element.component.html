@@ -1,13 +1,15 @@
-<a [routerLink]="['/details/', recipe._id]">
-  <mat-card class="recipe-card">
-    <img mat-card-image src="{{ recipe.imageURL }}">
-    <mat-card-footer class="recipe-card-footer">
-      <p>{{recipe.title}}</p>
-    </mat-card-footer>
-    <mat-card-actions class="recipe-card-actions">
-      <p><mat-icon>alarm</mat-icon> {{recipe.prepTime}} min</p>
-      <p><mat-icon>calendar_today</mat-icon> {{recipeDate}}</p>
-      <p><mat-icon>star_border</mat-icon> {{recipe.likedBy.length}}</p>
-    </mat-card-actions>
-  </mat-card>
-</a>
+<ng-container *ngIf="recipe">
+  <a [routerLink]="['/details/', recipe._id]">
+    <mat-card class="recipe-card">
+      <img mat-card-image src="{{ recipe.imageURL }}">
+      <mat-card-footer class="recipe-card-footer">
+        <p>{{recipe.title}}</p>
+      </mat-card-footer>
+      <mat-card-actions class="recipe-card-actions">
+        <p><mat-icon>alarm</mat-icon> {{recipe.prepTime}} min</p>
+        <p><mat-icon>calendar_today</mat-icon> {{recipeDate}}</p>
+        <p><mat-icon>star_border</mat-icon> {{recipe.likedBy.length}}</p>
+      </mat-card-actions>
+    </mat-card>
+  </a>
+</ng-container>
