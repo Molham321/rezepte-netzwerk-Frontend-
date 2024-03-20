@@ -1,9 +1,11 @@
 
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
 import { RecipeService } from 'src/app/services';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-add',
@@ -39,7 +41,8 @@ export class AddComponent implements OnInit {
     private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private snackbar: MatSnackBar
 
   ) {
   }
@@ -148,11 +151,19 @@ export class AddComponent implements OnInit {
         next: () => {
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigateByUrl(returnUrl);
+          this.showSnackbar("Rezept wurde erfolgreich hochgeladen.");
         },
         error: errorMessage => {
           this.error = errorMessage;
           this.loading = false;
         }
       });
+  }
+
+  showSnackbar(snackbarMessage: string): void {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      data: snackbarMessage,
+      duration: 3000
+    })
   }
 }

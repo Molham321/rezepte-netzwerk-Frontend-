@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IComments } from 'src/app/interfaces/recipe.interface';
 import { RecipeService } from 'src/app/services';
 import { ShareDataService } from 'src/app/services/share-data/share-data.service';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-comment-section',
@@ -25,7 +27,8 @@ export class CommentSectionComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private rs: RecipeService,
-    private sds: ShareDataService) {
+    private sds: ShareDataService,
+    private snackbar: MatSnackBar) {
     this.sds.getUpdatedRecipe.subscribe(recipe => this.recipe = recipe);
   }
 
@@ -76,6 +79,15 @@ export class CommentSectionComponent implements OnInit {
     )
 
     this.commentForm.reset();
+
+    this.showSnackbar("Kommentar wurde erfolgreich gepostet.")
+  }
+
+  showSnackbar(snackbarMessage: string): void {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      data: snackbarMessage,
+      duration: 3000
+    })
   }
 
 }

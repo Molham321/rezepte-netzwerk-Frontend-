@@ -28,11 +28,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
@@ -40,7 +40,7 @@ import { SearchResultsComponent } from './shared/search-results/search-results.c
 import { DeleteConfirmationDialogComponent } from './dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { CommentSectionComponent } from './shared/comment-section/comment-section.component';
 import { CommentComponent } from './shared/comment/comment.component';
-import { UpdateComponent } from './recipes/update/update.component';
+import { SnackbarComponent } from './shared/snackbar/snackbar.component';
 
 
 @NgModule({
@@ -61,7 +61,7 @@ import { UpdateComponent } from './recipes/update/update.component';
     DeleteConfirmationDialogComponent,
     CommentSectionComponent,
     CommentComponent,
-    UpdateComponent
+    SnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +83,8 @@ import { UpdateComponent } from './recipes/update/update.component';
     MatTabsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

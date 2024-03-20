@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IRecipe } from 'src/app/interfaces';
 import { RecipeService, UserService } from 'src/app/services';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +33,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private recipeService: RecipeService) {
+    private recipeService: RecipeService,
+    private snackbar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -81,6 +84,9 @@ export class ProfileComponent implements OnInit {
 
       }
     )
+    // alert(this.userForm.controls['username'].value);
+    this.showSnackbar("Nutzername wurde erfolgreich geändert.");
+
   }
 
   onPasswordSubmit() {
@@ -117,6 +123,8 @@ export class ProfileComponent implements OnInit {
 
     this.error = false;
     this.passwordForm.reset();
+
+    this.showSnackbar("Passwort wurde erfolgreich geändert.");
   }
 
   readRecipes(ownerId: string): void {
@@ -140,5 +148,12 @@ export class ProfileComponent implements OnInit {
         complete: () => console.log('getSavedRecipes() completed')
       }
     )
+  }
+
+  showSnackbar(snackbarMessage: string): void {
+    this.snackbar.openFromComponent(SnackbarComponent, {
+      data: snackbarMessage,
+      duration: 3000
+    })
   }
 }
