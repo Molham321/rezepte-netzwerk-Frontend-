@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IRecipe, IUser } from 'src/app/interfaces';
-import { DataService, UserService, AuthenticationService, RecipeService } from 'src/app/services';
+import { UserService, AuthenticationService, RecipeService } from 'src/app/services';
 import { first } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
@@ -35,7 +35,6 @@ export class DetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private ds: DataService,
     private us: UserService,
     private rs: RecipeService,
     private authenticationService: AuthenticationService,
@@ -56,7 +55,7 @@ export class DetailsComponent implements OnInit {
   }
 
   ReadRecipe(id: string): void {
-    this.ds.getRecipeById(id).subscribe(
+    this.rs.getRecipeById(id).subscribe(
       {
         next: (response) => {
           this.currentRecipe = response;
@@ -171,7 +170,7 @@ export class DetailsComponent implements OnInit {
 
   openDeleteConfirmationDialog(): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
-      data: {title: "Rezept löschen", message: "Möchten Sie das Rezept wirklich löschen?"},
+      data: { title: "Rezept löschen", message: "Möchten Sie das Rezept wirklich löschen?" },
       width: '250px',
     });
 
@@ -195,11 +194,11 @@ export class DetailsComponent implements OnInit {
       if (action === 'increase') {
 
         ingredient.amount = ingredient.amount + (ingredient.amount / servings);
-        this.quantityCounter = quantityCounter + 1;
+        this.quantityCounter = this.currentRecipe.servings + 1;
 
       } else if (action === 'decrease' && quantityCounter > 1) {
         ingredient.amount = ingredient.amount - (ingredient.amount / servings);
-        this.quantityCounter = quantityCounter - 1;
+        this.quantityCounter = this.currentRecipe.servings - 1;
       }
     });
 

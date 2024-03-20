@@ -1,18 +1,27 @@
 
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs';
+import { IRecipe, IUser } from 'src/app/interfaces';
 import { RecipeService } from 'src/app/services';
-import { SnackbarComponent } from 'src/app/shared/snackbar/snackbar.component';
 
 @Component({
-  selector: 'app-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  selector: 'app-update',
+  templateUrl: './update.component.html',
+  styleUrls: ['./update.component.scss']
 })
-export class AddComponent implements OnInit {
+
+export class UpdateComponent implements OnInit {
+
+  currentRecipeId: string = "";
+  currentRecipe!: IRecipe;
+  recipeDate: string = "";
+  recipeOwner!: IUser;
+
+  loading = false;
+  submitted = false;
+  error?: string;
 
   form = this.formBuilder.group({
     title: ['', Validators.required],
@@ -22,12 +31,8 @@ export class AddComponent implements OnInit {
     prepTime: [0, Validators.required],
     ingredients: this.formBuilder.array([]),
     steps: this.formBuilder.array([]),
-    category: [[], [this.validateCategories()]]
+    category: [[''], [this.validateCategories()]]
   });
-
-  loading = false;
-  submitted = false;
-  error?: string;
 
   categoryOptions = ['Vorspeisen', 'Hauptspeisen', 'Desserts', 'Snacks', 'Getränke',
     'Spaghetti', 'Rind', 'Geflügel', 'Fisch', 'Schwein', 'Vegetarisch', 'Vegan',
@@ -36,21 +41,40 @@ export class AddComponent implements OnInit {
   einheit = ['Liter', 'Milliliter', 'Kilogramm', 'Gramm', 'Milligramm', 'Stück']
 
   constructor(
-    private formBuilder: FormBuilder,
-    private renderer: Renderer2,
-    private el: ElementRef,
     private route: ActivatedRoute,
-    private router: Router,
     private recipeService: RecipeService,
-    private snackbar: MatSnackBar
-
-  ) {
-  }
+    private formBuilder: FormBuilder,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
-    this.form.get('imageURL')?.valueChanges.subscribe(() => {
-      this.updateImagePreview();
-    });
+    this.currentRecipeId = this.route.snapshot.params['id'];
+    this.ReadRecipe(this.currentRecipeId);
+  }
+
+  private ReadRecipe(id: string): void {
+    this.recipeService.getRecipeById(id).subscribe(
+      {
+        next: (response) => {
+          this.currentRecipe = response;
+          this.updateFormValues();
+        },
+        error: (err) => console.log(err),
+        complete: () => console.log('getAll() completed')
+      }
+    )
+  }
+
+  private validateCategories(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const selectedCategories = control.value as string[];
+
+      if (selectedCategories && selectedCategories.length > 3) {
+        return { maxCategories: true };
+      }
+
+      return null;
+    };
   }
 
   get f() {
@@ -63,14 +87,6 @@ export class AddComponent implements OnInit {
 
   get steps() {
     return this.form.controls["steps"] as FormArray;
-  }
-
-  createIngredientFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      amount: ['', Validators.required],
-      unit: ['', Validators.required],
-      ingredient: ['', Validators.required],
-    });
   }
 
   addIngredient() {
@@ -100,29 +116,27 @@ export class AddComponent implements OnInit {
     this.steps.removeAt(lessonIndex);
   }
 
-  updateImagePreview() {
-    const imageURLControl = this.form.get('imageURL');
-    const imagePreviewElement = this.el.nativeElement.querySelector('.image-preview');
-
-    if (imageURLControl?.valid) {
-      this.renderer.setStyle(imagePreviewElement, 'background-image', `url(${imageURLControl.value})`);
-      this.renderer.setStyle(imagePreviewElement, 'background-size', 'cover');
-      this.renderer.setStyle(imagePreviewElement, 'background-position', 'center');
-    } else {
-      this.renderer.removeStyle(imagePreviewElement, 'background-image');
-    }
-  }
-
-  validateCategories(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const selectedCategories = control.value as string[];
-
-      if (selectedCategories && selectedCategories.length > 3) {
-        return { maxCategories: true };
-      }
-
-      return null;
-    };
+  private updateFormValues() {
+    this.form.patchValue({
+      title: this.currentRecipe.title,
+      description: this.currentRecipe.description,
+      imageURL: this.currentRecipe.imageURL,
+      servings: this.currentRecipe.servings,
+      prepTime: this.currentRecipe.prepTime,
+      ingredients: this.currentRecipe.ingredients,
+      steps: this.currentRecipe.steps,
+      category: this.currentRecipe.category
+    });
+    this.currentRecipe.ingredients.forEach(ingredient => {
+      this.addIngredient();
+      const index = this.ingredients.length - 1;
+      this.ingredients.at(index).patchValue(ingredient);
+    });
+    this.currentRecipe.steps.forEach(step => {
+      this.addStep();
+      const index = this.steps.length - 1;
+      this.steps.at(index).patchValue(step);
+    });
   }
 
   onSubmit() {
@@ -136,7 +150,8 @@ export class AddComponent implements OnInit {
 
     this.loading = true;
 
-    this.recipeService.createNewRecipe(
+    this.recipeService.updateRecipe(
+      this.currentRecipeId,
       this.f['title'].value!,
       this.f['description'].value!,
       this.f['imageURL'].value!,
@@ -151,19 +166,11 @@ export class AddComponent implements OnInit {
         next: () => {
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigateByUrl(returnUrl);
-          this.showSnackbar("Rezept wurde erfolgreich hochgeladen.");
         },
         error: errorMessage => {
           this.error = errorMessage;
           this.loading = false;
         }
       });
-  }
-
-  showSnackbar(snackbarMessage: string): void {
-    this.snackbar.openFromComponent(SnackbarComponent, {
-      data: snackbarMessage,
-      duration: 3000
-    })
   }
 }

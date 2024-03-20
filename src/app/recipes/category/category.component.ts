@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
-import { DataService } from 'src/app/services';
+import { ActivatedRoute } from '@angular/router';
+import { RecipeService } from 'src/app/services';
 import { IRecipe } from 'src/app/interfaces';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -11,63 +10,49 @@ import { map } from 'rxjs';
 })
 export class CategoryComponent implements OnInit {
   currentCategory: string = 'Alle'
-  recipes!: IRecipe[];
+  recipes: IRecipe[] = [];
+  sortedRecipes: IRecipe[] = [];
+  sortedByRating: boolean = false;
+  sortedByAlphabet: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private ds: DataService) {
-
+  constructor(
+    private route: ActivatedRoute,
+    private recipeService: RecipeService) {
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      // this.recipes = [];
       this.currentCategory = params['catName'];
-      console.log(this.currentCategory);
-
       this.readRecipes(this.currentCategory);
-
-      // this.readRecipes(params['catName']);
-      // console.log(this.recipes);
     })
-
-    // this.route.paramMap.subscribe((params: ParamMap) => {
-    //   this.currentCategory = params.get('catName')!;
-    // })
-
-    // this.router.events.subscribe((event) => {
-    //   if(event instanceof NavigationEnd) {
-    //     this.currentCategory = this.route.snapshot.paramMap.get('catName')!;
-    //     console.log(this.currentCategory);
-    //     this.readRecipes(this.currentCategory);
-    //     console.log(this.recipes);  
-    //   }
-    // })
   }
 
   readRecipes(category: string): void {
+    const recipeObservable = category === 'Alle' ?
+      this.recipeService.getAll() :
+      this.recipeService.getRecipeByCategory(category);
 
-    if(category == "Alle") {
-      this.ds.getAll().subscribe(
-        {
-          next: (response) => {
-            this.recipes = response;
-            // console.log(this.recipes);
-            // return this.recipes;
-          },
-          error: (err) => console.log(err),
-          complete: () => console.log('getAll() completed')
-        })
-    }
-    else {
-      this.ds.getRecipeByCategory(category).subscribe(
-        {
-          next: (response) => {
-            this.recipes = response;
-            // console.log(this.recipes);
-            // return this.recipes;
-          },
-          error: (err) => console.log(err),
-          complete: () => console.log('getByCategory() completed')
-        })
-    }
+    recipeObservable.subscribe({
+      next: (response) => {
+        this.recipes = response;
+        this.sortedRecipes = [...this.recipes];
+      }
+    })
+  }
+
+  sortByRating(): void {
+    this.sortedRecipes.sort((a, b) => {
+      return this.sortedByRating ? a.likedBy.length - b.likedBy.length : b.likedBy.length - a.likedBy.length;
+    });
+
+    this.sortedByRating = !this.sortedByRating;
+  }
+
+  sortByAlphabet(): void {
+    this.sortedRecipes.sort((a, b) => {
+      return this.sortedByAlphabet ? b.title.localeCompare(a.title) : a.title.localeCompare(b.title);
+    });
+
+    this.sortedByAlphabet = !this.sortedByAlphabet;
   }
 }

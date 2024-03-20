@@ -1,7 +1,7 @@
+import { RecipeService } from 'src/app/services';
 import { Component, OnInit } from '@angular/core';
 import { IRecipe } from 'src/app/interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataService } from 'src/app/services';
 
 @Component({
   selector: 'app-search-results',
@@ -13,8 +13,9 @@ export class SearchResultsComponent implements OnInit {
   allRecipes!: IRecipe[];
   filteredRecipes!: IRecipe[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private ds: DataService) {
-
+  constructor(
+    private route: ActivatedRoute,
+    private recipeService: RecipeService) {
   }
 
   ngOnInit(): void {
@@ -27,11 +28,10 @@ export class SearchResultsComponent implements OnInit {
   }
 
   GetAllRecipes(): void {
-    this.ds.getAll().subscribe(
+    this.recipeService.getAll().subscribe(
       {
         next: (response) => {
           this.allRecipes = response;
-          // console.log(this.allRecipes);
           this.FilterRecipes(this.searchString);
         },
         error: (err) => console.log(err),
@@ -40,23 +40,18 @@ export class SearchResultsComponent implements OnInit {
   }
 
   FilterRecipes(searchString: string): void {
-    // console.log(searchString);
     this.filteredRecipes = [];
     this.allRecipes.forEach(element => {
-      // console.log(element.title);
-      if(
+      if (
         element.title.toLocaleLowerCase().includes(searchString.toLocaleLowerCase()) ||
         element.description.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
-        ) {
-        // console.log(element.title);
+      ) {
         this.filteredRecipes.push(element);
       } else {
-        // Überprüfe Zutaten
         const matchingIngredients = element.ingredients.filter(ingredient =>
           ingredient.ingredient.toLowerCase().includes(searchString.toLowerCase())
         );
         if (matchingIngredients.length > 0) {
-          // Füge das Rezept nur hinzu, wenn es übereinstimmende Zutaten gibt
           this.filteredRecipes.push(element);
         }
       }
