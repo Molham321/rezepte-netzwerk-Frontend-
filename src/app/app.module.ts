@@ -41,6 +41,7 @@ import { DeleteConfirmationDialogComponent } from './dialogs/delete-confirmation
 import { CommentSectionComponent } from './shared/comment-section/comment-section.component';
 import { CommentComponent } from './shared/comment/comment.component';
 import { SnackbarComponent } from './shared/snackbar/snackbar.component';
+import { UpdateComponent } from './recipes/update/update.component';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { SnackbarComponent } from './shared/snackbar/snackbar.component';
     DetailsComponent,
     AddComponent,
     ProfileComponent,
+    UpdateComponent,
     LoginComponent,
     RegisterComponent,
     NotFoundComponent,
