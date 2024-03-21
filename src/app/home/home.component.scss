@@ -9,7 +9,7 @@
 
   .custom-heading {
     border-top: 2px solid black;
-    padding-top: 10px; // Verleiht dem Text etwas Abstand zur Linie
+    padding-top: 10px;
   }
 
   .presented-recipes {
@@ -76,14 +76,13 @@ section {
   font-size: 1.5em;
 }
 
-.row .co150 .imgBx {
+.imgBx {
   position: relative;
   width: 100%;
-  /* min-height: 350px;*/
   height: 100%;
 }
 
-.row .co150 .imgBx img {
+.imgBx img {
   position: absolute;
   top: 0;
   left: 0;
@@ -146,5 +145,33 @@ section {
   .banner .content h2 {
     font-size: 2.2em;
     color: #fff;
+  }
+}
+
+@media (max-width: 1050px) {
+  .presented-recipe-category {
+    margin: 60px 0;
+
+    h3 {
+      margin-left: 30px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .custom-heading {
+      border-top: 2px solid black;
+      padding-top: 10px;
+    }
+
+    .presented-recipes {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .item {
+      margin-bottom: 30px;
+    }
   }
 }
