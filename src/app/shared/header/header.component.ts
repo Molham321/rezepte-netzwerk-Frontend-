@@ -17,6 +17,11 @@ export class HeaderComponent implements OnInit {
 
   searchForm!: FormGroup;
 
+  badgevisible = false;
+  badgevisibility() {
+    this.badgevisible = true;
+  }
+
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router) {

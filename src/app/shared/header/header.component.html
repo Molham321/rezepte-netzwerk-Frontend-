@@ -1,54 +1,101 @@
-<header>
-  <mat-toolbar class="first-nav fixed-top bg-light">
-    <mat-toolbar-row class="d-flex align-items-center">
-      <a [routerLink]="['/home']" (click)="goToHomePage()" class="logo">Rezepte Netzwerk<span>.</span></a>
-      <form class="search" [formGroup]="searchForm" (ngSubmit)="searchRecipes()">
-        <mat-form-field>
-          <input matInput placeholder="Search" formControlName="recipe">
-        </mat-form-field>
-        <button class="searchButton" mat-raised-button color="primary" type="submit" [disabled]="searchForm.invalid">
-          <mat-icon>search</mat-icon> Search
-        </button>
-      </form>
-      <button mat-raised-button [matMenuTriggerFor]="filterMenu" class="filter-menu-button">
-        <mat-icon>filter_list</mat-icon> Rezepte
+<mat-toolbar color="wight" class="mat-elevation-z8">
+  <button (click)="drawer.toggle()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span></span>
+  <span (click)="goToHomePage()" class="titleText"><span>R</span>ezepte Netzwerk<span>.</span></span>
+
+  <!-- Suchleiste -->
+  <form [formGroup]="searchForm" (ngSubmit)="searchRecipes()">
+    <span class="search-container">
+      <input type="text" placeholder="Search..." formControlName="recipe" class="search-input">
+      <button class="search-button" mat-icon-button>
+        <mat-icon>search</mat-icon>
       </button>
-      <mat-menu #filterMenu="matMenu">
-        <button mat-menu-item [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</button>
-        <button mat-menu-item [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</button>
-        <button mat-menu-item [routerLink]="['/category', 'Desserts']">Desserts</button>
-        <button mat-menu-item [routerLink]="['/category', 'Snacks']">Snacks</button>
-        <button mat-menu-item [routerLink]="['/category', 'Getränke']">Getränke</button>
-        <button mat-menu-item [matMenuTriggerFor]="additionalCategoriesMenu">weitere Kategorien</button>
-      </mat-menu>
-      <mat-menu #additionalCategoriesMenu="matMenu">
-        <button mat-menu-item *ngFor="let category of recipeCategories" [routerLink]="['/category', category]">{{
-          category }}</button>
-      </mat-menu>
-      <div>
-      </div>
-      <button mat-raised-button *ngIf="!user" color="primary" [routerLink]="['/login']">
-        <mat-icon class="mr-1">exit_to_app</mat-icon> Login
+    </span>
+  </form>
+
+  <button mat-raised-button [matMenuTriggerFor]="filterMenu" class="filterMenu-btn btn">
+    <mat-icon>filter_list</mat-icon> Rezepte
+  </button>
+  <mat-menu #filterMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</button>
+    <button mat-menu-item [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</button>
+    <button mat-menu-item [routerLink]="['/category', 'Desserts']">Desserts</button>
+    <button mat-menu-item [routerLink]="['/category', 'Snacks']">Snacks</button>
+    <button mat-menu-item [routerLink]="['/category', 'Getränke']">Getränke</button>
+    <button mat-menu-item [matMenuTriggerFor]="additionalCategoriesMenu">weitere Kategorien</button>
+  </mat-menu>
+  <mat-menu #additionalCategoriesMenu="matMenu">
+    <button mat-menu-item *ngFor="let category of recipeCategories" [routerLink]="['/category', category]">{{
+      category }}</button>
+  </mat-menu>
+
+  <button class="login-btn btn" mat-raised-button *ngIf="!user" color="primary" [routerLink]="['/login']">
+    <mat-icon class="mr-1">exit_to_app</mat-icon> Login
+  </button>
+  <button class="register-btn btn" mat-raised-button *ngIf="!user" color="warn" [routerLink]="['/register']">
+    <mat-icon class="mr-1">person_add</mat-icon> Registrieren
+  </button>
+  <div class="dropdown btn" *ngIf="user">
+    <button mat-raised-button color="primary" [matMenuTriggerFor]="profileMenu">
+      <mat-icon class="mr-1">person</mat-icon> Hello {{ user!.username }}
+    </button>
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item [routerLink]="['/add']">
+        <mat-icon class="mr-1">add_box</mat-icon> Rezept hochladen
       </button>
-      <button mat-raised-button *ngIf="!user" color="warn" [routerLink]="['/register']">
-        <mat-icon class="mr-1">person_add</mat-icon> Registrieren
+      <button mat-menu-item [routerLink]="['/profile']">
+        <mat-icon class="mr-1">people</mat-icon> Profil
       </button>
-      <div class="dropdown" *ngIf="user">
-        <button mat-raised-button color="primary" [matMenuTriggerFor]="profileMenu">
-          <mat-icon class="mr-1">person</mat-icon> Hello {{ user!.username }}
+    </mat-menu>
+  </div>
+  <button class="btn" mat-raised-button *ngIf="user" color="warn" (click)="logout()">
+    <mat-icon class="mr-1">exit_to_app</mat-icon> Logout
+  </button>
+
+</mat-toolbar>
+
+<mat-drawer-container autosize>
+  <mat-drawer #drawer opened="true" mode="side" position="start">
+    <mat-nav-list>
+      <mat-list-item>
+        <button mat-button [matMenuTriggerFor]="filterMenu"><mat-icon>filter_list</mat-icon> Rezepte</button>
+        <mat-menu #filterMenu="matMenu">
+          <button mat-menu-item [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</button>
+          <button mat-menu-item [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</button>
+          <button mat-menu-item [routerLink]="['/category', 'Desserts']">Desserts</button>
+          <button mat-menu-item [routerLink]="['/category', 'Snacks']">Snacks</button>
+          <button mat-menu-item [routerLink]="['/category', 'Getränke']">Getränke</button>
+          <button mat-menu-item [matMenuTriggerFor]="additionalCategoriesMenu">weitere Kategorien</button>
+        </mat-menu>
+      </mat-list-item>
+      <mat-list-item *ngIf="!user">
+        <button mat-button [routerLink]="['/login']">
+          <mat-icon>exit_to_app</mat-icon> Login
+        </button> </mat-list-item>
+      <mat-list-item *ngIf="!user">
+        <button mat-button [routerLink]="['/register']">
+          <mat-icon>person_add</mat-icon> Registrieren
+        </button> </mat-list-item>
+      <mat-list-item *ngIf="user">
+        <button mat-button [matMenuTriggerFor]="profileMenu">
+          <mat-icon>person</mat-icon> Hello {{ user!.username }}
         </button>
         <mat-menu #profileMenu="matMenu">
           <button mat-menu-item [routerLink]="['/add']">
-            <mat-icon class="mr-1">add_box</mat-icon> Rezept hochladen
+            <mat-icon>add_box</mat-icon> Rezept hochladen
           </button>
           <button mat-menu-item [routerLink]="['/profile']">
-            <mat-icon class="mr-1">people</mat-icon> Profil
+            <mat-icon>people</mat-icon> Profil
           </button>
         </mat-menu>
-      </div>
-      <button mat-raised-button *ngIf="user" color="warn" (click)="logout()">
-        <mat-icon class="mr-1">exit_to_app</mat-icon> Logout
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
-</header>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="content-container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

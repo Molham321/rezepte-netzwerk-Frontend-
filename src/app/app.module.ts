@@ -33,6 +33,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatListModule } from "@angular/material/list"
 
 
 import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
@@ -86,7 +88,9 @@ import { UpdateComponent } from './recipes/update/update.component';
     HttpClientModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
