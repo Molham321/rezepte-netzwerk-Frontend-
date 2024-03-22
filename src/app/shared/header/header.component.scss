@@ -46,17 +46,9 @@
   margin-left: 10px;
 }
 
-.content-container {
-  display: flex;
-  flex-direction: column;
-  /* Stack content vertically */
-  height: 100vh;
-  /* Make container take up full viewport height */
-}
-
 @media (max-width: 1050px) {
   .search-input {
-    width: 50%;
+    width: 69%;
   }
 
   .filter-menu-button {
@@ -66,6 +58,12 @@
   .btn,
   .filterMenu-btn {
     display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .search-input {
+    width: 50%;
   }
 }
 
