@@ -87,7 +87,7 @@ export class DetailsComponent implements OnInit {
   CheckIfRecipeOwner(): boolean {
     var isRecipeOwner = false;
 
-    if (this.user && this.user?._id === this.currentRecipe.createdBy) {
+    if ((this.user && this.user?._id === this.currentRecipe.createdBy) || (this.user && this.user.authentication.role === 'admin')) {
       isRecipeOwner = true;
     }
 
