@@ -33,6 +33,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 
 
 import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
@@ -42,6 +44,7 @@ import { CommentSectionComponent } from './shared/comment-section/comment-sectio
 import { CommentComponent } from './shared/comment/comment.component';
 import { SnackbarComponent } from './shared/snackbar/snackbar.component';
 import { UpdateComponent } from './recipes/update/update.component';
+import { AdminViewComponent } from './admin/admin-view/admin-view.component';
 
 
 @NgModule({
@@ -63,7 +66,8 @@ import { UpdateComponent } from './recipes/update/update.component';
     DeleteConfirmationDialogComponent,
     CommentSectionComponent,
     CommentComponent,
-    SnackbarComponent
+    SnackbarComponent,
+    AdminViewComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +90,9 @@ import { UpdateComponent } from './recipes/update/update.component';
     HttpClientModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

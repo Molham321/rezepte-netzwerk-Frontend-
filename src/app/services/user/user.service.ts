@@ -11,6 +11,10 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  getAll(): Observable<IUser[]> {
+    return this.http.get<IUser[]>(this.baseUrl);
+  }
+
   getUserById(id: string): Observable<IUser> {
     return this.http.get<IUser>(this.baseUrl + id);
   }
