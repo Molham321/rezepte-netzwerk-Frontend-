@@ -11,13 +11,14 @@ import { DetailsComponent } from './recipes/details/details.component';
 import { AuthGuard } from './guards'
 import { SearchResultsComponent } from './shared/search-results/search-results.component';
 import { UpdateComponent } from './recipes/update/update.component';
+import { AdminViewComponent } from './admin/admin-view/admin-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  // { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
+  { path: 'admin', component: AdminViewComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
   { path: 'profile', component: ProfileComponent },
   { path: 'add', component: AddComponent },
   { path: 'category/:catName', component: CategoryComponent },
