@@ -5,143 +5,117 @@
   margin: 20px;
 
   .image-container {
-    width: 500px;
-    margin: auto;
+
+    width: 70%;
 
     .details-image {
       width: 100%;
+      height: 300px;
       object-fit: cover;
     }
 
     .recipe-chips {
-      width: 500px;
-      margin: 0 15px;
+      width: 100%;
     }
 
     .recipe-chip {
-      width: 150px;
+      width: 100%;
+    }
+  }
 
-      .chip-content {
-        margin: 0 auto;
+  .recipe-owner {
+    color: #888;
+  }
+}
+
+.recipe-ingredients {
+
+  .ingredients-table {
+    width: 100%;
+
+    .mat-column-amount {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+.mat-column-unit {
+  border-right: 1px solid lightgray;
+}
+
+.recipe-steps {
+  margin-top: 20px;
+
+  .steps-description {
+    margin: 0 20px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    color: #555;
+  }
+}
+
+.recipe-actions {
+
+  .action-buttons {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    button {
+      @extend .common-button-style;
+      color: #fff;
+      background-color: #4caf50;
+
+      &:hover {
+        background-color: #45a049;
+      }
+
+      &:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+
+      margin: 10px;
+    }
+
+    .like-save {
+      background-color: #c14b7e;
+    }
+
+    .like-save:hover {
+      background-color: #a83e6c;
+    }
+  }
+
+  .comment-button {
+    width: 100%;
+
+    button {
+      width: 100%;
+      background-color: #3498db;
+
+      &:hover {
+        background-color: #2980b9;
       }
     }
   }
 
-  .recipe-section {
-    // margin: 40px 0;
-    min-width: 900px;
-
-    h3,
-    .steps-order,
-    .recipe-owner {
-      color: #333;
-      margin: 50px 0 20px 0;
-      font-size: 24px;
-    }
-
-    .recipe-owner {
-      color: #888;
-    }
-
-    .recipe-ingredients {
-      padding: 10px;
-
-      .ingredients-table {
-        width: 100%;
-
-        .mat-column-amount {
-          width: 32px;
-          padding-right: 24px;
-          text-align: center;
-        }
-
-        .mat-column-unit {
-          width: 128px;
-          border-right: 1px solid lightgray;
-          padding-right: 24px;
-          text-align: center;
-        }
-      }
-    }
-
-    .recipe-steps {
-      margin-top: 20px;
-
-      .steps-description {
-        margin: 0 20px;
-        padding: 10px;
-        background-color: #f0f0f0;
-        border-radius: 5px;
-        color: #555;
-      }
-    }
-  }
-
-  .recipe-actions {
-    margin: 50px 0;
-
-    .action-buttons {
-      width: 600px;
-      margin: auto;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-
-      button {
-        @extend .common-button-style;
-        color: #fff;
-        background-color: #4caf50;
-        margin-right: 10px;
-
-        &:hover {
-          background-color: #45a049;
-        }
-
-        &:disabled {
-          background-color: #ddd;
-          cursor: not-allowed;
-        }
-      }
-
-      .like-save {
-        background-color: #c14b7e;
-      }
-
-      .like-save:hover {
-        background-color: #a83e6c;
-      }
-    }
-
-    .comment-button {
-      width: 600px;
-      margin: 50px auto 0;
-
-      button {
-        width: 100%;
-        background-color: #3498db;
-
-        &:hover {
-          background-color: #2980b9;
-        }
-      }
-    }
-
-    .comment-section {
-      width: 600px;
-      margin: 50px auto 0;
-    }
+  .comment-section {
+    width: 100%;
   }
 }
 
 $lightBackgroundColor: #f0f0f0;
 
 .common-button-style {
-  width: 150px;
+  width: 100%;
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  padding: 10px;
-  font-size: 16px;
 }
 
 @media print {

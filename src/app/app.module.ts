@@ -33,8 +33,11 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav'
+import { MatListModule } from "@angular/material/list"
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+
 
 
 import { RecipeListElementComponent } from './shared/recipe-list-element/recipe-list-element.component';
@@ -91,6 +94,8 @@ import { AdminViewComponent } from './admin/admin-view/admin-view.component';
     ReactiveFormsModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatSidenavModule,
+    MatListModule,
     MatPaginatorModule,
     MatSortModule
   ],
