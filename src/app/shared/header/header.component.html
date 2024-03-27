@@ -91,7 +91,14 @@
           </button>
         </mat-menu>
       </mat-list-item>
+      <mat-list-item *ngIf="user">
+        <button mat-button (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon> Logout
+        </button>
+      </mat-list-item>
+
     </mat-nav-list>
+
   </mat-drawer>
   <mat-drawer-content>
     <div class="content-container">
