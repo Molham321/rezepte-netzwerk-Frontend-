@@ -85,7 +85,7 @@ export class CommentComponent implements OnInit {
 
   IsCommentOwner(): boolean {
     if(this.user) {
-      if(this.user._id === this.comment.createdBy) {
+      if(this.user._id === this.comment.createdBy || this.user.authentication.role === "admin") {
         return true;
       } else {
         return false;
