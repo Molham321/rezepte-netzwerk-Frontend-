@@ -29,11 +29,11 @@
   .example-element-diagram {
     min-width: 80px;
     border: 2px solid black;
-    font-weight: lighter;
+    // font-weight: lighter;
   }
 
   .example-element-symbol {
-    font-weight: bold;
+    // font-weight: bold;
     line-height: normal;
   }
 
@@ -64,9 +64,7 @@
   }
 }
 
-@media (max-width: 430px) {
-
-
+@media (max-width: 600px) {
 
   table {
     width: 100%;
