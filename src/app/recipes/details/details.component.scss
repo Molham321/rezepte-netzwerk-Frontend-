@@ -3,10 +3,15 @@
   flex-direction: column;
   align-items: center;
   margin: 20px;
+  width: 100%;
 
   .image-container {
 
-    width: 70%;
+    width: 50%;
+
+    img {
+      width: 30%;
+    }
 
     .details-image {
       width: 100%;
@@ -16,10 +21,11 @@
 
     .recipe-chips {
       width: 100%;
+      margin-left: 30px;
     }
 
     .recipe-chip {
-      width: 100%;
+      width: 31%;
     }
   }
 
@@ -34,7 +40,6 @@
     width: 100%;
 
     .mat-column-amount {
-      width: 100%;
       text-align: center;
     }
   }
@@ -116,6 +121,30 @@ $lightBackgroundColor: #f0f0f0;
   cursor: pointer;
   border: none;
   border-radius: 5px;
+}
+
+@media (max-width: 800px) {
+
+  .details-page {
+    width: 100%;
+    margin: 0;
+
+    .image-container {
+      width: 100%;
+
+      img {
+        width: 100%;
+      }
+
+      .recipe-chips {
+        margin: 0;
+      }
+
+      .recipe-chip {
+        width: 100%;
+      }
+    }
+  }
 }
 
 @media print {
