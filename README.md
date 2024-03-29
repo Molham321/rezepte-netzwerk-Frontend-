@@ -49,7 +49,7 @@ Vorraussetzungen für das Projekt sind das Vorhandensein von NodeJS und Angular 
 
 Nachdem das RezepteNetzwerk von GitLab heruntergeladen wurde, kann es Visual Studio Code geöffnet werden. Zunächst sollte dort in einem Terminal der Befehl `npm install` ausgeführt werden, um alle notwendigen Abhängigkeiten zu installieren.
 
-### 2. Öffnen und Starten des Backends
+### 2. Öffnen und Starten des Backend-Servers
 
 Das zum Projekt gehörende Backend ist [hier](https://git.ai.fh-erfurt.de/rezepte-netzwerk/rezepte-netzwerk-backend) in einem separaten GitLab Projekt zu finden. Nachdem dieses anhand der dort vorhandenen Installationsanleitung erfolgreich gestartet wurde, geht es mit dem Starten des Frontends weiter.
 
@@ -69,6 +69,22 @@ Grundsätzlich kann die Webseite zwar ohne Anmeldung erkundet werden, für versc
 
 
 ## Verwendete Tools
+- Angular mit Angular Materials (Framework und Komponenten-Bibliothek)
+- Visual Studio Code (Entwicklungsumgebung)
+- NodeJS (Backend-Server)
+- Express.js (Backend-Server)
+- MongoDB mit Mongoose (Datenbank)
+- GitLab (Versionsverwaltung)
+- ClickUp (Sprintdurchführung)
+- Figma (Erstellung von Mockups)
+- Discord (Kommunikation)
+
+## Sprintplanung und -durchführung mit ClickUp
+
+Die Sprintplanung dieses Projektes wurde mit ClickUp durchgeführt. Hier wurde zu jedem Sprint ein Ordner angelegt, in dem sich jeweils ein Board befindet, auf dem Aufgaben angelegt wurden. Außerdem wurden Aufgabenbeschreibungen, Schätzungen der vorraussichtlichen Bearbeitungszeit und die letztendliche Zeiterfassung pro Aufgabe notiert.
+
+### !!! Hinweis zur Zeiterfassung
+Etwa ab dem Sprint vom 23.01. bis 06.02. wurde auf ClickUp mit diesem Projekt ein Nutzungslimit der kostenlosen Version erreicht. Das voreingestellte Feld "Zeiterfassung" sowie Custom-Felder konnten nicht mehr verwendet werden. Aus diesem Grund wurde die Zeiterfassung der übrigen Tickets in der Beschreibung des jeweiligen Aufgabe notiert und ist somit erst beim Klick auf das Ticket sichtbar. Bei allen vorherigen Aufgaben lässt sich die Zeiterfassung jedoch weiterhin dem dafür vorgesehenen Feld "Zeiterfassung" oder dem Custom-Feld "tatsächliche Bearbeitungszeit" entnehmen.
 
 ## Präsentationen
 
