@@ -1,27 +1,25 @@
 # RezepteNetzwerk
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.9.
+**Angular Web-Anwendung für Web Engineering 2, entwickelt von Anna-Lisa Merkel und Molham Al-khodari.**
 
-## Development server
+## Was ist das Rezepte-Netzwerk?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Im Rezepte-Netzwerk können Nutzer Kochrezepte anderer Leute zum Nachkochen finden oder nach der Registrierung eigene Rezepte hochladen. Mit Hilfe eines Kontos können sie außerdem auf verschiedene Weise mit den Rezepten interagieren, sie beispielsweise auf einer Merkliste speichern, Kommentare verfassen oder einem Rezept einen Stern vergeben. Zum leichteren Auffinden sind Rezepte außerdem in verschiedene Kategorien unterteilt und es sind einzelne Such- und Filterfunktionen vorhanden.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Seitenstruktur
 
-## Build
+## Installationsanleitung
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Verwendete Tools
 
-## Running unit tests
+## Präsentationen
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- [Auftaktpräsentation](documentation/RezepteNetzwerk_Auftaktpräsentation.pdf)
+- [Abschlusspräsentation](documentation/RezepteNetzwerk_Abschlusspräsentation.pdf)
+- [Sprintpräsentation 1](documentation/Sprint_1.pdf)
+- [Sprintpräsentation 2](documentation/Sprint_2.pdf)
+- [Sprintpräsentation 3](documentation/Sprint_3.pdf)
+- [Sprintpräsentation 4](documentation/Sprint_4.pdf)
+- [Sprintpräsentation 5](documentation/Sprint_5.pdf)
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
