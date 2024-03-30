@@ -68,18 +68,17 @@
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()" [disabled]="user && user.authentication.role == 'admin'"
         [routerLink]="['/update/', currentRecipe._id]">Bearbeiten</button>
       <button mat-stroked-button *ngIf="CheckIfRecipeOwner()" (click)="openDeleteConfirmationDialog()">Löschen</button>
-      <div>
-        <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
-          [ngClass]="user && currentRecipe.likedBy.includes(user._id) ? 'like-save' : 'no-like-save'"
-          (click)="UpdateRecipeLikeCount(currentRecipe._id, user!._id)"><mat-icon
-            *ngIf="user && currentRecipe.likedBy.includes(user._id)">done</mat-icon> Stern</button>
-      </div>
-      <div>
-        <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
-          [ngClass]="user && currentRecipe.savedBy.includes(user._id) ? 'like-save' : 'no-like-save'"
-          (click)="SaveRecipe(currentRecipe._id, user!._id)"><mat-icon
-            *ngIf="user && currentRecipe.savedBy.includes(user._id)">done</mat-icon> Merken</button>
-      </div>
+
+      <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
+        [ngClass]="user && currentRecipe.likedBy.includes(user._id) ? 'like-save' : 'no-like-save'"
+        (click)="UpdateRecipeLikeCount(currentRecipe._id, user!._id)"><mat-icon
+          *ngIf="user && currentRecipe.likedBy.includes(user._id)">done</mat-icon> Stern</button>
+
+      <button mat-stroked-button *ngIf="!CheckIfRecipeOwner()" [disabled]="!user"
+        [ngClass]="user && currentRecipe.savedBy.includes(user._id) ? 'like-save' : 'no-like-save'"
+        (click)="SaveRecipe(currentRecipe._id, user!._id)"><mat-icon
+          *ngIf="user && currentRecipe.savedBy.includes(user._id)">done</mat-icon> Merken</button>
+
     </div>
 
     <div class="comment-button">

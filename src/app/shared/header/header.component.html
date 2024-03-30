@@ -5,7 +5,6 @@
   <span></span>
   <span (click)="goToHomePage()" class="titleText"><span>R</span>ezepte Netzwerk<span>.</span></span>
 
-  <!-- Suchleiste -->
   <form [formGroup]="searchForm" (ngSubmit)="searchRecipes()">
     <span class="search-container">
       <input type="text" placeholder="Search..." formControlName="recipe" class="search-input">
@@ -60,10 +59,11 @@
 </mat-toolbar>
 
 <mat-drawer-container autosize>
-  <mat-drawer #drawer opened="true" mode="side" position="start">
+  <mat-drawer #drawer opened="false" mode="side" position="start" class="mat-drawer">
     <mat-nav-list>
-      <mat-list-item>
-        <button mat-button [matMenuTriggerFor]="filterMenu"><mat-icon>filter_list</mat-icon> Rezepte</button>
+      <mat-list-item></mat-list-item>
+      <mat-list-item [matMenuTriggerFor]="filterMenu">
+        <button mat-button><mat-icon>filter_list</mat-icon> Rezepte</button>
         <mat-menu #filterMenu="matMenu">
           <button mat-menu-item [routerLink]="['/category', 'Vorspeisen']">Vorspeisen</button>
           <button mat-menu-item [routerLink]="['/category', 'Hauptspeisen']">Hauptspeisen</button>
@@ -76,13 +76,15 @@
       <mat-list-item *ngIf="!user">
         <button mat-button [routerLink]="['/login']">
           <mat-icon>exit_to_app</mat-icon> Login
-        </button> </mat-list-item>
+        </button>
+      </mat-list-item>
       <mat-list-item *ngIf="!user">
         <button mat-button [routerLink]="['/register']">
           <mat-icon>person_add</mat-icon> Registrieren
-        </button> </mat-list-item>
-      <mat-list-item *ngIf="user">
-        <button mat-button [matMenuTriggerFor]="profileMenu">
+        </button>
+      </mat-list-item>
+      <mat-list-item *ngIf="user" [matMenuTriggerFor]="profileMenu">
+        <button mat-button>
           <mat-icon>person</mat-icon> Hello {{ user!.username }}
         </button>
         <mat-menu #profileMenu="matMenu">
