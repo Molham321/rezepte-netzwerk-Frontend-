@@ -64,6 +64,7 @@ Grundsätzlich kann die Webseite zwar ohne Anmeldung erkundet werden, für versc
 | Name          | E-Mail                     | Passwort  |
 | ------------- | -------------------------  | --------- |
 | Admin  | admin@test.com     | Test321.  |
+| User  | user@test.com     | Test321.  |
 | neuer Tester | neuerTester@gmail.com | Test321.  |
 | Spaghettifan | spaghetti@gmail.com | Test321. |
 
