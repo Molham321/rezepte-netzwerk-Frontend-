@@ -104,4 +104,5 @@ Etwa ab dem Sprint vom 23.01. bis 06.02. wurde auf ClickUp mit diesem Projekt ei
 - [Sprintpräsentation 3](documentation/Sprint_3.pdf)
 - [Sprintpräsentation 4](documentation/Sprint_4.pdf)
 - [Sprintpräsentation 5](documentation/Sprint_5.pdf)
+- [Mockups](documentation/Mockups)
 
