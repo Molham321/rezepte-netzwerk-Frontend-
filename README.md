@@ -19,7 +19,7 @@ Abhängig von der gewählten Kategorie, sind hier alle Rezepte der Kategorie in 
 
 ### Detailansicht
 
-Hier sind alle wichtigen Informationen zum gewählten Rezept aufgelistet. Es gibt eine Tabelle mit Zutaten, deren jeweilige Menge durch Änderung der Portionsmenge angepasst werden kann. Die einzelnen Arbeitsschritte sind untereinander aufgelistet. Außerdem können Besitzer des Rezeptes dieses über Buttons bearbeiten oder Löschen, andere angemeldete Nutzer können es Merken oder einen Stern vergeben. Eine Druckfunktion gibt es auch. Am unteren Seitenrand befindet sich außerdem ein ausklappbarer Kommentarbereich, in dem angemeldete Nutzer Kommentare verfassen und wieder löschen können.
+Hier sind alle wichtigen Informationen zum gewählten Rezept aufgelistet. Es gibt eine Tabelle mit Zutaten, deren jeweilige Menge durch Änderung der Portionsmenge angepasst werden kann. Die einzelnen Arbeitsschritte sind untereinander aufgelistet. Außerdem können Besitzer des Rezeptes dieses über Buttons bearbeiten oder löschen, andere angemeldete Nutzer können es merken oder einen Stern vergeben. Eine Druckfunktion gibt es auch. Am unteren Seitenrand befindet sich außerdem ein ausklappbarer Kommentarbereich, in dem angemeldete Nutzer Kommentare verfassen und wieder löschen können.
 
 ### Ergebnisse des Suchformulars
 
@@ -68,6 +68,14 @@ Grundsätzlich kann die Webseite zwar ohne Anmeldung erkundet werden, für versc
 | neuer Tester | neuerTester@gmail.com | Test321.  |
 | Spaghettifan | spaghetti@gmail.com | Test321. |
 
+## Responsive Styling
+
+Bei der Entwicklung des Rezepte-Netzwerks wurde darauf geachtet, dass die Seite auch auf verschiedenen Bildschirmgrößen verwendet werden kann. So können Nutzer sich die Rezepte problemlos auf beispielsweise ihrem Handy oder Tablet ansehen, während sie in der Küche kochen. Auf folgenden Geräten / Bildschirmgrößen wurde die Seite dafür neben dem normalen PC getestet:
+
+| Gerät          | Modell                     | Größe  |
+| ------------- | -------------------------  | --------- |
+| Tablet  | iPad iPadOS     | 810 x 1018  |
+| Handy  | iPhone 12/13 Pro Max iOS     | 428 x 926  |
 
 ## Verwendete Tools
 - Angular mit Angular Materials (Framework und Komponenten-Bibliothek)
